@@ -38,7 +38,11 @@ class TableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let pictureName = pictures[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "Picture", for: indexPath)
-        cell.textLabel?.text = pictureName
+        
+        var cellContentConfiguration = cell.defaultContentConfiguration()
+        cellContentConfiguration.text = pictureName
+        cell.contentConfiguration = cellContentConfiguration
+
         return cell
     }
 
