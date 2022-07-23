@@ -78,20 +78,15 @@
 		8A5B67D1288AB75F006DF48B /* ImageList */ = {
 			isa = PBXGroup;
 			children = (
-				8A5B67D2288AB75F006DF48B /* AppDelegate.swift */,
-				8A5B67D4288AB75F006DF48B /* SceneDelegate.swift */,
-				8A5B67D6288AB75F006DF48B /* TableViewController.swift */,
-				8A5B6817288BA7F3006DF48B /* DetailViewController.swift */,
-				8A5B67D8288AB75F006DF48B /* Main.storyboard */,
+				8A660BAF288C3DD500B44F4F /* Presentation Layer */,
+				8A660BB2288C3DF100B44F4F /* Data Layers */,
 				8A5B67DB288AB761006DF48B /* Assets.xcassets */,
-				8A5B67DD288AB761006DF48B /* LaunchScreen.storyboard */,
 				8A5B67E0288AB761006DF48B /* Info.plist */,
-				8A5B6816288AC14B006DF48B /* images */,
 			);
 			path = ImageList;
 			sourceTree = "<group>";
 		};
-		8A5B6816288AC14B006DF48B /* images */ = {
+		8A5B6816288AC14B006DF48B /* Images */ = {
 			isa = PBXGroup;
 			children = (
 				8A5B680A288AC13F006DF48B /* nssl0033.jpg */,
@@ -105,7 +100,44 @@
 				8A5B6808288AC13F006DF48B /* nssl0051.jpg */,
 				8A5B6809288AC13F006DF48B /* nssl0091.jpg */,
 			);
-			path = images;
+			path = Images;
+			sourceTree = "<group>";
+		};
+		8A660BAF288C3DD500B44F4F /* Presentation Layer */ = {
+			isa = PBXGroup;
+			children = (
+				8A5B67D2288AB75F006DF48B /* AppDelegate.swift */,
+				8A5B67D4288AB75F006DF48B /* SceneDelegate.swift */,
+				8A660BB0288C3DE100B44F4F /* UIViewControllers */,
+				8A660BB1288C3DEB00B44F4F /* Storyboards */,
+			);
+			path = "Presentation Layer";
+			sourceTree = "<group>";
+		};
+		8A660BB0288C3DE100B44F4F /* UIViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				8A5B67D6288AB75F006DF48B /* TableViewController.swift */,
+				8A5B6817288BA7F3006DF48B /* DetailViewController.swift */,
+			);
+			path = UIViewControllers;
+			sourceTree = "<group>";
+		};
+		8A660BB1288C3DEB00B44F4F /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				8A5B67D8288AB75F006DF48B /* Main.storyboard */,
+				8A5B67DD288AB761006DF48B /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		8A660BB2288C3DF100B44F4F /* Data Layers */ = {
+			isa = PBXGroup;
+			children = (
+				8A5B6816288AC14B006DF48B /* Images */,
+			);
+			path = "Data Layers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
