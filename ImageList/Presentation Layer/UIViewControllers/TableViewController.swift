@@ -27,17 +27,24 @@ class TableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let pictureName = pictures[indexPath.row]
+        guard let pictureName = pictures[indexPath.row] else { return UITableViewCell() }
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "Picture", for: indexPath)
         
-        var cellContentConfiguration = cell.defaultContentConfiguration()
-        cellContentConfiguration.text = pictureName
-        cell.contentConfiguration = cellContentConfiguration
+        setupTitleOfRow(cell, with: pictureName)
 
         return cell
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {        showDetailScreen(for: indexPath.row)
+    }
+
+    private func setupTitleOfRow(_ cell: UITableViewCell, with title: String) {
+        var cellContentConfiguration = cell.defaultContentConfiguration()
+        cellContentConfiguration.text = title
+        cellContentConfiguration.textProperties.font = UIFont.systemFont(ofSize: 25)
+        
+        cell.contentConfiguration = cellContentConfiguration
     }
     
     private func getImageList(with prefix: String) {
