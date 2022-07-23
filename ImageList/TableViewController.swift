@@ -12,20 +12,9 @@ class TableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        
-        let fm = FileManager.default
-        let path = Bundle.main.resourcePath!
-        let items = try! fm.contentsOfDirectory(atPath: path)
-
-        for item in items {
-            if item.hasPrefix("nssl") {
-                pictures.append(item)
-            }
-        }
-        
         title = "Image List"
         
+        getImageList(with: "nssl")
         setupNavigationController()
     }
     
@@ -49,6 +38,18 @@ class TableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {        showDetailScreen(for: indexPath.row)
+    }
+    
+    private func getImageList(with prefix: String) {
+        let fm = FileManager.default
+        let path = Bundle.main.resourcePath!
+        let items = try! fm.contentsOfDirectory(atPath: path)
+
+        for item in items {
+            if item.hasPrefix(prefix) {
+                pictures.append(item)
+            }
+        }
     }
     
     private func showDetailScreen(for rowIndex: Int) {
