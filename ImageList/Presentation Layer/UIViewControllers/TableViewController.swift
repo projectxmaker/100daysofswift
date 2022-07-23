@@ -83,6 +83,7 @@ class TableViewController: UITableViewController {
         { return }
         
         detailViewController.selectedImage = pictureName
+        detailViewController.pageTitle = getTitleOfDetailScreen(at: rowIndex)
         
         // push DetailViewController to NavigationBar
         navigationController?.pushViewController(detailViewController, animated: true)
@@ -91,6 +92,10 @@ class TableViewController: UITableViewController {
     private func setupNavigationController() {
         navigationController?.navigationBar.backgroundColor = .white
         navigationController?.navigationBar.prefersLargeTitles = true
+    }
+    
+    private func getTitleOfDetailScreen(at picIndex: Int) -> String {
+        "Picture \(picIndex + 1) of \(pictures.count)" 
     }
 
 }
