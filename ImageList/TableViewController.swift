@@ -8,7 +8,7 @@
 import UIKit
 
 class TableViewController: UITableViewController {
-    var pictures = [String]()
+    var pictures = [String?]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +24,9 @@ class TableViewController: UITableViewController {
             }
         }
         
-        print(pictures)
+        title = "Image List"
+        
+        setupNavigationController()
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -46,6 +48,28 @@ class TableViewController: UITableViewController {
         return cell
     }
 
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {        showDetailScreen(for: indexPath.row)
+    }
+    
+    private func showDetailScreen(for rowIndex: Int) {
+        let mainStoryboard = UIStoryboard.init(name: "Main", bundle: nil)
+        
+        guard
+            let pictureName = pictures[rowIndex],
+            let detailViewController = mainStoryboard.instantiateViewController(withIdentifier: "Detail") as? DetailViewController
+        else
+        { return }
+        
+        detailViewController.selectedImage = pictureName
+        
+        // push DetailViewController to NavigationBar
+        navigationController?.pushViewController(detailViewController, animated: true)
+    }
+    
+    private func setupNavigationController() {
+        navigationController?.navigationBar.backgroundColor = .white
+        navigationController?.navigationBar.prefersLargeTitles = true
+    }
 
 }
 
