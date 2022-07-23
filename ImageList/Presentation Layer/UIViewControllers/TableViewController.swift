@@ -57,6 +57,20 @@ class TableViewController: UITableViewController {
                 pictures.append(item)
             }
         }
+        
+        sortImageList()
+    }
+    
+    private func sortImageList() {
+        pictures.sort { (a: String?, b: String?) in
+            guard
+                let lhs = a,
+                let rhs = b
+            else {
+                return false
+            }
+            return lhs < rhs
+        }
     }
     
     private func showDetailScreen(for rowIndex: Int) {
