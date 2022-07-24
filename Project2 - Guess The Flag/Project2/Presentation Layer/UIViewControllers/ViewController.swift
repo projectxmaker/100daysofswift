@@ -13,15 +13,18 @@ extension ViewController {
 
 class ViewController: UIViewController {
 
+    // MARK: - IBOutlet
     @IBOutlet weak var button1: UIButton!
     @IBOutlet weak var button2: UIButton!
     @IBOutlet weak var button3: UIButton!
 
+    // MARK: - Constants
     struct keys {
         static let defaultScore = 0
         static let defaultCurrentQuestionNumber = 1
     }
     
+    // MARK: - Variables
     var countries: [String] = []
     
     var score = ViewController.keys.defaultScore
@@ -29,6 +32,7 @@ class ViewController: UIViewController {
     let totalOfQuestions = 10
     var currentQuestionNumber = ViewController.keys.defaultCurrentQuestionNumber
     
+    // MARK: - Functions
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -75,15 +79,21 @@ class ViewController: UIViewController {
         title = "\(randomCorrectAnswer) | \(currentQuestionNumber)/\(totalOfQuestions) | Score: \(score)"
     }
     
-    @IBAction func buttonTapped(_ sender: UIButton) {
-        if sender.tag == correctAnswer {
+    private func evaluteAnswer(_ sender: UIButton) {
+        let selectedAnswer = sender.tag
+        if selectedAnswer == correctAnswer {
             score += 1
+            beforeMoveToNextQuestion()
         } else {
             score -= 1
+            
+            let ac = UIAlertController(title: "Wrong Answer", message: "That’s the flag of \(countries[selectedAnswer].uppercased())", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: beforeMoveToNextQuestion))
+            present(ac, animated: true, completion: nil)
         }
-        
-        currentQuestionNumber += 1
-        
+    }
+    
+    private func beforeMoveToNextQuestion(_ action: UIAlertAction? = nil) {
         if currentQuestionNumber > totalOfQuestions {
             let ac = UIAlertController(title: "Final Score", message: "Your score \(score)", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: setupFlags))
@@ -94,6 +104,12 @@ class ViewController: UIViewController {
         } else {
             setupFlags()
         }
+    }
+    
+    // MARK: - IBAction
+    @IBAction func buttonTapped(_ sender: UIButton) {
+        currentQuestionNumber += 1
+        evaluteAnswer(sender)
     }
 }
 
