@@ -7,23 +7,41 @@
 
 import UIKit
 
+extension ViewController {
+
+}
+
 class ViewController: UIViewController {
 
     @IBOutlet weak var button1: UIButton!
     @IBOutlet weak var button2: UIButton!
     @IBOutlet weak var button3: UIButton!
+
+    struct keys {
+        static let defaultScore = 0
+        static let defaultCurrentQuestionNumber = 1
+    }
     
     var countries: [String] = []
-    var score = 0
+    
+    var score = ViewController.keys.defaultScore
     var correctAnswer = 0
+    let totalOfQuestions = 10
+    var currentQuestionNumber = ViewController.keys.defaultCurrentQuestionNumber
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        resetDefaultStats()
         setupCountries()
         decorateAllFlags()
         setupFlags()
+    }
+    
+    private func resetDefaultStats() {
+        score = ViewController.keys.defaultScore
+        currentQuestionNumber = ViewController.keys.defaultCurrentQuestionNumber
     }
     
     private func setupCountries() {
@@ -54,24 +72,28 @@ class ViewController: UIViewController {
     private func setupCorrectAnswer() {
         correctAnswer = Int.random(in: 0...2)
         let randomCorrectAnswer = countries[correctAnswer].uppercased()
-        title = randomCorrectAnswer + " | Score: \(score)"
+        title = "\(randomCorrectAnswer) | \(currentQuestionNumber)/\(totalOfQuestions) | Score: \(score)"
     }
     
     @IBAction func buttonTapped(_ sender: UIButton) {
-        var title = ""
-        
         if sender.tag == correctAnswer {
-            title = "Correct"
             score += 1
         } else {
-            title = "Incorrect"
             score -= 1
         }
         
-        let ac = UIAlertController(title: title, message: "Your score \(score)", preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: setupFlags))
+        currentQuestionNumber += 1
         
-        present(ac, animated: true, completion: nil)
+        if currentQuestionNumber > totalOfQuestions {
+            let ac = UIAlertController(title: "Final Score", message: "Your score \(score)", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: setupFlags))
+            
+            present(ac, animated: true, completion: nil)
+            
+            resetDefaultStats()
+        } else {
+            setupFlags()
+        }
     }
 }
 
