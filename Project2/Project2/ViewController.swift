@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     
     var countries: [String] = []
     var score = 0
+    var correctAnswer = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,19 +23,20 @@ class ViewController: UIViewController {
         setupCountries()
         decorateFlags()
         setupFlags()
-        setupView()
     }
     
     private func setupCountries() {
         countries += ["estonia", "france", "germany", "ireland", "italy", "monaco", "nigeria", "poland", "russia", "spain", "uk", "us"]
     }
     
-    private func setupFlags() {
+    private func setupFlags(_ action: UIAlertAction? = nil) {
         countries.shuffle()
         
         button1.setImage(UIImage(named: countries[0]), for: .normal)
         button2.setImage(UIImage(named: countries[1]), for: .normal)
-        button2.setImage(UIImage(named: countries[2]), for: .normal)
+        button3.setImage(UIImage(named: countries[2]), for: .normal)
+        
+        setupView()
     }
     
     private func decorateFlags() {
@@ -48,8 +50,26 @@ class ViewController: UIViewController {
     }
     
     private func setupView() {
-        let randomCorrectAnswer = countries[Int.random(in: 0...2)]
+        correctAnswer = Int.random(in: 0...2)
+        let randomCorrectAnswer = countries[correctAnswer]
         title = randomCorrectAnswer.uppercased()
+    }
+    
+    @IBAction func buttonTapped(_ sender: UIButton) {
+        var title = ""
+        
+        if sender.tag == correctAnswer {
+            title = "Correct"
+            score += 1
+        } else {
+            title = "Incorrect"
+            score -= 1
+        }
+        
+        let ac = UIAlertController(title: title, message: "Your score \(score)", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: setupFlags))
+        
+        present(ac, animated: true, completion: nil)
     }
 }
 
