@@ -19,9 +19,10 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // Do any additional setup after loading the view.
         setupCountries()
-        decorateFlags()
+        decorateAllFlags()
         setupFlags()
     }
     
@@ -39,14 +40,15 @@ class ViewController: UIViewController {
         setupView()
     }
     
-    private func decorateFlags() {
-        button1.layer.borderWidth = 1
-        button2.layer.borderWidth = 1
-        button3.layer.borderWidth = 1
-        
-        button1.layer.borderColor = UIColor.lightGray.cgColor
-        button2.layer.borderColor = UIColor.lightGray.cgColor
-        button3.layer.borderColor = UIColor.lightGray.cgColor
+    private func decorateAllFlags() {
+        decorateFlag(button1)
+        decorateFlag(button2)
+        decorateFlag(button3)
+    }
+    
+    private func decorateFlag(_ button: UIButton) {
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.lightGray.cgColor
     }
     
     private func setupView() {
