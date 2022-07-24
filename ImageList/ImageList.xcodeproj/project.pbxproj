@@ -79,7 +79,7 @@
 			isa = PBXGroup;
 			children = (
 				8A660BAF288C3DD500B44F4F /* Presentation Layer */,
-				8A660BB2288C3DF100B44F4F /* Data Layers */,
+				8A660BB2288C3DF100B44F4F /* Data Layer */,
 				8A5B67DB288AB761006DF48B /* Assets.xcassets */,
 				8A5B67E0288AB761006DF48B /* Info.plist */,
 			);
@@ -132,12 +132,12 @@
 			path = Storyboards;
 			sourceTree = "<group>";
 		};
-		8A660BB2288C3DF100B44F4F /* Data Layers */ = {
+		8A660BB2288C3DF100B44F4F /* Data Layer */ = {
 			isa = PBXGroup;
 			children = (
 				8A5B6816288AC14B006DF48B /* Images */,
 			);
-			path = "Data Layers";
+			path = "Data Layer";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -386,7 +386,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.ImageList;
+				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.ImageList;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -414,7 +414,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.ImageList;
+				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.ImageList;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
