@@ -7,10 +7,6 @@
 
 import UIKit
 
-extension ViewController {
-
-}
-
 class ViewController: UIViewController {
 
     // MARK: - IBOutlet
