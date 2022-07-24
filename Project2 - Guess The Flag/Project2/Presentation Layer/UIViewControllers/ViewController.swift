@@ -37,7 +37,7 @@ class ViewController: UIViewController {
         button2.setImage(UIImage(named: countries[1]), for: .normal)
         button3.setImage(UIImage(named: countries[2]), for: .normal)
         
-        setupView()
+        setupCorrectAnswer()
     }
     
     private func decorateAllFlags() {
@@ -51,10 +51,10 @@ class ViewController: UIViewController {
         button.layer.borderColor = UIColor.lightGray.cgColor
     }
     
-    private func setupView() {
+    private func setupCorrectAnswer() {
         correctAnswer = Int.random(in: 0...2)
-        let randomCorrectAnswer = countries[correctAnswer]
-        title = randomCorrectAnswer.uppercased()
+        let randomCorrectAnswer = countries[correctAnswer].uppercased()
+        title = randomCorrectAnswer + " | Score: \(score)"
     }
     
     @IBAction func buttonTapped(_ sender: UIButton) {
