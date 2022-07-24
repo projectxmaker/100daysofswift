@@ -19,10 +19,10 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
         setupCountries()
         decorateFlags()
         setupFlags()
+        setupView()
     }
     
     private func setupCountries() {
@@ -30,6 +30,8 @@ class ViewController: UIViewController {
     }
     
     private func setupFlags() {
+        countries.shuffle()
+        
         button1.setImage(UIImage(named: countries[0]), for: .normal)
         button2.setImage(UIImage(named: countries[1]), for: .normal)
         button2.setImage(UIImage(named: countries[2]), for: .normal)
@@ -44,7 +46,10 @@ class ViewController: UIViewController {
         button2.layer.borderColor = UIColor.lightGray.cgColor
         button3.layer.borderColor = UIColor.lightGray.cgColor
     }
-
-
+    
+    private func setupView() {
+        let randomCorrectAnswer = countries[Int.random(in: 0...2)]
+        title = randomCorrectAnswer.uppercased()
+    }
 }
 
