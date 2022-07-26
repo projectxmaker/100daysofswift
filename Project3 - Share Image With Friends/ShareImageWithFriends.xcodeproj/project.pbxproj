@@ -27,7 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8A5B67CF288AB75F006DF48B /* ImageList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageList.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8A5B67CF288AB75F006DF48B /* ShareImageWithFriends.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShareImageWithFriends.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A5B67D2288AB75F006DF48B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8A5B67D4288AB75F006DF48B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		8A5B67D6288AB75F006DF48B /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
@@ -62,7 +62,7 @@
 		8A5B67C6288AB75F006DF48B = {
 			isa = PBXGroup;
 			children = (
-				8A5B67D1288AB75F006DF48B /* ImageList */,
+				8A5B67D1288AB75F006DF48B /* ShareImageWithFriends */,
 				8A5B67D0288AB75F006DF48B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -70,12 +70,12 @@
 		8A5B67D0288AB75F006DF48B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8A5B67CF288AB75F006DF48B /* ImageList.app */,
+				8A5B67CF288AB75F006DF48B /* ShareImageWithFriends.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		8A5B67D1288AB75F006DF48B /* ImageList */ = {
+		8A5B67D1288AB75F006DF48B /* ShareImageWithFriends */ = {
 			isa = PBXGroup;
 			children = (
 				8A660BAF288C3DD500B44F4F /* Presentation Layer */,
@@ -83,7 +83,7 @@
 				8A5B67DB288AB761006DF48B /* Assets.xcassets */,
 				8A5B67E0288AB761006DF48B /* Info.plist */,
 			);
-			path = ImageList;
+			path = ShareImageWithFriends;
 			sourceTree = "<group>";
 		};
 		8A5B6816288AC14B006DF48B /* Images */ = {
@@ -143,9 +143,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8A5B67CE288AB75F006DF48B /* ImageList */ = {
+		8A5B67CE288AB75F006DF48B /* ShareImageWithFriends */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8A5B67F9288AB762006DF48B /* Build configuration list for PBXNativeTarget "ImageList" */;
+			buildConfigurationList = 8A5B67F9288AB762006DF48B /* Build configuration list for PBXNativeTarget "ShareImageWithFriends" */;
 			buildPhases = (
 				8A5B67CB288AB75F006DF48B /* Sources */,
 				8A5B67CC288AB75F006DF48B /* Frameworks */,
@@ -155,9 +155,9 @@
 			);
 			dependencies = (
 			);
-			name = ImageList;
+			name = ShareImageWithFriends;
 			productName = ImageList;
-			productReference = 8A5B67CF288AB75F006DF48B /* ImageList.app */;
+			productReference = 8A5B67CF288AB75F006DF48B /* ShareImageWithFriends.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -175,7 +175,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 8A5B67CA288AB75F006DF48B /* Build configuration list for PBXProject "ImageList" */;
+			buildConfigurationList = 8A5B67CA288AB75F006DF48B /* Build configuration list for PBXProject "ShareImageWithFriends" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -188,7 +188,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8A5B67CE288AB75F006DF48B /* ImageList */,
+				8A5B67CE288AB75F006DF48B /* ShareImageWithFriends */,
 			);
 		};
 /* End PBXProject section */
@@ -375,7 +375,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TT8TA55RWH;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = ImageList/Info.plist;
+				INFOPLIST_FILE = ShareImageWithFriends/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -386,7 +386,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.ImageList;
+				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.ShareImageWithFriends;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -403,7 +403,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TT8TA55RWH;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = ImageList/Info.plist;
+				INFOPLIST_FILE = ShareImageWithFriends/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -414,7 +414,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.ImageList;
+				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.ShareImageWithFriends;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -425,7 +425,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		8A5B67CA288AB75F006DF48B /* Build configuration list for PBXProject "ImageList" */ = {
+		8A5B67CA288AB75F006DF48B /* Build configuration list for PBXProject "ShareImageWithFriends" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8A5B67F7288AB762006DF48B /* Debug */,
@@ -434,7 +434,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8A5B67F9288AB762006DF48B /* Build configuration list for PBXNativeTarget "ImageList" */ = {
+		8A5B67F9288AB762006DF48B /* Build configuration list for PBXNativeTarget "ShareImageWithFriends" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8A5B67FA288AB762006DF48B /* Debug */,

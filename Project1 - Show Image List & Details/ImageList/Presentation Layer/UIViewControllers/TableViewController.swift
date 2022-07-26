@@ -92,6 +92,17 @@ class TableViewController: UITableViewController {
     private func setupNavigationController() {
         navigationController?.navigationBar.backgroundColor = .white
         navigationController?.navigationBar.prefersLargeTitles = true
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(handleSharedButtonTapped))
+    }
+    
+    @objc private func handleSharedButtonTapped() {
+        let appURL = "http://projectxmaker.com/imagelist"
+        
+        let av = UIActivityViewController(activityItems: [appURL], applicationActivities: nil)
+        av.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        
+        present(av, animated: true, completion: nil)
     }
     
     private func getTitleOfDetailScreen(at picIndex: Int) -> String {
