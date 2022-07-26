@@ -37,6 +37,7 @@ class ViewController: UIViewController {
         setupCountries()
         decorateAllFlags()
         setupFlags()
+        setupButtonToShowScore()
     }
     
     private func resetDefaultStats() {
@@ -100,6 +101,16 @@ class ViewController: UIViewController {
         } else {
             setupFlags()
         }
+    }
+    
+    private func setupButtonToShowScore() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(handleButtonShowScoreInfoTapped))
+    }
+    
+    @objc private func handleButtonShowScoreInfoTapped() {
+        let ac = UIAlertController(title: "Score", message: "Your current score \(score)", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: nil))
+        present(ac, animated: true, completion: nil)
     }
     
     // MARK: - IBAction
