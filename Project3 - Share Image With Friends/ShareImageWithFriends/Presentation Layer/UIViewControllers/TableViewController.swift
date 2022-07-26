@@ -32,7 +32,7 @@ class TableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Picture", for: indexPath)
         
         setupTitleOfRow(cell, with: pictureName)
-
+        
         return cell
     }
 
