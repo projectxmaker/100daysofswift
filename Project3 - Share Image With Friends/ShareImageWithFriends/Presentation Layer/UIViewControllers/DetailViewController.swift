@@ -51,7 +51,8 @@ class DetailViewController: UIViewController {
             let image = imageView.image?.jpegData(compressionQuality: 0.8)
         else { return }
         
-        let av = UIActivityViewController(activityItems: [image], applicationActivities: [])
+        let imageName = selectedImage ?? ""
+        let av = UIActivityViewController(activityItems: [image, imageName], applicationActivities: [])
         
         av.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
 
