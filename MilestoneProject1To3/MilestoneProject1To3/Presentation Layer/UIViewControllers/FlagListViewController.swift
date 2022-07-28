@@ -37,6 +37,17 @@ class FlagListViewController: UITableViewController {
         
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let flagFileName = flagList[indexPath.row]
+        
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        guard let flagDetailViewController = storyboard.instantiateViewController(withIdentifier: "FlagDetail") as? FlagDetailViewController else { return }
+        
+        flagDetailViewController.selectedFlagName = flagFileName
+        
+        navigationController?.pushViewController(flagDetailViewController, animated: true)
+    }
 
     private func prepareFlagList() {
         let filePaths: [String]
