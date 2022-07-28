@@ -9,7 +9,8 @@ import UIKit
 
 class FlagListViewController: UITableViewController {
 
-    private var flagList: [String] = []
+    private var flagList: [String: String] = [:]
+    private var flagNamesInOrder: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,6 +18,7 @@ class FlagListViewController: UITableViewController {
         prepareFlagList()
     }
 
+    // MARK: - Table Configuration
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -31,7 +33,7 @@ class FlagListViewController: UITableViewController {
             return UITableViewCell() }
         
         var contentConfiguration = cell.defaultContentConfiguration()
-        contentConfiguration.text = flagList[indexPath.row]
+        contentConfiguration.text = flagNamesInOrder[indexPath.row]
         contentConfiguration.textProperties.font = UIFont.systemFont(ofSize: 20)
         cell.contentConfiguration = contentConfiguration
         
@@ -39,18 +41,23 @@ class FlagListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let flagFileName = flagList[indexPath.row]
-        
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         guard let flagDetailViewController = storyboard.instantiateViewController(withIdentifier: "FlagDetail") as? FlagDetailViewController else { return }
         
+        let flagFileName = flagNamesInOrder[indexPath.row]
+        let flagFilePath = flagList[flagFileName] ?? ""
         flagDetailViewController.selectedFlagName = flagFileName
+        flagDetailViewController.selectedFlagPath = flagFilePath
         
         navigationController?.pushViewController(flagDetailViewController, animated: true)
     }
 
+    
+    // MARK: - Functions
     private func prepareFlagList() {
-        let filePaths: [String]
+        var addedFlags: [String] = []
+        let fileNames: [String]
+        var selectedFlags: [String:String] = [:]
         
         let url = Bundle.main.bundleURL
         let flagFolderPath = url.appendingPathComponent("Flags", isDirectory: true)
@@ -58,14 +65,34 @@ class FlagListViewController: UITableViewController {
         let fm = FileManager.default
         
         do {
-            filePaths = try fm.contentsOfDirectory(atPath: flagFolderPath.path)
+            fileNames = try fm.contentsOfDirectory(atPath: flagFolderPath.path)
         }
         catch {
-            filePaths = []
+            fileNames = []
         }
         
-        for filePath in filePaths {
-            flagList.append(filePath)
+        for fileName in fileNames {
+            // only filter 3X PNG files
+            if fileName.hasSuffix("@3x.png") == true {
+                let countryName = fileName.split(separator: "@", maxSplits: 2, omittingEmptySubsequences: true)[0].uppercased()
+                
+                if addedFlags.contains(countryName) == false {
+                    addedFlags.append(countryName)
+                    selectedFlags[countryName] = flagFolderPath.appendingPathComponent(fileName, isDirectory: false).path
+                }
+            }
+        }
+        
+        if addedFlags.count > 0 {
+            // sort by alphabet
+            addedFlags.sort { a, b in
+                a < b
+            }
+            
+            for seletedFlagName in addedFlags {
+                flagNamesInOrder.append(seletedFlagName)
+                flagList[seletedFlagName] = selectedFlags[seletedFlagName]
+            }
         }
     }
 }
