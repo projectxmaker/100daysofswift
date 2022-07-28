@@ -29,12 +29,21 @@ class FlagListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "FlagCell") else {
+        guard
+            let cell = tableView.dequeueReusableCell(withIdentifier: "FlagCell")
+        else {
             return UITableViewCell() }
         
         var contentConfiguration = cell.defaultContentConfiguration()
-        contentConfiguration.text = flagNamesInOrder[indexPath.row]
+        
+        let flagName = flagNamesInOrder[indexPath.row]
+        contentConfiguration.text = flagName
         contentConfiguration.textProperties.font = UIFont.systemFont(ofSize: 20)
+        
+        if let flagPath = flagList[flagName] {
+            contentConfiguration.image = UIImage(contentsOfFile: flagPath)
+        }
+        
         cell.contentConfiguration = contentConfiguration
         
         return cell
