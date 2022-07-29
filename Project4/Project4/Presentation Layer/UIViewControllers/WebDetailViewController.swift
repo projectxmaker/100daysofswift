@@ -8,11 +8,12 @@
 import UIKit
 import WebKit
 
-class ViewController: UIViewController, WKNavigationDelegate {
+class WebDetailViewController: UIViewController, WKNavigationDelegate {
 
     @objc private var webView: WKWebView!
     private var progressView: UIProgressView!
-    private let websites = ["vnexpress.net", "zingnews.vn"]
+    var websites: [String] = []
+    var defaultWebsite: String?
     
     override func loadView() {
         webView = WKWebView()
@@ -26,7 +27,10 @@ class ViewController: UIViewController, WKNavigationDelegate {
         
         setupOpenPageButtonOnNavigationBar()
         setupToolbarItems()
-        loadWebsite(websites[0])
+        
+        if let toBeLoadedWebsite = defaultWebsite {
+            loadWebsite(toBeLoadedWebsite)
+        }
     }
     
     private func setupOpenPageButtonOnNavigationBar() {
