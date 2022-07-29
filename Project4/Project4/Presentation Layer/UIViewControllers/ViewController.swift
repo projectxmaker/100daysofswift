@@ -103,6 +103,13 @@ class ViewController: UIViewController, WKNavigationDelegate {
             }
         }
         
+        // display alert when user clicks on the website that is not allowed
+        if navigationAction.navigationType == .linkActivated {
+            let ac = UIAlertController(title: "ALERT!", message: "\(url?.host ?? "") is not allowed!", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "Continue", style: .cancel, handler: nil))
+            present(ac, animated: true, completion: nil)
+        }
+        
         decisionHandler(.cancel)
     }
 }
