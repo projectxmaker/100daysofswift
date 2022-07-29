@@ -10,7 +10,8 @@ import WebKit
 
 class ViewController: UIViewController, WKNavigationDelegate {
 
-    private var webView: WKWebView!
+    @objc private var webView: WKWebView!
+    private var progressView = UIProgressView(progressViewStyle: .default)
     
     override func loadView() {
         webView = WKWebView()
@@ -22,6 +23,7 @@ class ViewController: UIViewController, WKNavigationDelegate {
         super.viewDidLoad()
         
         setupOpenPageButtonOnNavigationBar()
+        setupToolbarItems()
     }
     
     private func setupOpenPageButtonOnNavigationBar() {
@@ -49,6 +51,31 @@ class ViewController: UIViewController, WKNavigationDelegate {
         webView.allowsBackForwardNavigationGestures = true
     }
 
-
+    private func setupToolbarItems() {
+        let spacerButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        
+        let refreshButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: webView, action: #selector(webView.reload))
+        
+        progressView.sizeToFit()
+        let progressBarButton = UIBarButtonItem(customView: progressView)
+        
+        addObserverForChangesOfWebEstimatedProgress()
+        
+        toolbarItems = [progressBarButton, spacerButton, refreshButton]
+        
+        navigationController?.isToolbarHidden = false
+    }
+    
+    // MARK: - Observers
+    private func addObserverForChangesOfWebEstimatedProgress() {
+        addObserver(self, forKeyPath: #keyPath(webView.estimatedProgress), options: .new, context: nil)
+    }
+    
+    // MARK: - Check Changes Of Web Estimated Progress
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if keyPath == "webView.estimatedProgress" {
+            progressView.progress = Float(webView.estimatedProgress)
+        }
+    }
 }
 
