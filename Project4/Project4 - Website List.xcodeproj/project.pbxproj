@@ -17,7 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8AA6BBD32893823B00CA435A /* Project4.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project4.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8AA6BBD32893823B00CA435A /* Project4 - Website List.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Project4 - Website List.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8AA6BBD62893823B00CA435A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8AA6BBD82893823B00CA435A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		8AA6BBDA2893823B00CA435A /* WebDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebDetailViewController.swift; sourceTree = "<group>"; };
@@ -42,7 +42,7 @@
 		8AA6BBCA2893823B00CA435A = {
 			isa = PBXGroup;
 			children = (
-				8AA6BBD52893823B00CA435A /* Project4 */,
+				8AA6BBD52893823B00CA435A /* WebsiteList */,
 				8AA6BBD42893823B00CA435A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -50,19 +50,19 @@
 		8AA6BBD42893823B00CA435A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8AA6BBD32893823B00CA435A /* Project4.app */,
+				8AA6BBD32893823B00CA435A /* Project4 - Website List.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		8AA6BBD52893823B00CA435A /* Project4 */ = {
+		8AA6BBD52893823B00CA435A /* WebsiteList */ = {
 			isa = PBXGroup;
 			children = (
 				8AA6BC062893825C00CA435A /* Presentation Layer */,
 				8AA6BBDF2893823D00CA435A /* Assets.xcassets */,
 				8AA6BBE42893823D00CA435A /* Info.plist */,
 			);
-			path = Project4;
+			path = WebsiteList;
 			sourceTree = "<group>";
 		};
 		8AA6BC062893825C00CA435A /* Presentation Layer */ = {
@@ -97,9 +97,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8AA6BBD22893823B00CA435A /* Project4 */ = {
+		8AA6BBD22893823B00CA435A /* Project4 - Website List */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8AA6BBFD2893823E00CA435A /* Build configuration list for PBXNativeTarget "Project4" */;
+			buildConfigurationList = 8AA6BBFD2893823E00CA435A /* Build configuration list for PBXNativeTarget "Project4 - Website List" */;
 			buildPhases = (
 				8AA6BBCF2893823B00CA435A /* Sources */,
 				8AA6BBD02893823B00CA435A /* Frameworks */,
@@ -109,9 +109,9 @@
 			);
 			dependencies = (
 			);
-			name = Project4;
+			name = "Project4 - Website List";
 			productName = Project4;
-			productReference = 8AA6BBD32893823B00CA435A /* Project4.app */;
+			productReference = 8AA6BBD32893823B00CA435A /* Project4 - Website List.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -129,7 +129,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 8AA6BBCE2893823B00CA435A /* Build configuration list for PBXProject "Project4" */;
+			buildConfigurationList = 8AA6BBCE2893823B00CA435A /* Build configuration list for PBXProject "Project4 - Website List" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -142,7 +142,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8AA6BBD22893823B00CA435A /* Project4 */,
+				8AA6BBD22893823B00CA435A /* Project4 - Website List */,
 			);
 		};
 /* End PBXProject section */
@@ -319,7 +319,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TT8TA55RWH;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Project4/Info.plist;
+				INFOPLIST_FILE = WebsiteList/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -330,7 +330,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.Project4;
+				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.WebsiteList;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -347,7 +347,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TT8TA55RWH;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Project4/Info.plist;
+				INFOPLIST_FILE = WebsiteList/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -358,7 +358,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.Project4;
+				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.WebsiteList;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -369,7 +369,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		8AA6BBCE2893823B00CA435A /* Build configuration list for PBXProject "Project4" */ = {
+		8AA6BBCE2893823B00CA435A /* Build configuration list for PBXProject "Project4 - Website List" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8AA6BBFB2893823E00CA435A /* Debug */,
@@ -378,7 +378,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8AA6BBFD2893823E00CA435A /* Build configuration list for PBXNativeTarget "Project4" */ = {
+		8AA6BBFD2893823E00CA435A /* Build configuration list for PBXNativeTarget "Project4 - Website List" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8AA6BBFE2893823E00CA435A /* Debug */,
