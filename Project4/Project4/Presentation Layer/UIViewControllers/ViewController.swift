@@ -12,7 +12,7 @@ class ViewController: UIViewController, WKNavigationDelegate {
 
     @objc private var webView: WKWebView!
     private var progressView: UIProgressView!
-    private let websites = ["vnexpress.net", "news.zing.vn"]
+    private let websites = ["vnexpress.net", "zingnews.vn"]
     
     override func loadView() {
         webView = WKWebView()
@@ -88,6 +88,22 @@ class ViewController: UIViewController, WKNavigationDelegate {
         if keyPath == "webView.estimatedProgress" {
             progressView.progress = Float(webView.estimatedProgress)
         }
+    }
+    
+    // MARK: - Check To-Be-Loaded Website Is One Of Allowed Websites
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        let url = navigationAction.request.url
+        
+        if let host = url?.host {
+            for eachWebsite in websites {
+                if host.contains(eachWebsite) {
+                    decisionHandler(.allow)
+                    return
+                }
+            }
+        }
+        
+        decisionHandler(.cancel)
     }
 }
 
