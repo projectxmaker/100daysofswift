@@ -11,11 +11,13 @@ import WebKit
 class ViewController: UIViewController, WKNavigationDelegate {
 
     @objc private var webView: WKWebView!
-    private var progressView = UIProgressView(progressViewStyle: .default)
+    private var progressView: UIProgressView!
+    private let websites = ["vnexpress.net", "news.zing.vn"]
     
     override func loadView() {
         webView = WKWebView()
         webView.navigationDelegate = self
+        webView.allowsBackForwardNavigationGestures = true
         view = webView
     }
     
@@ -24,6 +26,7 @@ class ViewController: UIViewController, WKNavigationDelegate {
         
         setupOpenPageButtonOnNavigationBar()
         setupToolbarItems()
+        loadWebsite(websites[0])
     }
     
     private func setupOpenPageButtonOnNavigationBar() {
@@ -32,8 +35,10 @@ class ViewController: UIViewController, WKNavigationDelegate {
     
     @objc private func openPageButtonTapped() {
         let ac = UIAlertController(title: "Open page...", message: nil, preferredStyle: .actionSheet)
-        ac.addAction(UIAlertAction(title: "vnexpress.net", style: .default, handler: openPage))
-        ac.addAction(UIAlertAction(title: "news.zing.vn", style: .default, handler: openPage))
+        
+        for eachWebsite in websites {
+            ac.addAction(UIAlertAction(title: eachWebsite, style: .default, handler: openPage))
+        }
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
         ac.popoverPresentationController?.barButtonItem = navigationController?.navigationItem.rightBarButtonItem
@@ -43,12 +48,18 @@ class ViewController: UIViewController, WKNavigationDelegate {
     
     private func openPage(_ action: UIAlertAction) {
         guard
-            let actionTitle = action.title,
-            let url = URL(string: "https://" + actionTitle)
+            let actionTitle = action.title
+        else { return }
+        
+        loadWebsite(actionTitle)
+    }
+    
+    private func loadWebsite(_ website: String) {
+        guard
+            let url = URL(string: "https://" + website)
         else { return }
         
         webView.load(URLRequest(url: url))
-        webView.allowsBackForwardNavigationGestures = true
     }
 
     private func setupToolbarItems() {
@@ -56,6 +67,7 @@ class ViewController: UIViewController, WKNavigationDelegate {
         
         let refreshButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: webView, action: #selector(webView.reload))
         
+        progressView = UIProgressView(progressViewStyle: .default)
         progressView.sizeToFit()
         let progressBarButton = UIBarButtonItem(customView: progressView)
         
