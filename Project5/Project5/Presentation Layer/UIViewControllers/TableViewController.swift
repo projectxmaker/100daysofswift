@@ -17,6 +17,7 @@ class TableViewController: UITableViewController {
 
         loadWordsFromFile()
         startGame()
+        setupAnswerButton()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -66,6 +67,28 @@ class TableViewController: UITableViewController {
         title = allWords.randomElement()
         usedWords.removeAll(keepingCapacity: true)
         tableView.reloadData()
+    }
+    
+    private func setupAnswerButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleAnswerButtonTapped))
+    }
+    
+    @objc private func handleAnswerButtonTapped() {
+        let ac = UIAlertController(title: "Enter answer", message: nil, preferredStyle: .alert)
+        ac.addTextField()
+        
+        let submitButton = UIAlertAction(title: "Answer", style: .default) { [weak ac, weak self] _ in
+            guard let answer = ac?.textFields?[0].text else { return }
+            self?.submit(answer)
+        }
+        
+        ac.addAction(submitButton)
+        
+        present(ac, animated: true, completion: nil)
+    }
+    
+    private func submit(_ answer: String) {
+        
     }
 
 }
