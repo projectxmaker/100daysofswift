@@ -18,11 +18,6 @@ class TableViewController: UITableViewController {
         loadWordsFromFile()
         startGame()
         setupButtonsOfNavigationBar()
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
     // MARK: - Table view data source
@@ -38,7 +33,7 @@ class TableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Word", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: TableViewController.keys.tableReusableCellIdentifier, for: indexPath)
 
         // Configure the cell...
         var contentConfig = cell.defaultContentConfiguration()
@@ -52,14 +47,14 @@ class TableViewController: UITableViewController {
     // MARK: - Extra Functions
     private func loadWordsFromFile() {
         guard
-            let filePath = Bundle.main.path(forResource: "start", ofType: "txt"),
+            let filePath = Bundle.main.path(forResource: TableViewController.keys.wordFileName, ofType: TableViewController.keys.wordFileExtension),
             let fileContent = try? String(contentsOfFile: filePath)
         else { return }
         
-        allWords = fileContent.components(separatedBy: "\n")
+        allWords = fileContent.components(separatedBy: TableViewController.keys.wordFileBreakLineCharacter)
         
         if allWords.isEmpty {
-            allWords = ["xwyalkua"]
+            allWords = TableViewController.keys.defaultAllWords
         }
     }
     
@@ -83,10 +78,10 @@ class TableViewController: UITableViewController {
     }
     
     @objc private func handleAnswerButtonTapped() {
-        let ac = UIAlertController(title: "Enter answer", message: nil, preferredStyle: .alert)
+        let ac = UIAlertController(title: TableViewController.keys.alertAnswerFormTitle, message: nil, preferredStyle: .alert)
         ac.addTextField()
         
-        let submitButton = UIAlertAction(title: "Answer", style: .default) { [weak ac, weak self] _ in
+        let submitButton = UIAlertAction(title: TableViewController.keys.alertAnswerSubmitButtonTitle, style: .default) { [weak ac, weak self] _ in
             guard let answer = ac?.textFields?[0].text else { return }
             self?.submit(answer)
         }
@@ -112,19 +107,19 @@ class TableViewController: UITableViewController {
                             
                             return
                         } else {
-                            showErrorMessage(title: "Word not recognised", message: "You can't just make them up, you know!")
+                            showErrorMessage(title: TableViewController.keys.errorTitleOfIsNotReal, message: TableViewController.keys.errorMessageOfIsNotReal)
                         }
                     } else {
-                        showErrorMessage(title: "Word used already", message: "Be more original!")
+                        showErrorMessage(title: TableViewController.keys.errorTitleOfIsNotOriginal, message: TableViewController.keys.errorMessageOfIsNotOriginal)
                     }
                 } else {
-                    showErrorMessage(title: "Word not possible", message: "You can't spell that word from \(title)")
+                    showErrorMessage(title: TableViewController.keys.errorTitleOfIsNotPossible, message: "\(TableViewController.keys.errorMessageOfIsNotPossible) \(title)")
                 }
             } else {
-                showErrorMessage(title: "Word not possible", message: "You can't just put the same word of \(title)")
+                showErrorMessage(title: TableViewController.keys.errorTitleOfIsTheStartWord, message: "\(TableViewController.keys.errorMessageOfIsTheStartWord) \(title)")
             }
         } else {
-            showErrorMessage(title: "Word not possible", message: "The length of word must be equal or greater than 3")
+            showErrorMessage(title: TableViewController.keys.errorMessageOfIsInvalidLength, message: "\(TableViewController.keys.errorTitleOfIsInvalidLength) \(TableViewController.keys.inputMinimumLength)")
         }
     }
     
@@ -150,13 +145,13 @@ class TableViewController: UITableViewController {
         let checker = UITextChecker()
         let range = NSRange(location: 0, length: word.utf16.count)
         
-        let misspelledRange = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "en")
+        let misspelledRange = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: TableViewController.keys.spellCheckLanguage)
         
         return misspelledRange.location == NSNotFound
     }
     
     private func isValidLength(word: String) -> Bool {
-        word.count >= 3
+        word.count >= TableViewController.keys.inputMinimumLength
     }
     
     private func isTheStartWord(word: String) -> Bool {
@@ -170,7 +165,7 @@ class TableViewController: UITableViewController {
     
     private func showErrorMessage(title: String, message: String) {
         let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "OK", style: .default))
+        ac.addAction(UIAlertAction(title: TableViewController.keys.alertInvalidInputButtonTitle, style: .default))
         present(ac, animated: true)
     }
 

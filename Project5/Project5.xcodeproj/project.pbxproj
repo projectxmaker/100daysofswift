@@ -14,6 +14,7 @@
 		8A66E19328951E56001C4519 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A66E19128951E56001C4519 /* LaunchScreen.storyboard */; };
 		8A66E1BC28952270001C4519 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66E1BB28952270001C4519 /* TableViewController.swift */; };
 		8A66E1C0289527E1001C4519 /* start.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8A66E1BF289527E1001C4519 /* start.txt */; };
+		8A66E1C328958173001C4519 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66E1C228958173001C4519 /* Constant.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		8A66E19428951E56001C4519 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8A66E1BB28952270001C4519 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		8A66E1BF289527E1001C4519 /* start.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = start.txt; sourceTree = "<group>"; };
+		8A66E1C228958173001C4519 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,9 +61,10 @@
 			isa = PBXGroup;
 			children = (
 				8A66E1B628951E73001C4519 /* Presentation Layer */,
+				8A66E1C1289527E4001C4519 /* Data Layer */,
 				8A66E18F28951E56001C4519 /* Assets.xcassets */,
 				8A66E19428951E56001C4519 /* Info.plist */,
-				8A66E1C1289527E4001C4519 /* Data Layer */,
+				8A66E1C228958173001C4519 /* Constant.swift */,
 			);
 			path = Project5;
 			sourceTree = "<group>";
@@ -177,6 +180,7 @@
 				8A66E18728951E54001C4519 /* AppDelegate.swift in Sources */,
 				8A66E18928951E54001C4519 /* SceneDelegate.swift in Sources */,
 				8A66E1BC28952270001C4519 /* TableViewController.swift in Sources */,
+				8A66E1C328958173001C4519 /* Constant.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
