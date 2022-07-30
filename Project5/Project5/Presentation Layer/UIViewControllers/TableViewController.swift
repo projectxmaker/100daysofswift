@@ -124,7 +124,7 @@ class TableViewController: UITableViewController {
                 showErrorMessage(title: "Word not possible", message: "You can't just put the same word of \(title)")
             }
         } else {
-            showErrorMessage(title: "Word not possible", message: "The length of word must be greater than 3")
+            showErrorMessage(title: "Word not possible", message: "The length of word must be equal or greater than 3")
         }
     }
     
@@ -156,7 +156,7 @@ class TableViewController: UITableViewController {
     }
     
     private func isValidLength(word: String) -> Bool {
-        word.count > 3
+        word.count >= 3
     }
     
     private func isTheStartWord(word: String) -> Bool {
