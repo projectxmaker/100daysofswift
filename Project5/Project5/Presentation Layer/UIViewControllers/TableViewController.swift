@@ -17,7 +17,7 @@ class TableViewController: UITableViewController {
 
         loadWordsFromFile()
         startGame()
-        setupAnswerButton()
+        setupButtonsOfNavigationBar()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -63,14 +63,23 @@ class TableViewController: UITableViewController {
         }
     }
     
-    private func startGame() {
+    @objc private func startGame() {
         title = allWords.randomElement()
         usedWords.removeAll(keepingCapacity: true)
         tableView.reloadData()
     }
     
+    private func setupButtonsOfNavigationBar() {
+        setupAnswerButton()
+        setupRestartGameButton()
+    }
+    
     private func setupAnswerButton() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleAnswerButtonTapped))
+    }
+    
+    private func setupRestartGameButton() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(startGame))
     }
     
     @objc private func handleAnswerButtonTapped() {
