@@ -119,7 +119,7 @@ class TableViewController: UITableViewController {
                 showErrorMessage(title: TableViewController.keys.errorTitleOfIsTheStartWord, message: "\(TableViewController.keys.errorMessageOfIsTheStartWord) \(title)")
             }
         } else {
-            showErrorMessage(title: TableViewController.keys.errorMessageOfIsInvalidLength, message: "\(TableViewController.keys.errorTitleOfIsInvalidLength) \(TableViewController.keys.inputMinimumLength)")
+            showErrorMessage(title: TableViewController.keys.errorTitleOfIsInvalidLength, message: "\(TableViewController.keys.errorMessageOfIsInvalidLength) \(TableViewController.keys.inputMinimumLength)")
         }
     }
     
