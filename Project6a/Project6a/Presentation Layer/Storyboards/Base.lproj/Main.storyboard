@@ -11,13 +11,16 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Project2" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Project6a" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gGG-f9-MiV">
                                 <rect key="frame" x="95" y="100" width="224" height="114"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="gGG-f9-MiV" secondAttribute="height" multiplier="112:57" id="a8g-aV-Adb"/>
+                                </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="us"/>
                                 <connections>
@@ -26,6 +29,9 @@
                             </button>
                             <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WfT-Nu-Z7O">
                                 <rect key="frame" x="95" y="244" width="224" height="114"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="WfT-Nu-Z7O" secondAttribute="height" multiplier="112:57" id="gZ2-2q-7Wo"/>
+                                </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="us"/>
                                 <connections>
@@ -34,6 +40,10 @@
                             </button>
                             <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gZn-Da-Jd8">
                                 <rect key="frame" x="95" y="388" width="224" height="114"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="gZn-Da-Jd8" secondAttribute="height" multiplier="112:57" id="WaA-e7-ve7"/>
+                                    <constraint firstAttribute="height" constant="114" id="gL7-uX-pIX"/>
+                                </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="us"/>
                                 <connections>
@@ -45,11 +55,14 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="WfT-Nu-Z7O" firstAttribute="centerX" secondItem="gGG-f9-MiV" secondAttribute="centerX" id="6I7-fe-V6V"/>
+                            <constraint firstItem="WfT-Nu-Z7O" firstAttribute="height" secondItem="gGG-f9-MiV" secondAttribute="height" id="8RH-Gz-gbv"/>
                             <constraint firstItem="gGG-f9-MiV" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="12" id="9bH-aS-SbI"/>
                             <constraint firstItem="gGG-f9-MiV" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="eQ3-hZ-sTj"/>
                             <constraint firstItem="gZn-Da-Jd8" firstAttribute="centerX" secondItem="WfT-Nu-Z7O" secondAttribute="centerX" id="efY-hu-UsE"/>
                             <constraint firstItem="gZn-Da-Jd8" firstAttribute="top" secondItem="WfT-Nu-Z7O" secondAttribute="bottom" constant="30" id="hsP-kB-tga"/>
                             <constraint firstItem="WfT-Nu-Z7O" firstAttribute="top" secondItem="gGG-f9-MiV" secondAttribute="bottom" constant="30" id="k0k-9a-3ng"/>
+                            <constraint firstItem="gZn-Da-Jd8" firstAttribute="height" secondItem="WfT-Nu-Z7O" secondAttribute="height" id="mEe-x6-fe4"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="gZn-Da-Jd8" secondAttribute="bottom" constant="20" id="wmf-2T-A8d"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="6Te-Ou-7Zd"/>
