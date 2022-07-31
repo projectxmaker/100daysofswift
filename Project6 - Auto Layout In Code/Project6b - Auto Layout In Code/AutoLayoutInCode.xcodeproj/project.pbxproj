@@ -16,7 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8A66E1CD28967F1C001C4519 /* Project6b.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project6b.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8A66E1CD28967F1C001C4519 /* AutoLayoutInCode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AutoLayoutInCode.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A66E1D028967F1C001C4519 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8A66E1D228967F1C001C4519 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		8A66E1D428967F1C001C4519 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -40,7 +40,7 @@
 		8A66E1C428967F1C001C4519 = {
 			isa = PBXGroup;
 			children = (
-				8A66E1CF28967F1C001C4519 /* Project6b */,
+				8A66E1CF28967F1C001C4519 /* AutoLayoutInCode */,
 				8A66E1CE28967F1C001C4519 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -48,19 +48,19 @@
 		8A66E1CE28967F1C001C4519 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8A66E1CD28967F1C001C4519 /* Project6b.app */,
+				8A66E1CD28967F1C001C4519 /* AutoLayoutInCode.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		8A66E1CF28967F1C001C4519 /* Project6b */ = {
+		8A66E1CF28967F1C001C4519 /* AutoLayoutInCode */ = {
 			isa = PBXGroup;
 			children = (
 				8A66E20028967F34001C4519 /* Presentation Layer */,
 				8A66E1D928967F1F001C4519 /* Assets.xcassets */,
 				8A66E1DE28967F1F001C4519 /* Info.plist */,
 			);
-			path = Project6b;
+			path = AutoLayoutInCode;
 			sourceTree = "<group>";
 		};
 		8A66E20028967F34001C4519 /* Presentation Layer */ = {
@@ -94,9 +94,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8A66E1CC28967F1C001C4519 /* Project6b */ = {
+		8A66E1CC28967F1C001C4519 /* AutoLayoutInCode */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8A66E1F728967F1F001C4519 /* Build configuration list for PBXNativeTarget "Project6b" */;
+			buildConfigurationList = 8A66E1F728967F1F001C4519 /* Build configuration list for PBXNativeTarget "AutoLayoutInCode" */;
 			buildPhases = (
 				8A66E1C928967F1C001C4519 /* Sources */,
 				8A66E1CA28967F1C001C4519 /* Frameworks */,
@@ -106,9 +106,9 @@
 			);
 			dependencies = (
 			);
-			name = Project6b;
+			name = AutoLayoutInCode;
 			productName = Project6b;
-			productReference = 8A66E1CD28967F1C001C4519 /* Project6b.app */;
+			productReference = 8A66E1CD28967F1C001C4519 /* AutoLayoutInCode.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -126,7 +126,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 8A66E1C828967F1C001C4519 /* Build configuration list for PBXProject "Project6b" */;
+			buildConfigurationList = 8A66E1C828967F1C001C4519 /* Build configuration list for PBXProject "AutoLayoutInCode" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -139,7 +139,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8A66E1CC28967F1C001C4519 /* Project6b */,
+				8A66E1CC28967F1C001C4519 /* AutoLayoutInCode */,
 			);
 		};
 /* End PBXProject section */
@@ -315,7 +315,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TT8TA55RWH;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Project6b/Info.plist;
+				INFOPLIST_FILE = AutoLayoutInCode/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -326,7 +326,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.Project6b;
+				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.AutoLayoutInCode;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -343,7 +343,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TT8TA55RWH;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Project6b/Info.plist;
+				INFOPLIST_FILE = AutoLayoutInCode/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -354,7 +354,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.Project6b;
+				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.AutoLayoutInCode;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -365,7 +365,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		8A66E1C828967F1C001C4519 /* Build configuration list for PBXProject "Project6b" */ = {
+		8A66E1C828967F1C001C4519 /* Build configuration list for PBXProject "AutoLayoutInCode" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8A66E1F528967F1F001C4519 /* Debug */,
@@ -374,7 +374,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8A66E1F728967F1F001C4519 /* Build configuration list for PBXNativeTarget "Project6b" */ = {
+		8A66E1F728967F1F001C4519 /* Build configuration list for PBXNativeTarget "AutoLayoutInCode" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8A66E1F828967F1F001C4519 /* Debug */,

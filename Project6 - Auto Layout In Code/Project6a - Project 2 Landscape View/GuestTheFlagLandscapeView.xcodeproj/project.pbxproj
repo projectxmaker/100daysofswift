@@ -16,7 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8AE8ABFF288D3A860071CA26 /* Project6a.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project6a.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8AE8ABFF288D3A860071CA26 /* GuestTheFlagLandscapeView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GuestTheFlagLandscapeView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8AE8AC02288D3A860071CA26 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8AE8AC04288D3A860071CA26 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		8AE8AC06288D3A860071CA26 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -40,7 +40,7 @@
 		8AE8ABF6288D3A860071CA26 = {
 			isa = PBXGroup;
 			children = (
-				8AE8AC01288D3A860071CA26 /* Project6a */,
+				8AE8AC01288D3A860071CA26 /* GuestTheFlagLandscapeView */,
 				8AE8AC00288D3A860071CA26 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -48,19 +48,19 @@
 		8AE8AC00288D3A860071CA26 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8AE8ABFF288D3A860071CA26 /* Project6a.app */,
+				8AE8ABFF288D3A860071CA26 /* GuestTheFlagLandscapeView.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		8AE8AC01288D3A860071CA26 /* Project6a */ = {
+		8AE8AC01288D3A860071CA26 /* GuestTheFlagLandscapeView */ = {
 			isa = PBXGroup;
 			children = (
 				8AE8AC32288DADE70071CA26 /* Presentation Layer */,
 				8AE8AC0B288D3A870071CA26 /* Assets.xcassets */,
 				8AE8AC10288D3A870071CA26 /* Info.plist */,
 			);
-			path = Project6a;
+			path = GuestTheFlagLandscapeView;
 			sourceTree = "<group>";
 		};
 		8AE8AC32288DADE70071CA26 /* Presentation Layer */ = {
@@ -94,9 +94,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8AE8ABFE288D3A860071CA26 /* Project6a */ = {
+		8AE8ABFE288D3A860071CA26 /* GuestTheFlagLandscapeView */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8AE8AC29288D3A870071CA26 /* Build configuration list for PBXNativeTarget "Project6a" */;
+			buildConfigurationList = 8AE8AC29288D3A870071CA26 /* Build configuration list for PBXNativeTarget "GuestTheFlagLandscapeView" */;
 			buildPhases = (
 				8AE8ABFB288D3A860071CA26 /* Sources */,
 				8AE8ABFC288D3A860071CA26 /* Frameworks */,
@@ -106,9 +106,9 @@
 			);
 			dependencies = (
 			);
-			name = Project6a;
+			name = GuestTheFlagLandscapeView;
 			productName = Project2;
-			productReference = 8AE8ABFF288D3A860071CA26 /* Project6a.app */;
+			productReference = 8AE8ABFF288D3A860071CA26 /* GuestTheFlagLandscapeView.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -126,7 +126,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 8AE8ABFA288D3A860071CA26 /* Build configuration list for PBXProject "Project6a" */;
+			buildConfigurationList = 8AE8ABFA288D3A860071CA26 /* Build configuration list for PBXProject "GuestTheFlagLandscapeView" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -139,7 +139,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8AE8ABFE288D3A860071CA26 /* Project6a */,
+				8AE8ABFE288D3A860071CA26 /* GuestTheFlagLandscapeView */,
 			);
 		};
 /* End PBXProject section */
@@ -315,7 +315,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TT8TA55RWH;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Project6a/Info.plist;
+				INFOPLIST_FILE = GuestTheFlagLandscapeView/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -327,7 +327,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.Project6a;
+				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.GuestTheFlagLandscapeView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -344,7 +344,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TT8TA55RWH;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Project6a/Info.plist;
+				INFOPLIST_FILE = GuestTheFlagLandscapeView/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -356,7 +356,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.Project6a;
+				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.GuestTheFlagLandscapeView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -367,7 +367,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		8AE8ABFA288D3A860071CA26 /* Build configuration list for PBXProject "Project6a" */ = {
+		8AE8ABFA288D3A860071CA26 /* Build configuration list for PBXProject "GuestTheFlagLandscapeView" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8AE8AC27288D3A870071CA26 /* Debug */,
@@ -376,7 +376,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8AE8AC29288D3A870071CA26 /* Build configuration list for PBXNativeTarget "Project6a" */ = {
+		8AE8AC29288D3A870071CA26 /* Build configuration list for PBXNativeTarget "GuestTheFlagLandscapeView" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8AE8AC2A288D3A870071CA26 /* Debug */,
