@@ -12,15 +12,14 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="test" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="AutoLayoutByIB" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1hi-cP-4Rh">
-                                <rect key="frame" x="0.0" y="54" width="414" height="199.5"/>
+                                <rect key="frame" x="0.0" y="54" width="414" height="200"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="1hi-cP-4Rh" secondAttribute="height" multiplier="83:40" id="Kk9-Rb-YwL"/>
                                     <constraint firstAttribute="height" priority="999" constant="200" id="Oj3-kE-gmT"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
@@ -31,14 +30,14 @@
                                 </buttonConfiguration>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yCo-Xz-sD5">
-                                <rect key="frame" x="0.0" y="273.5" width="414" height="199.5"/>
+                                <rect key="frame" x="0.0" y="274" width="414" height="200"/>
                                 <color key="backgroundColor" name="AccentColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6ti-Ki-tlE">
-                                <rect key="frame" x="0.0" y="493" width="414" height="199.5"/>
+                                <rect key="frame" x="0.0" y="494" width="414" height="200"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Button2">
                                     <backgroundConfiguration key="background">
