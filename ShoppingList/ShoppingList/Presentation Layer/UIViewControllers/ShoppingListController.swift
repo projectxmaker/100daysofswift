@@ -10,7 +10,7 @@ import UIKit
 class ShoppingListController: UITableViewController {
 
     private var itemList: [String] = []
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -35,57 +35,66 @@ class ShoppingListController: UITableViewController {
 
         var contentConfig = cell.defaultContentConfiguration()
         contentConfig.text = itemList[indexPath.row]
-        contentConfig.textProperties.font = UIFont.systemFont(ofSize: 25)
+        contentConfig.textProperties.font = UIFont.systemFont(ofSize: 30)
         cell.contentConfiguration = contentConfig
 
         return cell
     }
-    
+
     // MARK: - Extra Functions
     private func setupButtonsOfNavigationItem() {
+        // button: add item
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleAddItemButtonTapped))
-        
+
+        // button: reset item list
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(resetItemList))
     }
-    
+
     @objc private func handleAddItemButtonTapped() {
-        let av = UIAlertController(title: "Add Item", message: nil, preferredStyle: .alert)
+        let ac = UIAlertController(title: "Add Item", message: nil, preferredStyle: .alert)
+
+        //ac.addTextField()
+        ac.addTextField { textField in
+            textField.placeholder = "input new Item's name here"
+        }
         
-        av.addTextField()
-        av.addAction(UIAlertAction(title: "Add", style: .default, handler: {[weak av, weak self] _ in
-            let inputValue: String
-            if let tempInputValue = av?.textFields?[0].text {
-                if let itemExist = self?.itemList.contains(tempInputValue),
-                   itemExist == false {
-                    inputValue = tempInputValue
-                    
-                    self?.itemList.insert(inputValue, at: 0)
-                        
-                    let indexPathOfFirstRow = IndexPath(row: 0, section: 0)
-                    self?.tableView.insertRows(at: [indexPathOfFirstRow], with: .automatic)
-                    
-                } else {
-                    let av = UIAlertController(title: "Invalid Item", message: "Item's name must not empty", preferredStyle: .alert)
-                    av.addAction(UIAlertAction(title: "Continue", style: .cancel, handler: nil))
-                    
-                    self?.present(av, animated: true, completion: nil)
-                }
-            } else {
-                let av = UIAlertController(title: "Invalid Item", message: "Item's name must not empty", preferredStyle: .alert)
-                av.addAction(UIAlertAction(title: "Continue", style: .cancel, handler: nil))
-                
-                self?.present(av, animated: true, completion: nil)
-            }
-        }))
-                
-        av.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        
-        present(av, animated: true, completion: nil)
+        let actionAddNewItem = UIAlertAction(title: "Add", style: .default) { [weak ac, weak self] _ in
+            guard let inputValue = ac?.textFields?[0].text else { return }
+            self?.addItem(itemName: inputValue)
+        }
+        ac.addAction(actionAddNewItem)
+
+        //ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+
+        present(ac, animated: true, completion: nil)
     }
-    
+
     @objc private func resetItemList() {
         itemList.removeAll(keepingCapacity: true)
         tableView.reloadData()
+    }
+
+    private func showAlertOfError(errorTitle: String, errorMessage: String) {
+        let ac = UIAlertController(title: errorTitle, message: errorMessage, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Continue", style: .cancel, handler: nil))
+
+        present(ac, animated: true, completion: nil)
+    }
+
+    private func addItem(itemName: String) {
+        if !itemName.isEmpty {
+            if !itemList.contains(itemName) {
+                itemList.insert(itemName, at: 0)
+
+                let indexPathOfFirstRow = IndexPath(row: 0, section: 0)
+                tableView.insertRows(at: [indexPathOfFirstRow], with: .automatic)
+
+            } else {
+                showAlertOfError(errorTitle: "Invalid Item", errorMessage: "Item is already in list")
+            }
+        } else {
+            showAlertOfError(errorTitle: "Invalid Item", errorMessage: "Item's name must not empty")
+        }
     }
 
 }
