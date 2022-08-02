@@ -20,6 +20,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1hi-cP-4Rh">
                                 <rect key="frame" x="0.0" y="54" width="414" height="200"/>
                                 <constraints>
+                                    <constraint firstAttribute="width" secondItem="1hi-cP-4Rh" secondAttribute="height" multiplier="207:100" id="BxC-DC-dDm"/>
                                     <constraint firstAttribute="height" priority="999" constant="200" id="Oj3-kE-gmT"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
