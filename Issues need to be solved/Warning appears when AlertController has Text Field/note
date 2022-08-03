@@ -1,0 +1,6 @@
+XCode 13.x
+iOS 15.x
+iPhone 13
+
+Warning:
+2022-08-03 21:53:49.062902+0700 test2[31337:1060901] [LayoutConstraints] Changing the translatesAutoresizingMaskIntoConstraints property of a UICollectionViewCell that is managed by a UICollectionView is not supported, and will result in incorrect self-sizing. View: <_UIAlertControllerTextFieldViewCollectionCell: 0x7fab5070b1c0; frame = (0 0; 270 24); gestureRecognizers = <NSArray: 0x600003d9a310>; layer = <CALayer: 0x60000339b280>>
