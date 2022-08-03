@@ -44,10 +44,21 @@ class ShoppingListController: UITableViewController {
     // MARK: - Extra Functions
     private func setupButtonsOfNavigationItem() {
         // button: add item
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleAddItemButtonTapped))
+        let addNewItemButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleAddItemButtonTapped))
+        
+        // button: share item list
+        let shareButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareItemList))
+        
+        navigationItem.rightBarButtonItems = [shareButton, addNewItemButton]
 
         // button: reset item list
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(resetItemList))
+    }
+    
+    @objc private func shareItemList() {
+        let stringOfItemList = itemList.joined(separator: "\n")
+        let av = UIActivityViewController(activityItems: [stringOfItemList], applicationActivities: nil)
+        present(av, animated: true, completion: nil)
     }
 
     @objc private func handleAddItemButtonTapped() {
@@ -64,7 +75,7 @@ class ShoppingListController: UITableViewController {
         }
         ac.addAction(actionAddNewItem)
 
-        //ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 
         present(ac, animated: true, completion: nil)
     }
