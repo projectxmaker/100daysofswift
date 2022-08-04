@@ -44,6 +44,12 @@ class ViewController: UITableViewController {
         return 1
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let detailView = DetailViewController()
+        detailView.detailItem = petitions[indexPath.row]
+        navigationController?.pushViewController(detailView, animated: true)
+    }
+    
     // MARK: - Extra Functions
     private func getPetitions() {
         let petitionUrl = "https://www.hackingwithswift.com/samples/petitions-1.json"

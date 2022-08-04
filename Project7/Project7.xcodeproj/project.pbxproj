@@ -15,6 +15,7 @@
 		8A0AE3B8289B57880028BADF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A0AE3B6289B57880028BADF /* LaunchScreen.storyboard */; };
 		8A0AE3DF289BC01F0028BADF /* Petition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0AE3DE289BC01F0028BADF /* Petition.swift */; };
 		8A0AE3E1289BC0490028BADF /* Petitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0AE3E0289BC0490028BADF /* Petitions.swift */; };
+		8A0AE3E3289BCCCB0028BADF /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0AE3E2289BCCCB0028BADF /* DetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		8A0AE3B9289B57880028BADF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8A0AE3DE289BC01F0028BADF /* Petition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Petition.swift; sourceTree = "<group>"; };
 		8A0AE3E0289BC0490028BADF /* Petitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Petitions.swift; sourceTree = "<group>"; };
+		8A0AE3E2289BCCCB0028BADF /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +95,7 @@
 			isa = PBXGroup;
 			children = (
 				8A0AE3AF289B57870028BADF /* ViewController.swift */,
+				8A0AE3E2289BCCCB0028BADF /* DetailViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -171,6 +174,7 @@
 				8A0AE3B0289B57870028BADF /* ViewController.swift in Sources */,
 				8A0AE3DF289BC01F0028BADF /* Petition.swift in Sources */,
 				8A0AE3AC289B57870028BADF /* AppDelegate.swift in Sources */,
+				8A0AE3E3289BCCCB0028BADF /* DetailViewController.swift in Sources */,
 				8A0AE3AE289B57870028BADF /* SceneDelegate.swift in Sources */,
 				8A0AE3E1289BC0490028BADF /* Petitions.swift in Sources */,
 			);
