@@ -52,7 +52,15 @@ class ViewController: UITableViewController {
     
     // MARK: - Extra Functions
     private func getPetitions() {
-        let petitionUrl = "https://www.hackingwithswift.com/samples/petitions-1.json"
+        let mostRecentPetitionUrl = "https://www.hackingwithswift.com/samples/petitions-1.json"
+        let topRatedPetitionUrl = "https://www.hackingwithswift.com/samples/petitions-2.json"
+        
+        let petitionUrl: String
+        if navigationController?.tabBarItem.tag == 0 {
+            petitionUrl = mostRecentPetitionUrl
+        } else {
+            petitionUrl = topRatedPetitionUrl
+        }
         
         guard
             let url = URL(string: petitionUrl),
