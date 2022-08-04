@@ -9,11 +9,13 @@ import UIKit
 
 class ViewController: UITableViewController {
 
-    private var petitions = [String]()
+    private var petitions = [Petition]()
     
+    // MARK: - Override Functions Of TableViewControllers
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        getPetitions()
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -23,11 +25,15 @@ class ViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         
+        let cellData = petitions[indexPath.row]
+        
         var contentConfig = cell.defaultContentConfiguration()
-        contentConfig.text = "Title"
-        contentConfig.secondaryText = "Subtitle"
-        contentConfig.textProperties.font = UIFont.systemFont(ofSize: 30)
-        contentConfig.secondaryTextProperties.font = UIFont.systemFont(ofSize: 20)
+        contentConfig.text = cellData.title
+        contentConfig.secondaryText = cellData.body
+        contentConfig.textProperties.font = UIFont.systemFont(ofSize: 18)
+        contentConfig.textProperties.numberOfLines = 1
+        contentConfig.secondaryTextProperties.font = UIFont.systemFont(ofSize: 15)
+        contentConfig.secondaryTextProperties.numberOfLines = 1
         
         cell.contentConfiguration = contentConfig
         
@@ -36,6 +42,29 @@ class ViewController: UITableViewController {
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
+    }
+    
+    // MARK: - Extra Functions
+    private func getPetitions() {
+        let petitionUrl = "https://www.hackingwithswift.com/samples/petitions-1.json"
+        
+        guard
+            let url = URL(string: petitionUrl),
+            let data = try? Data.init(contentsOf: url)
+        else {
+            return
+        }
+        
+        parse(from: data)
+    }
+    
+    private func parse(from data: Data) {
+        let decoder = JSONDecoder()
+        
+        guard let parsedData = try? decoder.decode(Petitions.self, from: data) else { return }
+        
+        petitions = parsedData.results
+        tableView.reloadData()
     }
 }
 
