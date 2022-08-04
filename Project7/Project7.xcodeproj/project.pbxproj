@@ -63,10 +63,9 @@
 			isa = PBXGroup;
 			children = (
 				8A0AE3DB289B57A10028BADF /* Presentation Layer */,
+				8A0AE3E4289BE4E80028BADF /* Data Layer */,
 				8A0AE3B4289B57880028BADF /* Assets.xcassets */,
 				8A0AE3B9289B57880028BADF /* Info.plist */,
-				8A0AE3DE289BC01F0028BADF /* Petition.swift */,
-				8A0AE3E0289BC0490028BADF /* Petitions.swift */,
 			);
 			path = Project7;
 			sourceTree = "<group>";
@@ -98,6 +97,15 @@
 				8A0AE3E2289BCCCB0028BADF /* DetailViewController.swift */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		8A0AE3E4289BE4E80028BADF /* Data Layer */ = {
+			isa = PBXGroup;
+			children = (
+				8A0AE3DE289BC01F0028BADF /* Petition.swift */,
+				8A0AE3E0289BC0490028BADF /* Petitions.swift */,
+			);
+			path = "Data Layer";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
