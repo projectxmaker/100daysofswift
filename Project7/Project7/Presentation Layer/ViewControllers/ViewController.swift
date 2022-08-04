@@ -66,6 +66,7 @@ class ViewController: UITableViewController {
             let url = URL(string: petitionUrl),
             let data = try? Data.init(contentsOf: url)
         else {
+            showError()
             return
         }
         
@@ -79,6 +80,12 @@ class ViewController: UITableViewController {
         
         petitions = parsedData.results
         tableView.reloadData()
+    }
+    
+    private func showError() {
+        let ac = UIAlertController(title: "Loading Error", message: "Got error while loading the page", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+        present(ac, animated: true, completion: nil)
     }
 }
 
