@@ -16,6 +16,7 @@ class ViewController: UITableViewController {
         super.viewDidLoad()
         
         getPetitions()
+        setupCreditsButton()
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -84,6 +85,16 @@ class ViewController: UITableViewController {
     
     private func showError() {
         let ac = UIAlertController(title: "Loading Error", message: "Got error while loading the page", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+        present(ac, animated: true, completion: nil)
+    }
+    
+    private func setupCreditsButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(handleCreditsButtonTapped))
+    }
+    
+    @objc private func handleCreditsButtonTapped() {
+        let ac = UIAlertController(title: "Credits", message: "The data comes from the We The People API of the Whitehouse", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
         present(ac, animated: true, completion: nil)
     }
