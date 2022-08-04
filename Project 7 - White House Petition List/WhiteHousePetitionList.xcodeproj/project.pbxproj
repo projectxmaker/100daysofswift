@@ -19,7 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8A0AE3A8289B57870028BADF /* WhiteHouseRepitionList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhiteHouseRepitionList.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8A0AE3A8289B57870028BADF /* WhiteHousePetitionList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhiteHousePetitionList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A0AE3AB289B57870028BADF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8A0AE3AD289B57870028BADF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		8A0AE3AF289B57870028BADF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -46,7 +46,7 @@
 		8A0AE39F289B57870028BADF = {
 			isa = PBXGroup;
 			children = (
-				8A0AE3AA289B57870028BADF /* WhiteHouseRepitionList */,
+				8A0AE3AA289B57870028BADF /* WhiteHousePetitionList */,
 				8A0AE3A9289B57870028BADF /* Products */,
 			);
 			sourceTree = "<group>";
@@ -54,12 +54,12 @@
 		8A0AE3A9289B57870028BADF /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8A0AE3A8289B57870028BADF /* WhiteHouseRepitionList.app */,
+				8A0AE3A8289B57870028BADF /* WhiteHousePetitionList.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		8A0AE3AA289B57870028BADF /* WhiteHouseRepitionList */ = {
+		8A0AE3AA289B57870028BADF /* WhiteHousePetitionList */ = {
 			isa = PBXGroup;
 			children = (
 				8A0AE3DB289B57A10028BADF /* Presentation Layer */,
@@ -67,7 +67,7 @@
 				8A0AE3B4289B57880028BADF /* Assets.xcassets */,
 				8A0AE3B9289B57880028BADF /* Info.plist */,
 			);
-			path = WhiteHouseRepitionList;
+			path = WhiteHousePetitionList;
 			sourceTree = "<group>";
 		};
 		8A0AE3DB289B57A10028BADF /* Presentation Layer */ = {
@@ -111,9 +111,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8A0AE3A7289B57870028BADF /* WhiteHouseRepitionList */ = {
+		8A0AE3A7289B57870028BADF /* WhiteHousePetitionList */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8A0AE3D2289B57880028BADF /* Build configuration list for PBXNativeTarget "WhiteHouseRepitionList" */;
+			buildConfigurationList = 8A0AE3D2289B57880028BADF /* Build configuration list for PBXNativeTarget "WhiteHousePetitionList" */;
 			buildPhases = (
 				8A0AE3A4289B57870028BADF /* Sources */,
 				8A0AE3A5289B57870028BADF /* Frameworks */,
@@ -123,9 +123,9 @@
 			);
 			dependencies = (
 			);
-			name = WhiteHouseRepitionList;
+			name = WhiteHousePetitionList;
 			productName = Project7;
-			productReference = 8A0AE3A8289B57870028BADF /* WhiteHouseRepitionList.app */;
+			productReference = 8A0AE3A8289B57870028BADF /* WhiteHousePetitionList.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -143,7 +143,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 8A0AE3A3289B57870028BADF /* Build configuration list for PBXProject "WhiteHouseRepitionList" */;
+			buildConfigurationList = 8A0AE3A3289B57870028BADF /* Build configuration list for PBXProject "WhiteHousePetitionList" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -156,7 +156,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8A0AE3A7289B57870028BADF /* WhiteHouseRepitionList */,
+				8A0AE3A7289B57870028BADF /* WhiteHousePetitionList */,
 			);
 		};
 /* End PBXProject section */
@@ -335,7 +335,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TT8TA55RWH;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = WhiteHouseRepitionList/Info.plist;
+				INFOPLIST_FILE = WhiteHousePetitionList/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -346,7 +346,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.WhiteHouseRepitionList;
+				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.WhiteHousePetitionList;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -363,7 +363,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TT8TA55RWH;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = WhiteHouseRepitionList/Info.plist;
+				INFOPLIST_FILE = WhiteHousePetitionList/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -374,7 +374,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.WhiteHouseRepitionList;
+				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.WhiteHousePetitionList;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -385,7 +385,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		8A0AE3A3289B57870028BADF /* Build configuration list for PBXProject "WhiteHouseRepitionList" */ = {
+		8A0AE3A3289B57870028BADF /* Build configuration list for PBXProject "WhiteHousePetitionList" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8A0AE3D0289B57880028BADF /* Debug */,
@@ -394,7 +394,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8A0AE3D2289B57880028BADF /* Build configuration list for PBXNativeTarget "WhiteHouseRepitionList" */ = {
+		8A0AE3D2289B57880028BADF /* Build configuration list for PBXNativeTarget "WhiteHousePetitionList" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8A0AE3D3289B57880028BADF /* Debug */,
