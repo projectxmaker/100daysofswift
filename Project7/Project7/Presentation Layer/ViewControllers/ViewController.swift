@@ -17,6 +17,7 @@ class ViewController: UITableViewController {
         
         getPetitions()
         setupCreditsButton()
+        setupFilterButton()
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -97,6 +98,39 @@ class ViewController: UITableViewController {
         let ac = UIAlertController(title: "Credits", message: "The data comes from the We The People API of the Whitehouse", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
         present(ac, animated: true, completion: nil)
+    }
+    
+    private func setupFilterButton() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(handleFilterButtonTapped))
+    }
+    
+    @objc private func handleFilterButtonTapped() {
+        let ac = UIAlertController(title: "Filter", message: nil, preferredStyle: .alert)
+        ac.addTextField { textfield in
+            textfield.placeholder = "enter keyword here"
+        }
+        
+        let filterAction = UIAlertAction(title: "Filter", style: .default) { [weak ac, weak self] _ in
+            guard
+                let textfield = ac?.textFields?[0],
+                let keyword = textfield.text,
+                !keyword.isEmpty
+            else { return }
+            
+            self?.filterPetition(keyword)
+        }
+        ac.addAction(filterAction)
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        present(ac, animated: true, completion: nil)
+    }
+    
+    private func filterPetition(_ keyword: String) {
+        let tempPetitions = petitions
+        petitions = tempPetitions.filter { petition in
+            petition.title.lowercased().contains(keyword.lowercased()) || petition.body.lowercased().contains(keyword)
+        }
+        tableView.reloadData()
     }
 }
 
