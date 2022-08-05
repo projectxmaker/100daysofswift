@@ -71,12 +71,15 @@ class ViewController: UIViewController {
         currentAnswerTextField.isUserInteractionEnabled = false
         view.addSubview(currentAnswerTextField)
         
-        submitButton = UIButton(type: .system)
+        var filled = UIButton.Configuration.filled()
+        filled.buttonSize = .large
+        
+        submitButton = UIButton(configuration: filled, primaryAction: nil)
         submitButton.translatesAutoresizingMaskIntoConstraints = false
         submitButton.setTitle("SUBMIT", for: .normal)
         view.addSubview(submitButton)
         
-        clearButton = UIButton(type: .system)
+        clearButton = UIButton(configuration: filled, primaryAction: nil)
         clearButton.translatesAutoresizingMaskIntoConstraints = false
         clearButton.setTitle("CLEAR", for: .normal)
         view.addSubview(clearButton)
@@ -87,18 +90,28 @@ class ViewController: UIViewController {
         
         let buttonWidth = 150
         let buttonHeight = 44
+        let spacingBetweenButtons = 5
+        
+        var tinted = UIButton.Configuration.tinted()
+        tinted.buttonSize = .large
         
         for curRow in 0..<4 {
             for curCol in 0..<5 {
-                let button = UIButton(type: .system)
-                button.frame = CGRect(x: curCol * buttonWidth, y: curRow * buttonHeight * 2, width: buttonWidth, height: buttonHeight)
+                let button = UIButton(configuration: tinted, primaryAction: nil)
+                
+                var xPosition = curCol * buttonWidth
+                if curCol > 0 {
+                    xPosition += curCol * spacingBetweenButtons
+                }
+                
+                button.frame = CGRect(x: xPosition, y: curRow * buttonHeight * 2, width: buttonWidth, height: buttonHeight)
                 
                 button.titleLabel?.textAlignment = .center
                 button.titleLabel?.font = UIFont.systemFont(ofSize: 40)
                 button.setTitle("AC", for: .normal)
                 
-                buttonsView.addSubview(button)
                 answerButtons.append(button)
+                buttonsView.addSubview(button)
             }
         }
         
@@ -125,7 +138,7 @@ class ViewController: UIViewController {
             clearButton.centerYAnchor.constraint(equalTo: submitButton.centerYAnchor),
             clearButton.centerXAnchor.constraint(equalTo: view.layoutMarginsGuide.centerXAnchor, constant: 100),
             
-            buttonsView.topAnchor.constraint(equalTo: submitButton.bottomAnchor, constant: 20),
+            buttonsView.topAnchor.constraint(equalTo: submitButton.bottomAnchor, constant: 40),
             buttonsView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -10),
             buttonsView.centerXAnchor.constraint(equalTo: view.layoutMarginsGuide.centerXAnchor),
             buttonsView.widthAnchor.constraint(equalToConstant: 750),
