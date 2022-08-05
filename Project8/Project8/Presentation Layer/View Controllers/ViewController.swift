@@ -16,9 +16,12 @@ class ViewController: UIViewController {
     private var answerButtons = [UIButton]()
     
     private var level = 1
+    private var score = 0
     private var clueString = ""
     private var answerString = ""
+    private var answers = [String]()
     private var answerBits = [String]()
+    private var activatedAnswerButtons = [UIButton]()
     
     private var submitButton: UIButton!
     private var clearButton: UIButton!
@@ -146,6 +149,7 @@ class ViewController: UIViewController {
                     answerString += "\(tempAnswerString.count) letters \n"
                     
                     answerBits += answer.components(separatedBy: "|")
+                    answers.append(tempAnswerString)
                 }
                 
                 // fill data into the views
@@ -175,15 +179,53 @@ class ViewController: UIViewController {
     }
     
     @objc private func handleSubmitButtonTapped() {
-        print("submit button is tapped")
+        guard
+            let answeredText = currentAnswerTextField.text,
+            let answerIndex = answers.firstIndex(of: answeredText),
+            var arrAnswersInAnswerLabel = answerLabel.text?.components(separatedBy: "\n")
+        else { return }
+        
+        arrAnswersInAnswerLabel[answerIndex] = answeredText
+        answerLabel.text = arrAnswersInAnswerLabel.joined(separator: "\n")
+        
+        score += 1
+        scoreLabel.text = "Score: \(score)"
+        
+        handleClearButtonTapped()
+        
+        if score == answers.count {
+            let ac = UIAlertController(title: "Congrats!", message: "Completed Level \(level) \n Wanna go next Level?", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            
+            if level == 1 {
+                ac.addAction(UIAlertAction(title: "Next Level", style: .default, handler: { [weak self] _ in
+                    self?.level += 1
+                    self?.score = 0
+                    self?.loadLevel()
+                }))
+            }
+            
+            present(ac, animated: true, completion: nil)
+        }
     }
     
     @objc private func handleClearButtonTapped() {
-        print("clear button is tapped")
+        currentAnswerTextField.text = ""
+        
+        for eachActivatedButton in activatedAnswerButtons {
+            eachActivatedButton.isHidden = false
+        }
+        
+        activatedAnswerButtons.removeAll(keepingCapacity: true)
     }
     
     @objc private func handleAnswerButtonTapped(_ button: UIButton) {
-        print("answer button \(button.currentTitle ?? "unknown") is tapped")
+        guard let buttonTitle = button.currentTitle else { return }
+        
+        currentAnswerTextField.text = currentAnswerTextField.text?.appending(buttonTitle)
+        
+        activatedAnswerButtons.append(button)
+        button.isHidden = true
     }
 }
 
