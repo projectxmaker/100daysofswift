@@ -16,11 +16,8 @@ class ViewController: UIViewController {
     private var answerButtons = [UIButton]()
     
     private var level = 1
-    private var score = 0
-    private var clueString = ""
-    private var answerString = ""
-    private var answers = [String]()
-    private var answerBits = [String]()
+    private var score: Int!
+    private var solutions = [String]()
     private var activatedAnswerButtons = [UIButton]()
     
     private var submitButton: UIButton!
@@ -29,9 +26,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
+        resetData()
         loadLevel()
-        setupAction()
+        setupTargetActionForButtons()
     }
 
     override func loadView() {
@@ -133,9 +130,20 @@ class ViewController: UIViewController {
     }
     
     // MARK: - Extra Functions
+    private func resetData() {
+        score = 0
+        solutions.removeAll(keepingCapacity: true)
+        
+        clearCurrentAnswer()
+    }
+    
     private func loadLevel() {
         if let levelFileUrl = Bundle.main.url(forResource: "level\(level)", withExtension: "txt") {
             if let levelFileContent = try? String(contentsOf: levelFileUrl) {
+                var clueString = ""
+                var answerString = ""
+                var answerBits = [String]()
+                
                 let lines = levelFileContent.components(separatedBy: "\n")
                 
                 for (index, line) in lines.enumerated() {
@@ -149,7 +157,7 @@ class ViewController: UIViewController {
                     answerString += "\(tempAnswerString.count) letters \n"
                     
                     answerBits += answer.components(separatedBy: "|")
-                    answers.append(tempAnswerString)
+                    solutions.append(tempAnswerString)
                 }
                 
                 // fill data into the views
@@ -169,7 +177,7 @@ class ViewController: UIViewController {
         }
     }
     
-    private func setupAction() {
+    private func setupTargetActionForButtons() {
         submitButton.addTarget(self, action: #selector(handleSubmitButtonTapped), for: .touchUpInside)
         clearButton.addTarget(self, action: #selector(handleClearButtonTapped), for: .touchUpInside)
         
@@ -178,10 +186,22 @@ class ViewController: UIViewController {
         }
     }
     
+    private func clearCurrentAnswer() {
+        currentAnswerTextField.text = ""
+        
+        for eachActivatedButton in activatedAnswerButtons {
+            eachActivatedButton.isHidden = false
+        }
+        
+        activatedAnswerButtons.removeAll(keepingCapacity: true)
+    }
+    
+    // MARK: - Functions For Button Tapped
+    
     @objc private func handleSubmitButtonTapped() {
         guard
             let answeredText = currentAnswerTextField.text,
-            let answerIndex = answers.firstIndex(of: answeredText),
+            let answerIndex = solutions.firstIndex(of: answeredText),
             var arrAnswersInAnswerLabel = answerLabel.text?.components(separatedBy: "\n")
         else { return }
         
@@ -189,18 +209,18 @@ class ViewController: UIViewController {
         answerLabel.text = arrAnswersInAnswerLabel.joined(separator: "\n")
         
         score += 1
-        scoreLabel.text = "Score: \(score)"
+        scoreLabel.text = "Score: \(score ?? 0)"
         
         handleClearButtonTapped()
         
-        if score == answers.count {
-            let ac = UIAlertController(title: "Congrats!", message: "Completed Level \(level) \n Wanna go next Level?", preferredStyle: .alert)
+        if score == solutions.count {
+            let ac = UIAlertController(title: "Congrats!", message: "Completed Level \(level)", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             
             if level == 1 {
                 ac.addAction(UIAlertAction(title: "Next Level", style: .default, handler: { [weak self] _ in
                     self?.level += 1
-                    self?.score = 0
+                    self?.resetData()
                     self?.loadLevel()
                 }))
             }
@@ -210,13 +230,7 @@ class ViewController: UIViewController {
     }
     
     @objc private func handleClearButtonTapped() {
-        currentAnswerTextField.text = ""
-        
-        for eachActivatedButton in activatedAnswerButtons {
-            eachActivatedButton.isHidden = false
-        }
-        
-        activatedAnswerButtons.removeAll(keepingCapacity: true)
+        clearCurrentAnswer()
     }
     
     @objc private func handleAnswerButtonTapped(_ button: UIButton) {
