@@ -16,7 +16,11 @@ class ViewController: UIViewController {
     private var answerButtons = [UIButton]()
     
     private var level = 1
-    private var score: Int!
+    private var score: Int! {
+        didSet {
+            scoreLabel.text = "Score: \(score ?? 0)"
+        }
+    }
     private var solutions = [String]()
     private var activatedAnswerButtons = [UIButton]()
     
@@ -218,7 +222,6 @@ class ViewController: UIViewController {
         answerLabel.text = arrAnswersInAnswerLabel.joined(separator: "\n")
         
         score += 1
-        scoreLabel.text = "Score: \(score ?? 0)"
         
         handleClearButtonTapped()
         
