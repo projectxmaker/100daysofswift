@@ -15,10 +15,20 @@ class ViewController: UIViewController {
     private var currentAnswerTextField: UITextField!
     private var answerButtons = [UIButton]()
     
+    private var level = 1
+    private var clueString = ""
+    private var answerString = ""
+    private var answerBits = [String]()
+    
+    private var submitButton: UIButton!
+    private var clearButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
+        loadLevel()
+        setupAction()
     }
 
     override func loadView() {
@@ -57,12 +67,12 @@ class ViewController: UIViewController {
         currentAnswerTextField.isUserInteractionEnabled = false
         view.addSubview(currentAnswerTextField)
         
-        let submitButton = UIButton(type: .system)
+        submitButton = UIButton(type: .system)
         submitButton.translatesAutoresizingMaskIntoConstraints = false
         submitButton.setTitle("SUBMIT", for: .normal)
         view.addSubview(submitButton)
         
-        let clearButton = UIButton(type: .system)
+        clearButton = UIButton(type: .system)
         clearButton.translatesAutoresizingMaskIntoConstraints = false
         clearButton.setTitle("CLEAR", for: .normal)
         view.addSubview(clearButton)
@@ -117,8 +127,63 @@ class ViewController: UIViewController {
             buttonsView.widthAnchor.constraint(equalToConstant: 750),
             buttonsView.heightAnchor.constraint(equalToConstant: 320)
         ])
+    }
+    
+    // MARK: - Extra Functions
+    private func loadLevel() {
+        if let levelFileUrl = Bundle.main.url(forResource: "level\(level)", withExtension: "txt") {
+            if let levelFileContent = try? String(contentsOf: levelFileUrl) {
+                let lines = levelFileContent.components(separatedBy: "\n")
+                
+                for (index, line) in lines.enumerated() {
+                    let lineData = line.components(separatedBy: ":")
+                    let answer = lineData[0]
+                    let tempAnswerString = answer.replacingOccurrences(of: "|", with: "")
+                    
+                    let clue = lineData[1]
+                    
+                    clueString += "\(index + 1). \(clue) \n"
+                    answerString += "\(tempAnswerString.count) letters \n"
+                    
+                    answerBits += answer.components(separatedBy: "|")
+                }
+                
+                // fill data into the views
+                clueString = clueString.trimmingCharacters(in: .whitespacesAndNewlines)
+                clueLabel.text = clueString
+                
+                answerString = answerString.trimmingCharacters(in: .whitespacesAndNewlines)
+                answerLabel.text = answerString
+                
+                if answerBits.count == answerButtons.count {
+                    answerBits.shuffle()
+                    for (index, eachAnswerBit) in answerBits.enumerated() {
+                        answerButtons[index].setTitle(eachAnswerBit, for: .normal)
+                    }
+                }
+            }
+        }
+    }
+    
+    private func setupAction() {
+        submitButton.addTarget(self, action: #selector(handleSubmitButtonTapped), for: .touchUpInside)
+        clearButton.addTarget(self, action: #selector(handleClearButtonTapped), for: .touchUpInside)
         
-        
+        for eachAnswerButton in answerButtons {
+            eachAnswerButton.addTarget(self, action: #selector(handleAnswerButtonTapped(_:)), for: .touchUpInside)
+        }
+    }
+    
+    @objc private func handleSubmitButtonTapped() {
+        print("submit button is tapped")
+    }
+    
+    @objc private func handleClearButtonTapped() {
+        print("clear button is tapped")
+    }
+    
+    @objc private func handleAnswerButtonTapped(_ button: UIButton) {
+        print("answer button \(button.currentTitle ?? "unknown") is tapped")
     }
 }
 
