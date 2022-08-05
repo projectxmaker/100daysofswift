@@ -196,6 +196,15 @@ class ViewController: UIViewController {
         activatedAnswerButtons.removeAll(keepingCapacity: true)
     }
     
+    private func hasNextLevel() -> Bool {
+        let nextLevel = level + 1
+        guard let _ = Bundle.main.url(forResource: "level\(nextLevel)", withExtension: "txt") else {
+            return false
+        }
+        
+        return true
+    }
+    
     // MARK: - Functions For Button Tapped
     
     @objc private func handleSubmitButtonTapped() {
@@ -217,7 +226,7 @@ class ViewController: UIViewController {
             let ac = UIAlertController(title: "Congrats!", message: "Completed Level \(level)", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             
-            if level == 1 {
+            if hasNextLevel() {
                 ac.addAction(UIAlertAction(title: "Next Level", style: .default, handler: { [weak self] _ in
                     self?.level += 1
                     self?.resetData()
