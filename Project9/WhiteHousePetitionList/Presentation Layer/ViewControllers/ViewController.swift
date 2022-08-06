@@ -10,12 +10,14 @@ import UIKit
 class ViewController: UITableViewController {
 
     private var petitions = [Petition]()
+    private var petitionUrl = ""
     
     // MARK: - Override Functions Of TableViewControllers
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        getPetitions()
+        petitionUrl = getPetitionUrl()
+        performSelector(inBackground: #selector(getPetitions), with: nil)
         setupCreditsButton()
         setupFilterButton()
     }
@@ -53,10 +55,11 @@ class ViewController: UITableViewController {
     }
     
     // MARK: - Extra Functions
-    private func getPetitions() {
+    
+    private func getPetitionUrl() -> String {
         let mostRecentPetitionUrl = "https://www.hackingwithswift.com/samples/petitions-1.json"
         let topRatedPetitionUrl = "https://www.hackingwithswift.com/samples/petitions-2.json"
-        
+
         let petitionUrl: String
         if navigationController?.tabBarItem.tag == 0 {
             petitionUrl = mostRecentPetitionUrl
@@ -64,17 +67,19 @@ class ViewController: UITableViewController {
             petitionUrl = topRatedPetitionUrl
         }
         
-        DispatchQueue.global(qos: .userInitiated).async {
-            guard
-                let url = URL(string: petitionUrl),
-                let data = try? Data.init(contentsOf: url)
-            else {
-                self.showError()
-                return
-            }
-            
-            self.parse(from: data)
+        return petitionUrl
+    }
+    
+    @objc private func getPetitions() {
+        guard
+            let url = URL(string: petitionUrl),
+            let data = try? Data.init(contentsOf: url)
+        else {
+            performSelector(onMainThread: #selector(showError), with: nil, waitUntilDone: false)
+            return
         }
+        
+        self.parse(from: data)
     }
     
     private func parse(from data: Data) {
@@ -89,12 +94,10 @@ class ViewController: UITableViewController {
         }
     }
     
-    private func showError() {
-        DispatchQueue.main.async {
-            let ac = UIAlertController(title: "Loading Error", message: "Got error while loading the page", preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
-            self.present(ac, animated: true, completion: nil)
-        }
+    @objc private func showError() {
+        let ac = UIAlertController(title: "Loading Error", message: "Got error while loading the page", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+        self.present(ac, animated: true, completion: nil)
     }
     
     private func setupCreditsButton() {
