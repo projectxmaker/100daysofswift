@@ -64,15 +64,17 @@ class ViewController: UITableViewController {
             petitionUrl = topRatedPetitionUrl
         }
         
-        guard
-            let url = URL(string: petitionUrl),
-            let data = try? Data.init(contentsOf: url)
-        else {
-            showError()
-            return
+        DispatchQueue.global(qos: .userInitiated).async {
+            guard
+                let url = URL(string: petitionUrl),
+                let data = try? Data.init(contentsOf: url)
+            else {
+                self.showError()
+                return
+            }
+            
+            self.parse(from: data)
         }
-        
-        parse(from: data)
     }
     
     private func parse(from data: Data) {
