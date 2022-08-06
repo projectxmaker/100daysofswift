@@ -14,7 +14,8 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        performSelector(inBackground:with:)
+        performSelector(onMainThread:with:waitUntilDone:)
         embedWebViewIntoView()
         showPetitionDetail()
     }
