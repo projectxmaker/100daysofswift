@@ -83,13 +83,18 @@ class ViewController: UITableViewController {
         guard let parsedData = try? decoder.decode(Petitions.self, from: data) else { return }
         
         petitions = parsedData.results
-        tableView.reloadData()
+        
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
     
     private func showError() {
-        let ac = UIAlertController(title: "Loading Error", message: "Got error while loading the page", preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
-        present(ac, animated: true, completion: nil)
+        DispatchQueue.main.async {
+            let ac = UIAlertController(title: "Loading Error", message: "Got error while loading the page", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+            self.present(ac, animated: true, completion: nil)
+        }
     }
     
     private func setupCreditsButton() {
