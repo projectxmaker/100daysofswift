@@ -222,6 +222,10 @@ class ViewController: UIViewController {
         return true
     }
     
+    private func deductScore() {
+        score = score > 0 ? score - 1 : score
+    }
+    
     // MARK: - Functions For Button Tapped
     
     @objc private func handleSubmitButtonTapped() {
@@ -231,9 +235,12 @@ class ViewController: UIViewController {
             var arrAnswersInAnswerLabel = answerLabel.text?.components(separatedBy: "\n")
         else {
             let ac = UIAlertController(title: "Incorrect Answer", message: "Sorry, your submit is not a correct answer!", preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+            ac.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { [weak self] _ in
+                self?.deductScore()
+            }))
             ac.addAction(UIAlertAction(title: "Clear", style: .default, handler: { [weak self] _ in
                 self?.clearCurrentAnswer()
+                self?.deductScore()
             }))
             
             present(ac, animated: true, completion: nil)
