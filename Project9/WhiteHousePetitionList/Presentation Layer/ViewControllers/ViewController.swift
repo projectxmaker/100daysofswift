@@ -127,7 +127,9 @@ class ViewController: UITableViewController {
                 !keyword.isEmpty
             else { return }
             
-            self?.filterPetition(keyword)
+            DispatchQueue.global(qos: .userInitiated).async {
+                self?.filterPetition(keyword)
+            }
         }
         ac.addAction(filterAction)
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -135,12 +137,14 @@ class ViewController: UITableViewController {
         present(ac, animated: true, completion: nil)
     }
     
-    private func filterPetition(_ keyword: String) {
+    @objc private func filterPetition(_ keyword: String) {
         let tempPetitions = petitions
         petitions = tempPetitions.filter { petition in
             petition.title.lowercased().contains(keyword.lowercased()) || petition.body.lowercased().contains(keyword)
         }
-        tableView.reloadData()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
 }
 
