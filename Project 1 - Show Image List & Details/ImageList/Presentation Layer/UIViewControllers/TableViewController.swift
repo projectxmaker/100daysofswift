@@ -14,7 +14,7 @@ class TableViewController: UITableViewController {
         super.viewDidLoad()
         title = "Image List"
         
-        getImageList(with: "nssl")
+        performSelector(inBackground: #selector(fetchImages), with: nil)
         setupNavigationController()
     }
     
@@ -36,7 +36,8 @@ class TableViewController: UITableViewController {
         return cell
     }
 
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {        showDetailScreen(for: indexPath.row)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        showDetailScreen(for: indexPath.row)
     }
 
     private func setupTitleOfRow(_ cell: UITableViewCell, with title: String) {
@@ -45,6 +46,14 @@ class TableViewController: UITableViewController {
         cellContentConfiguration.textProperties.font = UIFont.systemFont(ofSize: 25)
         
         cell.contentConfiguration = cellContentConfiguration
+    }
+    
+    @objc private func fetchImages() {
+        getImageList(with: "nssl")
+        
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
     
     private func getImageList(with prefix: String) {
