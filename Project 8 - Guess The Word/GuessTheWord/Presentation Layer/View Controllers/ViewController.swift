@@ -22,6 +22,7 @@ class ViewController: UIViewController {
         }
     }
     private var solutions = [String]()
+    private var resolvedClues = [String]()
     private var activatedAnswerButtons = [UIButton]()
     
     private var submitButton: UIButton!
@@ -150,6 +151,7 @@ class ViewController: UIViewController {
     private func resetData() {
         score = 0
         solutions.removeAll(keepingCapacity: true)
+        resolvedClues.removeAll(keepingCapacity: true)
         
         clearCurrentAnswer()
     }
@@ -234,7 +236,7 @@ class ViewController: UIViewController {
             let answerIndex = solutions.firstIndex(of: answeredText),
             var arrAnswersInAnswerLabel = answerLabel.text?.components(separatedBy: "\n")
         else {
-            let ac = UIAlertController(title: "Incorrect Answer", message: "Sorry, your submit is not a correct answer!", preferredStyle: .alert)
+            let ac = UIAlertController(title: "Incorrect Answer", message: "Sorry, your answer is incorrect!", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { [weak self] _ in
                 self?.deductScore()
             }))
@@ -248,14 +250,24 @@ class ViewController: UIViewController {
             return
         }
         
+        if let _ = resolvedClues.firstIndex(of: answeredText) {
+            let ac = UIAlertController(title: "Redundant Answer", message: "Sorry, you've submitted this answer already!", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+            
+            present(ac, animated: true, completion: nil)
+            
+            return
+        }
+        
         arrAnswersInAnswerLabel[answerIndex] = answeredText
         answerLabel.text = arrAnswersInAnswerLabel.joined(separator: "\n")
         
         score += 1
+        resolvedClues.append(answeredText)
         
         handleClearButtonTapped()
         
-        if score == solutions.count {
+        if resolvedClues.count == solutions.count {
             let ac = UIAlertController(title: "Congrats!", message: "Completed Level \(level)", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             
