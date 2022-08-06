@@ -32,7 +32,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         resetData()
-        loadLevel()
+        asyncLoadLevel()
         setupTargetActionForButtons()
     }
 
@@ -148,6 +148,10 @@ class ViewController: UIViewController {
     }
     
     // MARK: - Extra Functions
+    private func asyncLoadLevel() {
+        performSelector(inBackground: #selector(loadLevel), with: nil)
+    }
+    
     private func resetData() {
         score = 0
         solutions.removeAll(keepingCapacity: true)
@@ -156,7 +160,7 @@ class ViewController: UIViewController {
         clearCurrentAnswer()
     }
     
-    private func loadLevel() {
+    @objc private func loadLevel() {
         if let levelFileUrl = Bundle.main.url(forResource: "level\(level)", withExtension: "txt") {
             if let levelFileContent = try? String(contentsOf: levelFileUrl) {
                 var clueString = ""
@@ -180,16 +184,18 @@ class ViewController: UIViewController {
                 }
                 
                 // fill data into the views
-                clueString = clueString.trimmingCharacters(in: .whitespacesAndNewlines)
-                clueLabel.text = clueString
-                
-                answerString = answerString.trimmingCharacters(in: .whitespacesAndNewlines)
-                answerLabel.text = answerString
-                
-                if answerBits.count == answerButtons.count {
-                    answerBits.shuffle()
-                    for (index, eachAnswerBit) in answerBits.enumerated() {
-                        answerButtons[index].setTitle(eachAnswerBit, for: .normal)
+                DispatchQueue.main.async {
+                    clueString = clueString.trimmingCharacters(in: .whitespacesAndNewlines)
+                    self.clueLabel.text = clueString
+                    
+                    answerString = answerString.trimmingCharacters(in: .whitespacesAndNewlines)
+                    self.answerLabel.text = answerString
+                    
+                    if answerBits.count == self.answerButtons.count {
+                        answerBits.shuffle()
+                        for (index, eachAnswerBit) in answerBits.enumerated() {
+                            self.answerButtons[index].setTitle(eachAnswerBit, for: .normal)
+                        }
                     }
                 }
             }
@@ -275,7 +281,7 @@ class ViewController: UIViewController {
                 ac.addAction(UIAlertAction(title: "Next Level", style: .default, handler: { [weak self] _ in
                     self?.level += 1
                     self?.resetData()
-                    self?.loadLevel()
+                    self?.asyncLoadLevel()
                 }))
             }
             
