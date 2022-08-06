@@ -229,7 +229,17 @@ class ViewController: UIViewController {
             let answeredText = currentAnswerTextField.text,
             let answerIndex = solutions.firstIndex(of: answeredText),
             var arrAnswersInAnswerLabel = answerLabel.text?.components(separatedBy: "\n")
-        else { return }
+        else {
+            let ac = UIAlertController(title: "Incorrect Answer", message: "Sorry, your submit is not a correct answer!", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+            ac.addAction(UIAlertAction(title: "Clear", style: .default, handler: { [weak self] _ in
+                self?.clearCurrentAnswer()
+            }))
+            
+            present(ac, animated: true, completion: nil)
+            
+            return
+        }
         
         arrAnswersInAnswerLabel[answerIndex] = answeredText
         answerLabel.text = arrAnswersInAnswerLabel.joined(separator: "\n")
