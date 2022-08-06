@@ -18,7 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8A0AE3EE289CB3B90028BADF /* Project8.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project8.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8A0AE3EE289CB3B90028BADF /* GuessTheWord.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GuessTheWord.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A0AE3F1289CB3B90028BADF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8A0AE3F3289CB3B90028BADF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		8A0AE3F5289CB3B90028BADF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -44,7 +44,7 @@
 		8A0AE3E5289CB3B90028BADF = {
 			isa = PBXGroup;
 			children = (
-				8A0AE3F0289CB3B90028BADF /* Project8 */,
+				8A0AE3F0289CB3B90028BADF /* GuessTheWord */,
 				8A0AE3EF289CB3B90028BADF /* Products */,
 			);
 			sourceTree = "<group>";
@@ -52,12 +52,12 @@
 		8A0AE3EF289CB3B90028BADF /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8A0AE3EE289CB3B90028BADF /* Project8.app */,
+				8A0AE3EE289CB3B90028BADF /* GuessTheWord.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		8A0AE3F0289CB3B90028BADF /* Project8 */ = {
+		8A0AE3F0289CB3B90028BADF /* GuessTheWord */ = {
 			isa = PBXGroup;
 			children = (
 				8A0AE421289CB41B0028BADF /* Presentation Layer */,
@@ -65,7 +65,7 @@
 				8A0AE3FA289CB3BC0028BADF /* Assets.xcassets */,
 				8A0AE3FF289CB3BC0028BADF /* Info.plist */,
 			);
-			path = Project8;
+			path = GuessTheWord;
 			sourceTree = "<group>";
 		};
 		8A0AE421289CB41B0028BADF /* Presentation Layer */ = {
@@ -108,9 +108,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8A0AE3ED289CB3B90028BADF /* Project8 */ = {
+		8A0AE3ED289CB3B90028BADF /* GuessTheWord */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8A0AE418289CB3BC0028BADF /* Build configuration list for PBXNativeTarget "Project8" */;
+			buildConfigurationList = 8A0AE418289CB3BC0028BADF /* Build configuration list for PBXNativeTarget "GuessTheWord" */;
 			buildPhases = (
 				8A0AE3EA289CB3B90028BADF /* Sources */,
 				8A0AE3EB289CB3B90028BADF /* Frameworks */,
@@ -120,9 +120,9 @@
 			);
 			dependencies = (
 			);
-			name = Project8;
+			name = GuessTheWord;
 			productName = Project8;
-			productReference = 8A0AE3EE289CB3B90028BADF /* Project8.app */;
+			productReference = 8A0AE3EE289CB3B90028BADF /* GuessTheWord.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -140,7 +140,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 8A0AE3E9289CB3B90028BADF /* Build configuration list for PBXProject "Project8" */;
+			buildConfigurationList = 8A0AE3E9289CB3B90028BADF /* Build configuration list for PBXProject "GuessTheWord" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -153,7 +153,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8A0AE3ED289CB3B90028BADF /* Project8 */,
+				8A0AE3ED289CB3B90028BADF /* GuessTheWord */,
 			);
 		};
 /* End PBXProject section */
@@ -331,7 +331,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TT8TA55RWH;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Project8/Info.plist;
+				INFOPLIST_FILE = GuessTheWord/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -342,7 +342,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.Project8;
+				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.GuessTheWord;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -359,7 +359,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TT8TA55RWH;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Project8/Info.plist;
+				INFOPLIST_FILE = GuessTheWord/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -370,7 +370,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.Project8;
+				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.GuessTheWord;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -381,7 +381,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		8A0AE3E9289CB3B90028BADF /* Build configuration list for PBXProject "Project8" */ = {
+		8A0AE3E9289CB3B90028BADF /* Build configuration list for PBXProject "GuessTheWord" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8A0AE416289CB3BC0028BADF /* Debug */,
@@ -390,7 +390,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8A0AE418289CB3BC0028BADF /* Build configuration list for PBXNativeTarget "Project8" */ = {
+		8A0AE418289CB3BC0028BADF /* Build configuration list for PBXNativeTarget "GuessTheWord" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8A0AE419289CB3BC0028BADF /* Debug */,
