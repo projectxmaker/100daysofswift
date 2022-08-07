@@ -9,6 +9,7 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    private var nextWordButton: UIButton!
     private var scoreLabel: UILabel!
     private var clueLabel: UILabel!
     private var currentAnswerTextField: UITextField!
@@ -49,6 +50,7 @@ class ViewController: UIViewController {
         view = UIView()
         view.backgroundColor = .white
         
+        buildNextWordLabel()
         buildScoreLabel()
         buildClueLabel()
         buildCurrentAnswerTextField()
@@ -59,6 +61,23 @@ class ViewController: UIViewController {
     }
     
     // MARK: - Button Tapped
+    @objc private func handleLoadAnotherWordTapped() {
+        let alertMessage =
+        """
+        Score will be deducted by one.
+        Are you ok?
+        """
+        
+        let ac = UIAlertController(title: "Guess Another Word?", message: alertMessage, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+        ac.addAction(UIAlertAction(title: "Yes", style: .default, handler: { [weak self] _ in
+            self?.deductScore(by: 1)
+            self?.restartGame()
+        }))
+        
+        present(ac, animated: true, completion: nil)
+
+    }
     
     @objc private func handleCharButtonTapped(_ button: UIButton) {
         currentAnswerButtons.append(button)
@@ -72,7 +91,7 @@ class ViewController: UIViewController {
             totalTried += 1
             
             if totalTried == maximumTries {
-                score = score > 0 ? score - 1 : score
+                deductScore(by: 1)
                 
                 let alertMessage =
                 """
@@ -186,6 +205,23 @@ class ViewController: UIViewController {
         ]
     }
     
+    private func buildNextWordLabel() {
+        nextWordButton = UIButton()
+        nextWordButton.translatesAutoresizingMaskIntoConstraints = false
+        nextWordButton.setTitle("Give up! Load Another Word!", for: .normal)
+        nextWordButton.contentHorizontalAlignment = .left
+        
+        nextWordButton.addTarget(self, action: #selector(handleLoadAnotherWordTapped), for: .touchUpInside)
+        nextWordButton.setTitleColor(.blue, for: .normal)
+        view.addSubview(nextWordButton)
+        
+        layoutConstraints += [
+            nextWordButton.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
+            nextWordButton.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
+            nextWordButton.widthAnchor.constraint(equalTo: view.layoutMarginsGuide.widthAnchor, multiplier: 0.5, constant: 0)
+        ]
+    }
+    
     private func buildScoreLabel() {
         scoreLabel = UILabel()
         scoreLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -194,8 +230,9 @@ class ViewController: UIViewController {
         view.addSubview(scoreLabel)
         
         layoutConstraints += [
-            scoreLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
             scoreLabel.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
+            scoreLabel.centerYAnchor.constraint(equalTo: nextWordButton.centerYAnchor),
+            nextWordButton.widthAnchor.constraint(equalTo: view.layoutMarginsGuide.widthAnchor, multiplier: 0.5, constant: 0)
         ]
     }
     
@@ -307,6 +344,10 @@ class ViewController: UIViewController {
     
     private func isValidDataLine(arrData: [String]) -> Bool {
         return arrData.count == 2
+    }
+    
+    private func deductScore(by value: Int) {
+        score = score >= value ? score - value : score
     }
 }
 
