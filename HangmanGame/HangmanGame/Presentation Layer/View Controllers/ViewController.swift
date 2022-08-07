@@ -17,7 +17,16 @@ class ViewController: UIViewController {
     
     private var solutionInChars: [String] = []
     private var tappedCorrectChars: [String] = []
-    private var clue: String = ""
+    private var score = 0 {
+        didSet {
+            scoreLabel.text = "Score: \(score)"
+        }
+    }
+    private var clue: String = ""  {
+        didSet {
+            clueLabel.text = "\(clue)"
+        }
+    }
     private var totalTried: Int = 0 {
         didSet {
             numberOfTriesLabel.text = "Number of tries: \(totalTried)/\(maximumTries)"
@@ -47,14 +56,14 @@ class ViewController: UIViewController {
         clueLabel.translatesAutoresizingMaskIntoConstraints = false
         clueLabel.textAlignment = .center
         clueLabel.text = "CLUE"
-        clueLabel.font = UIFont.systemFont(ofSize: 20)
+        clueLabel.font = UIFont.systemFont(ofSize: 30)
         clueLabel.setContentHuggingPriority(UILayoutPriority(1), for: .vertical)
         view.addSubview(clueLabel)
         
         currentAnswerTextField = UITextField()
         currentAnswerTextField.translatesAutoresizingMaskIntoConstraints = false
         currentAnswerTextField.textAlignment = .center
-        currentAnswerTextField.text = "HELLO"
+        currentAnswerTextField.text = ""
         currentAnswerTextField.font = UIFont.systemFont(ofSize: 40)
         view.addSubview(currentAnswerTextField)
         
@@ -78,8 +87,12 @@ class ViewController: UIViewController {
         let letters = (97...122).map({Character(UnicodeScalar($0))})
         
         var curCharIndex = 0
-        for curRow in 0..<4 {
-            for curCol in 0..<6 {
+        outerLoop: for curRow in 0..<4 {
+        for curCol in 0..<7 {
+                guard curCharIndex < letters.count else {
+                    break outerLoop
+                }
+                
                 let button = UIButton(configuration: buttonConfigTint, primaryAction: nil)
                 
                 var xAxis = curCol * charButtonWidth
@@ -120,18 +133,30 @@ class ViewController: UIViewController {
         ])
     }
     
+    // MARK: - Button Tapped
+    
     @objc private func handleCharButtonTapped(_ button: UIButton) {
         // deduct number of tries
         totalTried += 1
+        
+        currentAnswerButtons.append(button)
+        button.isHidden = true
         
         guard
             let buttonTitle = button.currentTitle,
             solutionInChars.contains(buttonTitle)
         else {
             if totalTried == maximumTries {
-                let ac = UIAlertController(title: "Out Of Tries", message: "Sorry, \(maximumTries) tries is reached. \n Game will be restarted!", preferredStyle: .alert)
-                ac.addAction(UIAlertAction(title: "Got it!", style: .cancel, handler: { _ in
-                    // restart the game ?
+                score = score > 0 ? score - 1 : score
+                
+                let alertMessage = """
+                Sorry, \(maximumTries) tries is reached.
+                Score: \(score)
+                Game will be restarted!
+"""
+                let ac = UIAlertController(title: "Out Of Tries", message: alertMessage, preferredStyle: .alert)
+                ac.addAction(UIAlertAction(title: "Got it!", style: .cancel, handler: { [weak self] _ in
+                    self?.restartGame()
                 }))
                 present(ac, animated: true, completion: nil)
             }
@@ -140,12 +165,11 @@ class ViewController: UIViewController {
         }
         
         tappedCorrectChars.append(buttonTitle)
-        currentAnswerButtons.append(button)
-        button.isHidden = true
-        
         showCurrentAnswerText()
+        showAlertIfWordIsSolved()
     }
     
+    // MARK: - Extra Functions
     private func showCurrentAnswerText() {
         var currentText = ""
         for eachChar in solutionInChars {
@@ -156,7 +180,32 @@ class ViewController: UIViewController {
             }
         }
         
-        currentAnswerTextField.text = currentText
+        DispatchQueue.main.async {
+            self.currentAnswerTextField.text = currentText
+        }
+    }
+    
+    private func showAlertIfWordIsSolved() {
+        guard
+            solutionInChars.elementsEqual(tappedCorrectChars)
+        else { return }
+        
+        score += 1
+        
+        let solutionInWord = solutionInChars.joined(separator: "")
+        let alertMessage = """
+        You solved word: \(solutionInWord)!
+        Score: \(score)
+        Do you want to guess another word?
+        """
+        
+        let ac = UIAlertController(title: "Congrats!", message: alertMessage, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+        ac.addAction(UIAlertAction(title: "Yes", style: .default, handler: { [weak self] _ in
+            self?.restartGame()
+        }))
+        
+        present(ac, animated: true, completion: nil)
     }
     
     @objc private func fetchData() {
@@ -167,32 +216,59 @@ class ViewController: UIViewController {
         
         arrData = fileData.components(separatedBy: "\n")
         
-        restartGame()
+        performSelector(onMainThread: #selector(restartGame), with: nil, waitUntilDone: false)
     }
     
-    private func restartGame() {
+    @objc private func restartGame() {
         guard !arrData.isEmpty else { return }
         
+        resetData()
+        selectWordToPlayRandomly()
+    }
+    
+    private func resetData() {
+        for eachButton in currentAnswerButtons {
+            eachButton.isHidden = false
+        }
+        
+        clue = ""
+        totalTried = 0
+        
+        currentAnswerButtons.removeAll(keepingCapacity: true)
+        tappedCorrectChars.removeAll(keepingCapacity: true)
+        solutionInChars.removeAll(keepingCapacity: true)
+    }
+    
+    private func selectWordToPlayRandomly() {
         arrData.shuffle()
         
         let dataLine = arrData[0]
         
         let arrDataOfEachLine = dataLine.components(separatedBy: ":")
         
-        guard arrDataOfEachLine.count == 2 else { return }
+        guard isValidDataLine(arrData: arrDataOfEachLine) else {
+            arrData.removeFirst()
+            
+            if arrData.count > 0 {
+                selectWordToPlayRandomly()
+            }
+            
+            return
+        }
         
         let solution = arrDataOfEachLine[0]
-        clue = arrData[1]
+        clue = arrDataOfEachLine[1]
         
         for (_, eachCharacter) in solution.enumerated() {
             solutionInChars.append(String(eachCharacter).capitalized)
         }
+        
+        showCurrentAnswerText()
         print(solutionInChars)
-        performSelector(onMainThread: #selector(fulfillViewWithData), with: nil, waitUntilDone: false)
     }
     
-    @objc private func fulfillViewWithData() {
-        showCurrentAnswerText()
+    private func isValidDataLine(arrData: [String]) -> Bool {
+        return arrData.count == 2
     }
 }
 
