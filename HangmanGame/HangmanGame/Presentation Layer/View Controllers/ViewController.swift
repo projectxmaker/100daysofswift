@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     private var currentAnswerTextField: UITextField!
     private var currentAnswerButtons = [UIButton]()
     private var numberOfTriesLabel: UILabel!
+    private let viewOfCharButtons = UIView()
     
     private var solutionInChars: [String] = []
     private var tappedCorrectChars: [String] = []
@@ -36,6 +37,8 @@ class ViewController: UIViewController {
     
     private let maximumTries = 7
     
+    private var layoutConstraints = [NSLayoutConstraint]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -46,34 +49,54 @@ class ViewController: UIViewController {
         view = UIView()
         view.backgroundColor = .white
         
-        scoreLabel = UILabel()
-        scoreLabel.translatesAutoresizingMaskIntoConstraints = false
-        scoreLabel.text = "Score: 0"
-        scoreLabel.textAlignment = .right
-        view.addSubview(scoreLabel)
+        buildScoreLabel()
+        buildClueLabel()
+        buildCurrentAnswerTextField()
+        buildTriesLabel()
+        buildViewWithCharacterButtonsInside()
         
-        clueLabel = UILabel()
-        clueLabel.translatesAutoresizingMaskIntoConstraints = false
-        clueLabel.textAlignment = .center
-        clueLabel.text = "CLUE"
-        clueLabel.font = UIFont.systemFont(ofSize: 30)
-        clueLabel.setContentHuggingPriority(UILayoutPriority(1), for: .vertical)
-        view.addSubview(clueLabel)
+        setupLayoutConstraints()
+    }
+    
+    // MARK: - Button Tapped
+    
+    @objc private func handleCharButtonTapped(_ button: UIButton) {
+        // deduct number of tries
+        totalTried += 1
         
-        currentAnswerTextField = UITextField()
-        currentAnswerTextField.translatesAutoresizingMaskIntoConstraints = false
-        currentAnswerTextField.textAlignment = .center
-        currentAnswerTextField.text = ""
-        currentAnswerTextField.font = UIFont.systemFont(ofSize: 40)
-        view.addSubview(currentAnswerTextField)
+        currentAnswerButtons.append(button)
+        button.isHidden = true
         
-        numberOfTriesLabel = UILabel()
-        numberOfTriesLabel.translatesAutoresizingMaskIntoConstraints = false
-        numberOfTriesLabel.textAlignment = .center
-        numberOfTriesLabel.text = "Number of tries: \(totalTried)/\(maximumTries)"
-        view.addSubview(numberOfTriesLabel)
+        guard
+            let buttonTitle = button.currentTitle,
+            solutionInChars.contains(buttonTitle)
+        else {
+            if totalTried == maximumTries {
+                score = score > 0 ? score - 1 : score
+                
+                let alertMessage =
+                """
+                Sorry, \(maximumTries) tries is reached.
+                Score: \(score)
+                Game will be restarted!
+                """
+                let ac = UIAlertController(title: "Out Of Tries", message: alertMessage, preferredStyle: .alert)
+                ac.addAction(UIAlertAction(title: "Got it!", style: .cancel, handler: { [weak self] _ in
+                    self?.restartGame()
+                }))
+                present(ac, animated: true, completion: nil)
+            }
+
+            return
+        }
         
-        let viewOfCharButtons = UIView()
+        tappedCorrectChars.append(buttonTitle)
+        showCurrentAnswerText()
+        showAlertIfWordIsSolved()
+    }
+    
+    // MARK: - Build UI View
+    private func buildViewWithCharacterButtonsInside() {
         viewOfCharButtons.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(viewOfCharButtons)
 
@@ -109,64 +132,75 @@ class ViewController: UIViewController {
             }
         }
         
-        NSLayoutConstraint.activate([
-            scoreLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
-            scoreLabel.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
-            
-            clueLabel.topAnchor.constraint(equalTo: scoreLabel.bottomAnchor, constant: 20),
-            clueLabel.centerXAnchor.constraint(equalTo: view.layoutMarginsGuide.centerXAnchor),
-            clueLabel.widthAnchor.constraint(equalTo: view.layoutMarginsGuide.widthAnchor, multiplier: 0.6, constant: 0),
-            
-            currentAnswerTextField.topAnchor.constraint(equalTo: clueLabel.bottomAnchor, constant: 20),
-            currentAnswerTextField.centerXAnchor.constraint(equalTo: view.layoutMarginsGuide.centerXAnchor),
-            currentAnswerTextField.widthAnchor.constraint(equalTo: view.layoutMarginsGuide.widthAnchor, multiplier: 0.4, constant: 0),
-            
-            numberOfTriesLabel.topAnchor.constraint(equalTo: currentAnswerTextField.bottomAnchor, constant: 20),
-            numberOfTriesLabel.centerXAnchor.constraint(equalTo: view.layoutMarginsGuide.centerXAnchor),
-            numberOfTriesLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.4, constant: 0),
-            
+        layoutConstraints += [
             viewOfCharButtons.topAnchor.constraint(equalTo: numberOfTriesLabel.bottomAnchor, constant: 40),
-            viewOfCharButtons.widthAnchor.constraint(equalToConstant: 720),
+            viewOfCharButtons.widthAnchor.constraint(equalTo: view.layoutMarginsGuide.widthAnchor, multiplier: 0.65, constant: 0),
             viewOfCharButtons.heightAnchor.constraint(equalToConstant: 350),
             viewOfCharButtons.centerXAnchor.constraint(equalTo: view.layoutMarginsGuide.centerXAnchor),
             viewOfCharButtons.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -10)
-        ])
+        ]
     }
     
-    // MARK: - Button Tapped
+    private func buildTriesLabel() {
+        numberOfTriesLabel = UILabel()
+        numberOfTriesLabel.translatesAutoresizingMaskIntoConstraints = false
+        numberOfTriesLabel.textAlignment = .center
+        numberOfTriesLabel.text = "Number of tries: \(totalTried)/\(maximumTries)"
+        view.addSubview(numberOfTriesLabel)
+        
+        layoutConstraints += [
+            numberOfTriesLabel.topAnchor.constraint(equalTo: currentAnswerTextField.bottomAnchor, constant: 20),
+            numberOfTriesLabel.centerXAnchor.constraint(equalTo: view.layoutMarginsGuide.centerXAnchor),
+            numberOfTriesLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.4, constant: 0),
+        ]
+    }
     
-    @objc private func handleCharButtonTapped(_ button: UIButton) {
-        // deduct number of tries
-        totalTried += 1
+    private func buildCurrentAnswerTextField() {
+        currentAnswerTextField = UITextField()
+        currentAnswerTextField.translatesAutoresizingMaskIntoConstraints = false
+        currentAnswerTextField.textAlignment = .center
+        currentAnswerTextField.text = ""
+        currentAnswerTextField.font = UIFont.systemFont(ofSize: 40)
+        view.addSubview(currentAnswerTextField)
         
-        currentAnswerButtons.append(button)
-        button.isHidden = true
+        layoutConstraints += [
+            currentAnswerTextField.topAnchor.constraint(equalTo: clueLabel.bottomAnchor, constant: 20),
+            currentAnswerTextField.centerXAnchor.constraint(equalTo: view.layoutMarginsGuide.centerXAnchor),
+            currentAnswerTextField.widthAnchor.constraint(equalTo: view.layoutMarginsGuide.widthAnchor, multiplier: 0.4, constant: 0)
+        ]
+    }
+    
+    private func buildClueLabel() {
+        clueLabel = UILabel()
+        clueLabel.translatesAutoresizingMaskIntoConstraints = false
+        clueLabel.textAlignment = .center
+        clueLabel.text = "CLUE"
+        clueLabel.font = UIFont.systemFont(ofSize: 30)
+        clueLabel.setContentHuggingPriority(UILayoutPriority(1), for: .vertical)
+        view.addSubview(clueLabel)
         
-        guard
-            let buttonTitle = button.currentTitle,
-            solutionInChars.contains(buttonTitle)
-        else {
-            if totalTried == maximumTries {
-                score = score > 0 ? score - 1 : score
-                
-                let alertMessage = """
-                Sorry, \(maximumTries) tries is reached.
-                Score: \(score)
-                Game will be restarted!
-"""
-                let ac = UIAlertController(title: "Out Of Tries", message: alertMessage, preferredStyle: .alert)
-                ac.addAction(UIAlertAction(title: "Got it!", style: .cancel, handler: { [weak self] _ in
-                    self?.restartGame()
-                }))
-                present(ac, animated: true, completion: nil)
-            }
-
-            return
-        }
+        layoutConstraints += [
+            clueLabel.topAnchor.constraint(equalTo: scoreLabel.bottomAnchor, constant: 20),
+            clueLabel.centerXAnchor.constraint(equalTo: view.layoutMarginsGuide.centerXAnchor),
+            clueLabel.widthAnchor.constraint(equalTo: view.layoutMarginsGuide.widthAnchor, multiplier: 0.6, constant: 0),
+        ]
+    }
+    
+    private func buildScoreLabel() {
+        scoreLabel = UILabel()
+        scoreLabel.translatesAutoresizingMaskIntoConstraints = false
+        scoreLabel.text = "Score: 0"
+        scoreLabel.textAlignment = .right
+        view.addSubview(scoreLabel)
         
-        tappedCorrectChars.append(buttonTitle)
-        showCurrentAnswerText()
-        showAlertIfWordIsSolved()
+        layoutConstraints += [
+            scoreLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
+            scoreLabel.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
+        ]
+    }
+    
+    private func setupLayoutConstraints() {
+        NSLayoutConstraint.activate(layoutConstraints)
     }
     
     // MARK: - Extra Functions
