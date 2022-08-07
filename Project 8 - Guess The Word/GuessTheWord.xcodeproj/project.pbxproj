@@ -13,8 +13,8 @@
 		8A0AE3F9289CB3B90028BADF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A0AE3F7289CB3B90028BADF /* Main.storyboard */; };
 		8A0AE3FB289CB3BC0028BADF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A0AE3FA289CB3BC0028BADF /* Assets.xcassets */; };
 		8A0AE3FE289CB3BC0028BADF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A0AE3FC289CB3BC0028BADF /* LaunchScreen.storyboard */; };
-		8A0AE425289D6D050028BADF /* level1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8A0AE424289D6D050028BADF /* level1.txt */; };
 		8A0AE428289D80A80028BADF /* level2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8A0AE427289D80A80028BADF /* level2.txt */; };
+		8A0AE46E289FBFF50028BADF /* level1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8A0AE46D289FBFF50028BADF /* level1.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,8 +26,8 @@
 		8A0AE3FA289CB3BC0028BADF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8A0AE3FD289CB3BC0028BADF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8A0AE3FF289CB3BC0028BADF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8A0AE424289D6D050028BADF /* level1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = level1.txt; sourceTree = "<group>"; };
 		8A0AE427289D80A80028BADF /* level2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = level2.txt; sourceTree = "<group>"; };
+		8A0AE46D289FBFF50028BADF /* level1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = level1.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,7 +99,7 @@
 		8A0AE426289D6D0F0028BADF /* Data Layer */ = {
 			isa = PBXGroup;
 			children = (
-				8A0AE424289D6D050028BADF /* level1.txt */,
+				8A0AE46D289FBFF50028BADF /* level1.txt */,
 				8A0AE427289D80A80028BADF /* level2.txt */,
 			);
 			path = "Data Layer";
@@ -163,9 +163,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A0AE46E289FBFF50028BADF /* level1.txt in Resources */,
 				8A0AE428289D80A80028BADF /* level2.txt in Resources */,
 				8A0AE3FE289CB3BC0028BADF /* LaunchScreen.storyboard in Resources */,
-				8A0AE425289D6D050028BADF /* level1.txt in Resources */,
 				8A0AE3FB289CB3BC0028BADF /* Assets.xcassets in Resources */,
 				8A0AE3F9289CB3B90028BADF /* Main.storyboard in Resources */,
 			);

@@ -61,9 +61,6 @@ class ViewController: UIViewController {
     // MARK: - Button Tapped
     
     @objc private func handleCharButtonTapped(_ button: UIButton) {
-        // deduct number of tries
-        totalTried += 1
-        
         currentAnswerButtons.append(button)
         button.isHidden = true
         
@@ -71,6 +68,9 @@ class ViewController: UIViewController {
             let buttonTitle = button.currentTitle,
             solutionInChars.contains(buttonTitle)
         else {
+            // deduct number of tries
+            totalTried += 1
+            
             if totalTried == maximumTries {
                 score = score > 0 ? score - 1 : score
                 
@@ -205,14 +205,18 @@ class ViewController: UIViewController {
     
     // MARK: - Extra Functions
     private func showCurrentAnswerText() {
+        var tmptappedCorrectCharsInSameOrderOfSolution = [String]()
         var currentText = ""
         for eachChar in solutionInChars {
             if tappedCorrectChars.contains(eachChar) {
                 currentText.append(" \(eachChar) ")
+                tmptappedCorrectCharsInSameOrderOfSolution.append(eachChar)
             } else {
                 currentText.append(" _ ")
             }
         }
+        
+        tappedCorrectChars = tmptappedCorrectCharsInSameOrderOfSolution
         
         DispatchQueue.main.async {
             self.currentAnswerTextField.text = currentText
