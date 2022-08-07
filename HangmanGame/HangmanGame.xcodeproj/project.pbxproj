@@ -13,7 +13,7 @@
 		8A0AE43D289EBA1F0028BADF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A0AE43B289EBA1F0028BADF /* Main.storyboard */; };
 		8A0AE43F289EBA210028BADF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A0AE43E289EBA210028BADF /* Assets.xcassets */; };
 		8A0AE442289EBA210028BADF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A0AE440289EBA210028BADF /* LaunchScreen.storyboard */; };
-		8A0AE470289FC04C0028BADF /* words.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8A0AE46F289FC04C0028BADF /* words.txt */; };
+		8A0AE472289FD62A0028BADF /* words.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8A0AE471289FD62A0028BADF /* words.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,7 +25,7 @@
 		8A0AE43E289EBA210028BADF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8A0AE441289EBA210028BADF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8A0AE443289EBA210028BADF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8A0AE46F289FC04C0028BADF /* words.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = words.txt; sourceTree = "<group>"; };
+		8A0AE471289FD62A0028BADF /* words.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = words.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,7 +80,7 @@
 		8A0AE468289EBA730028BADF /* Data Layer */ = {
 			isa = PBXGroup;
 			children = (
-				8A0AE46F289FC04C0028BADF /* words.txt */,
+				8A0AE471289FD62A0028BADF /* words.txt */,
 			);
 			path = "Data Layer";
 			sourceTree = "<group>";
@@ -160,8 +160,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A0AE472289FD62A0028BADF /* words.txt in Resources */,
 				8A0AE442289EBA210028BADF /* LaunchScreen.storyboard in Resources */,
-				8A0AE470289FC04C0028BADF /* words.txt in Resources */,
 				8A0AE43F289EBA210028BADF /* Assets.xcassets in Resources */,
 				8A0AE43D289EBA1F0028BADF /* Main.storyboard in Resources */,
 			);

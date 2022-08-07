@@ -76,7 +76,6 @@ class ViewController: UIViewController {
         }))
         
         present(ac, animated: true, completion: nil)
-
     }
     
     @objc private func handleCharButtonTapped(_ button: UIButton) {
@@ -339,7 +338,6 @@ class ViewController: UIViewController {
         }
         
         showCurrentAnswerText()
-        print(solutionInChars)
     }
     
     private func isValidDataLine(arrData: [String]) -> Bool {
