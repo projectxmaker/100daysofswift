@@ -9,8 +9,6 @@ import SpriteKit
 import GameplayKit
 
 class GameScene: SKScene {
-    private var colors: [UIColor] = [UIColor.red, UIColor.blue, UIColor.yellow, UIColor.white, UIColor.purple]
-    
     override func didMove(to view: SKView) {
         let background = SKSpriteNode(imageNamed: "background")
         background.position = CGPoint(x: 512, y: 384)
@@ -19,18 +17,38 @@ class GameScene: SKScene {
         addChild(background)
         
         physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
+        
+        let bouncerPositions = [
+            CGPoint(x: 0, y: 0),
+            CGPoint(x: 256, y: 0),
+            CGPoint(x: 512, y: 0),
+            CGPoint(x: 768, y: 0),
+            CGPoint(x: 1024, y: 0)
+        ]
+        
+        for eachPosition in bouncerPositions {
+            makeBouncer(at: eachPosition)
+        }
+
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first {
-            colors.shuffle()
-            let selectedColor = colors[0]
-            
             let location = touch.location(in: self)
-            let box = SKSpriteNode(color: selectedColor, size: CGSize(width: 64, height: 64))
-            box.position = location
-            box.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 64, height: 64))
-            addChild(box)
+            
+            let ball = SKSpriteNode(imageNamed: "ballRed")
+            ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width/2.0)
+            ball.physicsBody?.restitution = 0.4
+            ball.position = location
+            addChild(ball)
         }
+    }
+    
+    private func makeBouncer(at position: CGPoint) {
+        let bouncer = SKSpriteNode(imageNamed: "bouncer")
+        bouncer.position = position
+        bouncer.physicsBody = SKPhysicsBody(circleOfRadius: bouncer.size.width / 2.0)
+        bouncer.physicsBody?.isDynamic = false
+        addChild(bouncer)
     }
 }
