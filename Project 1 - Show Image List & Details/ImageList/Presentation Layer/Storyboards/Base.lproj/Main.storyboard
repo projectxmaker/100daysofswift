@@ -97,7 +97,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zSm-hv-VOY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1474.4000000000001" y="26.600985221674879"/>
+            <point key="canvasLocation" x="1330" y="27"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="yDu-Cf-gAp">
@@ -119,7 +119,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="RightArrow" width="840" height="572"/>
+        <image name="RightArrow" width="128" height="128"/>
         <image name="chevron.right" catalog="system" width="96" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
