@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8A0AE4B828A0CC560028BADF /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0AE4B728A0CC560028BADF /* CollectionViewController.swift */; };
+		8A0AE4BA28A0FAD40028BADF /* PictureCellCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0AE4B928A0FAD40028BADF /* PictureCellCollectionViewCell.swift */; };
 		8A5B67D3288AB75F006DF48B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5B67D2288AB75F006DF48B /* AppDelegate.swift */; };
 		8A5B67D5288AB75F006DF48B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5B67D4288AB75F006DF48B /* SceneDelegate.swift */; };
 		8A5B67D7288AB75F006DF48B /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5B67D6288AB75F006DF48B /* TableViewController.swift */; };
@@ -27,6 +29,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8A0AE4B728A0CC560028BADF /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
+		8A0AE4B928A0FAD40028BADF /* PictureCellCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PictureCellCollectionViewCell.swift; sourceTree = "<group>"; };
 		8A5B67CF288AB75F006DF48B /* ImageList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A5B67D2288AB75F006DF48B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8A5B67D4288AB75F006DF48B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -119,6 +123,8 @@
 			children = (
 				8A5B67D6288AB75F006DF48B /* TableViewController.swift */,
 				8A5B6817288BA7F3006DF48B /* DetailViewController.swift */,
+				8A0AE4B728A0CC560028BADF /* CollectionViewController.swift */,
+				8A0AE4B928A0FAD40028BADF /* PictureCellCollectionViewCell.swift */,
 			);
 			path = UIViewControllers;
 			sourceTree = "<group>";
@@ -225,6 +231,8 @@
 				8A5B67D3288AB75F006DF48B /* AppDelegate.swift in Sources */,
 				8A5B6818288BA7F3006DF48B /* DetailViewController.swift in Sources */,
 				8A5B67D5288AB75F006DF48B /* SceneDelegate.swift in Sources */,
+				8A0AE4B828A0CC560028BADF /* CollectionViewController.swift in Sources */,
+				8A0AE4BA28A0FAD40028BADF /* PictureCellCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
