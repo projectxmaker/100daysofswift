@@ -44,14 +44,14 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        let ac = UIAlertController(title: "Update Name", message: nil, preferredStyle: .alert)
-        ac.addTextField()
-        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        ac.addAction(UIAlertAction(title: "Save", style: .default, handler: { [weak self, weak ac] _ in
-            guard let newName = ac?.textFields?[0].text else { return }
-            
-            self?.updatePersonName(newName: newName, at: indexPath.item)
+        let itemIndex = indexPath.item
+        let ac = UIAlertController(title: "What do you want?", message: nil, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+        ac.addAction(UIAlertAction(title: "Delete", style: .default, handler: { [weak self] _ in
+            self?.deletePerson(at: itemIndex)
+        }))
+        ac.addAction(UIAlertAction(title: "Update Name", style: .default, handler: { [weak self] _ in
+            self?.showAlertToUpdatePersonName(at: itemIndex)
         }))
         
         present(ac, animated: true, completion: nil)
@@ -99,11 +99,29 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         present(imagePicker, animated: true, completion: nil)
     }
     
+    @objc private func showAlertToUpdatePersonName(at index: Int) {
+        let ac = UIAlertController(title: "Update Name", message: nil, preferredStyle: .alert)
+        ac.addTextField()
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        ac.addAction(UIAlertAction(title: "Save", style: .default, handler: { [weak self, weak ac] _ in
+            guard let newName = ac?.textFields?[0].text else { return }
+            
+            self?.updatePersonName(newName: newName, at: index)
+        }))
+        
+        present(ac, animated: true, completion: nil)
+    }
+    
     private func updatePersonName(newName name: String, at index: Int) {
         let person = persons[index]
         person.name = name
         
         collectionView.reloadData()
+    }
+    
+    private func deletePerson(at index: Int) {
+        persons.remove(at: index)
+        collectionView.deleteItems(at: [IndexPath(item: index, section: 0)])
     }
     
     private func getDocumentDirectory() -> URL {
