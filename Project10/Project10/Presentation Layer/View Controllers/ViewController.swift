@@ -96,6 +96,11 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         imagePicker.allowsEditing = true
         imagePicker.delegate = self
         
+        // allow to take picture from camera if this source type is available
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            imagePicker.sourceType = .camera
+        }
+        
         present(imagePicker, animated: true, completion: nil)
     }
     
