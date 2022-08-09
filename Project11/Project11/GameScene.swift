@@ -29,7 +29,22 @@ class GameScene: SKScene {
         for eachPosition in bouncerPositions {
             makeBouncer(at: eachPosition)
         }
-
+        
+        struct Slot {
+            var position: CGPoint
+            var isGood: Bool
+        }
+        
+        let slotPositions: [Slot] = [
+            Slot(position: CGPoint(x: 128, y: 0), isGood: true),
+            Slot(position: CGPoint(x: 384, y: 0), isGood: false),
+            Slot(position: CGPoint(x: 640, y: 0), isGood: true),
+            Slot(position: CGPoint(x: 896, y: 0), isGood: false)
+        ]
+        
+        for eachSlot in slotPositions {
+            makeSlots(at: eachSlot.position, isGood: eachSlot.isGood)
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -50,5 +65,28 @@ class GameScene: SKScene {
         bouncer.physicsBody = SKPhysicsBody(circleOfRadius: bouncer.size.width / 2.0)
         bouncer.physicsBody?.isDynamic = false
         addChild(bouncer)
+    }
+    
+    private func makeSlots(at position: CGPoint, isGood: Bool) {
+        var slotBase: SKSpriteNode
+        var slotGlow: SKSpriteNode
+        
+        if isGood {
+            slotBase = SKSpriteNode(imageNamed: "slotBaseGood")
+            slotGlow = SKSpriteNode(imageNamed: "slotGlowGood")
+        } else {
+            slotBase = SKSpriteNode(imageNamed: "slotBaseBad")
+            slotGlow = SKSpriteNode(imageNamed: "slotGlowBad")
+        }
+        
+        slotBase.position = position
+        slotGlow.position = position
+        
+        let action = SKAction.rotate(byAngle: .pi, duration: 10)
+        let repeatAction = SKAction.repeatForever(action)
+        slotGlow.run(repeatAction)
+        
+        addChild(slotBase)
+        addChild(slotGlow)
     }
 }
