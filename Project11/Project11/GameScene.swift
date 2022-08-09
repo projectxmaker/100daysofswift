@@ -187,7 +187,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         ball.physicsBody?.contactTestBitMask = contactAllCategories
         
-        ball.position = location
+        let ballLocationNearTop = CGPoint(x: location.x, y: 730)
+        ball.position = ballLocationNearTop
         ball.name = "ball"
 
         addChild(ball)
