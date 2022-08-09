@@ -9,6 +9,24 @@ import SpriteKit
 import GameplayKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
+    private var scoreLabel: SKLabelNode!
+    private var score = 0 {
+        didSet {
+            scoreLabel.text = "Score \(score)"
+        }
+    }
+    
+    private var editLabel: SKLabelNode!
+    private var edittingMode = false {
+        didSet {
+            if edittingMode {
+                editLabel.text = "Done"
+            } else {
+                editLabel.text = "Edit"
+            }
+        }
+    }
+    
     override func didMove(to view: SKView) {
         let background = SKSpriteNode(imageNamed: "background")
         background.position = CGPoint(x: 512, y: 384)
@@ -47,28 +65,34 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         for eachSlot in slotPositions {
             makeSlots(at: eachSlot.position, isGood: eachSlot.isGood)
         }
+        
+        scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
+        scoreLabel.text = "Score: 0"
+        scoreLabel.horizontalAlignmentMode = .right
+        scoreLabel.position = CGPoint(x: 840, y: 730)
+        addChild(scoreLabel)
+
+        editLabel = SKLabelNode(fontNamed: "Chalkduster")
+        editLabel.text = "Edit"
+        scoreLabel.horizontalAlignmentMode = .left
+        editLabel.position = CGPoint(x: 80, y: 730)
+        addChild(editLabel)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first {
             let location = touch.location(in: self)
             
-            let ball = SKSpriteNode(imageNamed: "ballRed")
-            ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width/2.0)
-            ball.physicsBody?.restitution = 0.4
-            
-            guard
-                let contactAllCategories = ball.physicsBody?.collisionBitMask
-            else {
-                return
+            let tappedNodes = nodes(at: location)
+            if tappedNodes.contains(editLabel) {
+                edittingMode.toggle()
+            } else {
+                if edittingMode {
+                    createObstacles(at: location)
+                } else {
+                    createBall(at: location)
+                }
             }
-            
-            ball.physicsBody?.contactTestBitMask = contactAllCategories
-            
-            ball.position = location
-            ball.name = "ball"
-
-            addChild(ball)
         }
     }
     
@@ -89,8 +113,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    // MARK: - Extra Functions
+
     private func collisionBetween(ball: SKNode, object: SKNode) {
-        if object.name == "bad" || object.name == "good" {
+        if object.name == "bad" {
+            score -= 1
+            destroyBall(ball)
+        } else if object.name == "good" {
+            score += 1
             destroyBall(ball)
         }
     }
@@ -133,5 +163,39 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         addChild(slotBase)
         addChild(slotGlow)
+    }
+    
+    private func createBall(at location: CGPoint) {
+        let ball = SKSpriteNode(imageNamed: "ballRed")
+        ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width/2.0)
+        ball.physicsBody?.restitution = 0.4
+        
+        guard
+            let contactAllCategories = ball.physicsBody?.collisionBitMask
+        else {
+            return
+        }
+        
+        ball.physicsBody?.contactTestBitMask = contactAllCategories
+        
+        ball.position = location
+        ball.name = "ball"
+
+        addChild(ball)
+    }
+    
+    private func createObstacles(at location: CGPoint) {
+        let randomeSize = CGSize(width: Int.random(in: 16...128), height: 16)
+        let randomColor = UIColor(red: CGFloat.random(in: 0...1), green: CGFloat.random(in: 0...1), blue: CGFloat.random(in: 0...1), alpha: 1)
+        
+        let obstacle = SKSpriteNode(color: randomColor, size: randomeSize)
+        
+        obstacle.zRotation = CGFloat.random(in: 1...3)
+        
+        obstacle.position = location
+        obstacle.physicsBody = SKPhysicsBody(rectangleOf: randomeSize)
+        obstacle.physicsBody?.isDynamic = false
+        
+        addChild(obstacle)
     }
 }
