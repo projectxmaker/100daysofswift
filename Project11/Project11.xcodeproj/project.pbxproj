@@ -14,6 +14,8 @@
 		8A0AE4D328A15AAB0028BADF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A0AE4D128A15AAB0028BADF /* Main.storyboard */; };
 		8A0AE4D528A15AAE0028BADF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A0AE4D428A15AAE0028BADF /* Assets.xcassets */; };
 		8A0AE4D828A15AAE0028BADF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A0AE4D628A15AAE0028BADF /* LaunchScreen.storyboard */; };
+		8A0AE4E128A268840028BADF /* FireParticles.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8A0AE4E028A268840028BADF /* FireParticles.sks */; };
+		8A0AE4E328A26C2F0028BADF /* SmokeParticles.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8A0AE4E228A26C2F0028BADF /* SmokeParticles.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +27,8 @@
 		8A0AE4D228A15AAB0028BADF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8A0AE4D428A15AAE0028BADF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8A0AE4D728A15AAE0028BADF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		8A0AE4E028A268840028BADF /* FireParticles.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = FireParticles.sks; sourceTree = "<group>"; };
+		8A0AE4E228A26C2F0028BADF /* SmokeParticles.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SmokeParticles.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +68,8 @@
 				8A0AE4D128A15AAB0028BADF /* Main.storyboard */,
 				8A0AE4D428A15AAE0028BADF /* Assets.xcassets */,
 				8A0AE4D628A15AAE0028BADF /* LaunchScreen.storyboard */,
+				8A0AE4E228A26C2F0028BADF /* SmokeParticles.sks */,
+				8A0AE4E028A268840028BADF /* FireParticles.sks */,
 			);
 			path = Project11;
 			sourceTree = "<group>";
@@ -128,6 +134,8 @@
 			files = (
 				8A0AE4D328A15AAB0028BADF /* Main.storyboard in Resources */,
 				8A0AE4CA28A15AAB0028BADF /* GameScene.sks in Resources */,
+				8A0AE4E128A268840028BADF /* FireParticles.sks in Resources */,
+				8A0AE4E328A26C2F0028BADF /* SmokeParticles.sks in Resources */,
 				8A0AE4D528A15AAE0028BADF /* Assets.xcassets in Resources */,
 				8A0AE4D828A15AAE0028BADF /* LaunchScreen.storyboard in Resources */,
 			);
