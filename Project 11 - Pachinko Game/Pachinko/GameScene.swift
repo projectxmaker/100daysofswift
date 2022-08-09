@@ -77,14 +77,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
         scoreLabel.text = "Score: 0"
-        scoreLabel.horizontalAlignmentMode = .right
+        scoreLabel.horizontalAlignmentMode = .left
         scoreLabel.position = CGPoint(x: 830, y: 730)
         addChild(scoreLabel)
         
         remainingBallLabel = SKLabelNode(fontNamed: "Chalkduster")
         remainingBallLabel.text = "Ball: \(defaultTotalBall)"
-        remainingBallLabel.horizontalAlignmentMode = .right
-        remainingBallLabel.position = CGPoint(x: 950, y: 680)
+        remainingBallLabel.horizontalAlignmentMode = .left
+        remainingBallLabel.position = CGPoint(x: 830, y: 680)
         addChild(remainingBallLabel)
 
         editLabel = SKLabelNode(fontNamed: "Chalkduster")
