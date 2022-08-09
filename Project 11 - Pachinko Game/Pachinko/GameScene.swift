@@ -37,61 +37,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func didMove(to view: SKView) {
-        let background = SKSpriteNode(imageNamed: "background")
-        background.position = CGPoint(x: 512, y: 384)
-        background.blendMode = .replace
-        background.zPosition = -1
-        addChild(background)
-        
         physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
-        
+
         physicsWorld.contactDelegate = self
         
-        let bouncerPositions = [
-            CGPoint(x: 0, y: 0),
-            CGPoint(x: 256, y: 0),
-            CGPoint(x: 512, y: 0),
-            CGPoint(x: 768, y: 0),
-            CGPoint(x: 1024, y: 0)
-        ]
-        
-        for eachPosition in bouncerPositions {
-            makeBouncer(at: eachPosition)
-        }
-        
-        struct Slot {
-            var position: CGPoint
-            var isGood: Bool
-        }
-        
-        let slotPositions: [Slot] = [
-            Slot(position: CGPoint(x: 128, y: 0), isGood: true),
-            Slot(position: CGPoint(x: 384, y: 0), isGood: false),
-            Slot(position: CGPoint(x: 640, y: 0), isGood: true),
-            Slot(position: CGPoint(x: 896, y: 0), isGood: false)
-        ]
-        
-        for eachSlot in slotPositions {
-            makeSlots(at: eachSlot.position, isGood: eachSlot.isGood)
-        }
-        
-        scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
-        scoreLabel.text = "Score: 0"
-        scoreLabel.horizontalAlignmentMode = .left
-        scoreLabel.position = CGPoint(x: 830, y: 730)
-        addChild(scoreLabel)
-        
-        remainingBallLabel = SKLabelNode(fontNamed: "Chalkduster")
-        remainingBallLabel.text = "Ball: \(defaultTotalBall)"
-        remainingBallLabel.horizontalAlignmentMode = .left
-        remainingBallLabel.position = CGPoint(x: 830, y: 680)
-        addChild(remainingBallLabel)
-
-        editLabel = SKLabelNode(fontNamed: "Chalkduster")
-        editLabel.text = "Edit"
-        scoreLabel.horizontalAlignmentMode = .left
-        editLabel.position = CGPoint(x: 80, y: 730)
-        addChild(editLabel)
+        setupBackground()
+        setupBouncers()
+        setupSlots()
+        setupScoreLabel()
+        setupRemainingBallLabel()
+        setupEditLabel()
         
         remainingBall = defaultTotalBall
     }
@@ -133,6 +88,70 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     // MARK: - Extra Functions
+    private func setupBackground() {
+        let background = SKSpriteNode(imageNamed: "background")
+        background.position = CGPoint(x: 512, y: 384)
+        background.blendMode = .replace
+        background.zPosition = -1
+        addChild(background)
+    }
+    
+    private func setupBouncers() {
+        let bouncerPositions = [
+            CGPoint(x: 0, y: 0),
+            CGPoint(x: 256, y: 0),
+            CGPoint(x: 512, y: 0),
+            CGPoint(x: 768, y: 0),
+            CGPoint(x: 1024, y: 0)
+        ]
+        
+        for eachPosition in bouncerPositions {
+            makeBouncer(at: eachPosition)
+        }
+    }
+    
+    private func setupSlots() {
+        struct Slot {
+            var position: CGPoint
+            var isGood: Bool
+        }
+        
+        let slotPositions: [Slot] = [
+            Slot(position: CGPoint(x: 128, y: 0), isGood: true),
+            Slot(position: CGPoint(x: 384, y: 0), isGood: false),
+            Slot(position: CGPoint(x: 640, y: 0), isGood: true),
+            Slot(position: CGPoint(x: 896, y: 0), isGood: false)
+        ]
+        
+        for eachSlot in slotPositions {
+            makeSlots(at: eachSlot.position, isGood: eachSlot.isGood)
+        }
+    }
+    
+    private func setupScoreLabel() {
+        scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
+        scoreLabel.text = "Score: 0"
+        scoreLabel.horizontalAlignmentMode = .left
+        scoreLabel.position = CGPoint(x: 830, y: 730)
+        addChild(scoreLabel)
+    }
+    
+    private func setupRemainingBallLabel() {
+        remainingBallLabel = SKLabelNode(fontNamed: "Chalkduster")
+        remainingBallLabel.text = "Ball: \(defaultTotalBall)"
+        remainingBallLabel.horizontalAlignmentMode = .left
+        remainingBallLabel.position = CGPoint(x: 830, y: 680)
+        addChild(remainingBallLabel)
+    }
+    
+    private func setupEditLabel() {
+        editLabel = SKLabelNode(fontNamed: "Chalkduster")
+        editLabel.text = "Edit"
+        editLabel.horizontalAlignmentMode = .left
+        editLabel.position = CGPoint(x: 20, y: 730)
+        addChild(editLabel)
+    }
+    
     private func collisionBetween(ball: SKNode, object: SKNode) {
         if object.name == "bad" {
             score -= 1
