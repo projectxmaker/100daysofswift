@@ -28,7 +28,10 @@ class ViewController: UIViewController {
     let totalOfQuestions = 10
     var currentQuestionNumber = ViewController.keys.defaultCurrentQuestionNumber
     
-    // MARK: - Functions
+    var highScore = 0
+    var congratNewHighScore = false
+    
+    // MARK: - Table View Functions
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -38,7 +41,10 @@ class ViewController: UIViewController {
         decorateAllFlags()
         setupFlags()
         setupButtonToShowScore()
+        loadPreviousHighScore()
     }
+    
+    // MARK: - Extra Functions
     
     private func resetDefaultStats() {
         score = ViewController.keys.defaultScore
@@ -88,6 +94,29 @@ class ViewController: UIViewController {
             ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: beforeMoveToNextQuestion))
             present(ac, animated: true, completion: nil)
         }
+        
+        saveHighScore()
+    }
+    
+    private func saveHighScore() {
+        if highScore == 0 || highScore < score {
+            let defaultData = UserDefaults.standard
+            defaultData.set(score, forKey: "PreviousHighScore")
+            
+            if !congratNewHighScore {
+                congratNewHighScore = true
+                
+                let ac = UIAlertController(title: "Congrats", message: "You reached \(score), a new highest score!", preferredStyle: .alert)
+                ac.addAction(UIAlertAction(title: "OK", style: .cancel))
+                
+                present(ac, animated: true)
+            }
+        }
+    }
+    
+    private func loadPreviousHighScore() {
+        let defaultData = UserDefaults.standard
+        highScore = defaultData.integer(forKey: "PreviousHighScore")
     }
     
     private func beforeMoveToNextQuestion(_ action: UIAlertAction? = nil) {
