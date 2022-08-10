@@ -12,6 +12,7 @@ private let reuseIdentifier = "Picture"
 class CollectionViewController: UICollectionViewController {
 
     var pictures = [String?]()
+    var pictureViews: [String:Int] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +28,8 @@ class CollectionViewController: UICollectionViewController {
         
         performSelector(inBackground: #selector(fetchImages), with: nil)
         setupNavigationController()
+        loadPictureViews()
+        print("viewDidLoad  ")
     }
     
     /*
@@ -53,19 +56,22 @@ class CollectionViewController: UICollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let itemIndex = indexPath.item
+        
         guard
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? PictureCellCollectionViewCell,
-            let pictureName = pictures[indexPath.item]
+            let pictureName = pictures[itemIndex]
         else { return UICollectionViewCell() }
         
         // Configure the cell
         cell.pictureName.text = pictureName
+        cell.views = getPictureViews(for: itemIndex)
     
         return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        showDetailScreen(for: indexPath.item)
+        showDetailScreen(for: indexPath)
     }
     
     // MARK: - Extra Functions
@@ -104,7 +110,8 @@ class CollectionViewController: UICollectionViewController {
         }
     }
     
-    private func showDetailScreen(for rowIndex: Int) {
+    private func showDetailScreen(for indexPath: IndexPath) {
+        let rowIndex = indexPath.item
         let mainStoryboard = UIStoryboard.init(name: "Main", bundle: nil)
         
         guard
@@ -118,6 +125,8 @@ class CollectionViewController: UICollectionViewController {
         
         // push DetailViewController to NavigationBar
         navigationController?.pushViewController(detailViewController, animated: true)
+        
+        increaseViewForSelectedPicture(for: indexPath)
     }
     
     private func setupNavigationController() {
@@ -140,6 +149,55 @@ class CollectionViewController: UICollectionViewController {
         "Picture \(picIndex + 1) of \(pictures.count)"
     }
 
+    private func increaseViewForSelectedPicture(for indexPath: IndexPath) {
+        let index = indexPath.item
+        guard let pictureName = pictures[index] else { return }
+        
+        pictureViews[pictureName] = (pictureViews[pictureName] ?? 0) + 1
+        
+        updatePictureViewsOfSelectedPicture(for: indexPath)
+        
+        savePictureViews()
+    }
+    
+    private func getPictureViews(for index: Int) -> Int {
+        guard
+            let pictureName = pictures[index],
+            let pictureViews = pictureViews[pictureName]
+        else { return 0 }
+        
+        return pictureViews
+    }
+    
+    private func savePictureViews() {
+        guard let data = try? JSONEncoder().encode(pictureViews) else { return }
+        
+        let defaultData = UserDefaults.standard
+        defaultData.set(data, forKey: "PictureViews")
+    }
+    
+    private func loadPictureViews() {
+        let defaultData = UserDefaults.standard
+        guard
+            let data = defaultData.object(forKey: "PictureViews") as? Data,
+            let tmpPictureViews = try? JSONDecoder().decode([String: Int].self, from: data)
+        else { return }
+        
+        pictureViews = tmpPictureViews
+    }
+    
+    private func updatePictureViewsOfSelectedPicture(for indexPath: IndexPath) {
+        guard
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? PictureCellCollectionViewCell,
+            let pictureName = pictures[indexPath.item],
+            let pictureViews = pictureViews[pictureName]
+        else { return }
+
+        cell.views = pictureViews
+        
+        collectionView.reloadItems(at: [indexPath])
+    }
+    
     // MARK: UICollectionViewDelegate
 
     /*

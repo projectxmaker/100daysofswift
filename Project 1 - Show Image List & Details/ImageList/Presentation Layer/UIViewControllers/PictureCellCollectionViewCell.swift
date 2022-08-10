@@ -10,4 +10,11 @@ import UIKit
 class PictureCellCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var pictureName: UILabel!
+    @IBOutlet weak var pictureViews: UILabel!
+    
+    var views = 0 {
+        didSet {
+            pictureViews.text = "Views: \(views)"
+        }
+    }
 }
