@@ -16,7 +16,7 @@ class TableViewController: UITableViewController {
         super.viewDidLoad()
 
         loadWordsFromFile()
-        startGame()
+        loadCurrentResult()
         setupButtonsOfNavigationBar()
     }
 
@@ -62,6 +62,8 @@ class TableViewController: UITableViewController {
         title = allWords.randomElement()
         usedWords.removeAll(keepingCapacity: true)
         tableView.reloadData()
+        
+        saveCurrentResult()
     }
     
     private func setupButtonsOfNavigationBar() {
@@ -104,6 +106,8 @@ class TableViewController: UITableViewController {
                             
                             let indexPath = IndexPath(row: 0, section: 0)
                             tableView.insertRows(at: [indexPath], with: .automatic)
+                            
+                            saveCurrentResult()
                             
                             return
                         } else {
@@ -167,6 +171,28 @@ class TableViewController: UITableViewController {
         let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: TableViewController.keys.alertInvalidInputButtonTitle, style: .default))
         present(ac, animated: true)
+    }
+    
+    private func saveCurrentResult() {
+        let defaultData = UserDefaults.standard
+        defaultData.set(title, forKey: "title")
+        defaultData.set(usedWords, forKey: "usedWords")
+    }
+    
+    private func loadCurrentResult() {
+        let defaultData = UserDefaults.standard
+        
+        guard
+            let tmpTitle = defaultData.string(forKey: "title"),
+            let tmpUsedWords = defaultData.array(forKey: "usedWords") as? [String]
+        else {
+            startGame()
+            return
+        }
+        
+        title = tmpTitle
+        usedWords = tmpUsedWords
+        tableView.reloadData()
     }
 
 }
