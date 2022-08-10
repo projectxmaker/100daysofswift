@@ -15,6 +15,7 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         setupAddPersonButton()
+        loadPersons()
     }
     
     // MARK: - Collection View
@@ -76,6 +77,7 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
             let indexPathOfNewPerson = IndexPath(item: 0, section: 0)
             collectionView.insertItems(at: [indexPathOfNewPerson])
             
+            savePersons()
         } catch {
             let ac = UIAlertController(title: "Error", message: "Error while selecting the image.\n\(error.localizedDescription)", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
@@ -122,17 +124,38 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         person.name = name
         
         collectionView.reloadData()
+        savePersons()
     }
     
     private func deletePerson(at index: Int) {
         persons.remove(at: index)
         collectionView.deleteItems(at: [IndexPath(item: index, section: 0)])
+        savePersons()
     }
     
     private func getDocumentDirectory() -> URL {
         let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         print(urls)
         return urls[0]
+    }
+    
+    private func savePersons() {
+        guard let data = try? JSONEncoder().encode(persons) else { return }
+        
+        let defaultStorage = UserDefaults.standard
+        defaultStorage.set(data, forKey: "persons")
+    }
+    
+    private func loadPersons() {
+        let defaultStorage = UserDefaults.standard
+        guard
+            let data = defaultStorage.data(forKey: "persons"),
+            let tmpPersons = try? JSONDecoder().decode([Person].self, from: data)
+        else {
+            return
+        }
+        
+        persons = tmpPersons
     }
 }
 
