@@ -9,15 +9,36 @@ import UIKit
 
 class PictureDetailController: UIViewController {
 
+    @IBOutlet weak var pictureView: UIImageView!
     
+    var picturePath = ""
+    
+    // MARK: - View Functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
+        loadPicture()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        hideBarOnTapped(isBool: true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        hideBarOnTapped(isBool: false)
+    }
+    
+    // MARK: - Extra Functions
+    private func loadPicture() {
+        pictureView.image = UIImage(contentsOfFile: picturePath)
+    }
 
+    private func hideBarOnTapped(isBool: Bool) {
+        navigationController?.hidesBarsOnTap = isBool
+    }
+    
     /*
     // MARK: - Navigation
 

@@ -54,14 +54,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TpQ-eQ-9Km">
-                                <rect key="frame" x="0.0" y="44" width="414" height="827"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TpQ-eQ-9Km">
+                                <rect key="frame" x="0.0" y="44" width="414" height="828"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="TpQ-eQ-9Km" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" constant="10" id="LAM-1w-IfW"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="TpQ-eQ-9Km" secondAttribute="trailing" id="hxN-uf-Nss"/>
+                            <constraint firstItem="TpQ-eQ-9Km" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="vnx-Hv-j25"/>
+                            <constraint firstItem="TpQ-eQ-9Km" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="yke-Yv-e1H"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="pictureView" destination="TpQ-eQ-9Km" id="2fE-EI-jzS"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

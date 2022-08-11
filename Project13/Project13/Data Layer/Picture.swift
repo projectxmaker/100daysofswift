@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Picture {
+class Picture: Codable {
     var fileName = ""
     var caption = ""
 }
