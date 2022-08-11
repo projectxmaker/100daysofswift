@@ -23,7 +23,7 @@ class PictureListController: UITableViewController, UIImagePickerControllerDeleg
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleAddNewPicture))
         
-        loadPictures()
+        performSelector(inBackground: #selector(loadPictures), with: self)
     }
 
     // MARK: - Table view data source
@@ -84,6 +84,9 @@ class PictureListController: UITableViewController, UIImagePickerControllerDeleg
         present(imagePicker, animated: true)
     }
     
+    
+    // MARK: - Extra Functions
+    
     private func viewPictureDetailScreen(indexPath index: IndexPath) {
         let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
         guard let pictureDetailController = mainStoryboard.instantiateViewController(withIdentifier: "PictureDetail") as? PictureDetailController else { return }
@@ -94,7 +97,7 @@ class PictureListController: UITableViewController, UIImagePickerControllerDeleg
         navigationController?.pushViewController(pictureDetailController, animated: true)
     }
     
-    // MARK: - Extra Functions
+    
     private func getDocumentDirectory() -> URL {
         let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return urls[0]
@@ -106,7 +109,7 @@ class PictureListController: UITableViewController, UIImagePickerControllerDeleg
         UserDefaults.standard.set(data, forKey: "Pictures")
     }
     
-    private func loadPictures() {
+    @objc private func loadPictures() {
         guard
             let data = UserDefaults.standard.object(forKey: "Pictures") as? Data,
             let tmpPictures = try? JSONDecoder().decode([Picture].self, from: data)
