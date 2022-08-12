@@ -58,6 +58,9 @@
                             </label>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="ohv-ed-tSs">
                                 <rect key="frame" x="121" y="747.5" width="260.5" height="31"/>
+                                <connections>
+                                    <action selector="intensityChanged:" destination="HDh-Re-czd" eventType="touchDragInside" id="bf3-yE-dkB"/>
+                                </connections>
                             </slider>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8UH-qM-rcF">
                                 <rect key="frame" x="3.5" y="805" width="207" height="31"/>
