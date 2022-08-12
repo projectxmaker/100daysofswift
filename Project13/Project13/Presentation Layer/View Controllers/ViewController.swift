@@ -141,9 +141,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         
         applyProcessing()
     }
-    //  - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo;
-
-    //func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
 
     @objc private func handleResultOfSavingImage(image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: UnsafeRawPointer) {
         
