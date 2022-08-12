@@ -11,6 +11,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var intensity: UISlider!
+    @IBOutlet weak var buttonChangeFilter: UIButton!
     
     var currentImage: UIImage!
     
@@ -34,8 +35,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         title = "Instafilter"
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleSelectImageFromPhotoButtonTapped))
         
+        let defaultFilter = filterList[0]
+        
         context = CIContext()
-        currentFilter = CIFilter(name: "CISepiaTone")
+        currentFilter = CIFilter(name: defaultFilter)
+        
+        setTitleForChangeFilterButton(title: defaultFilter)
     }
 
     // MARK: - Button Functions
@@ -92,13 +97,16 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
     private func setFilter(action: UIAlertAction) {
         // ensure there is an image ready to be filtered, and a filter is selected
         guard
-            currentImage != nil,
             let filterName = action.title
         else { return}
         
+        setTitleForChangeFilterButton(title: filterName)
+        
         currentFilter = CIFilter(name: filterName)
         
-        setCurrentImageToCurrentFilter()
+        if currentImage != nil {
+            setCurrentImageToCurrentFilter()
+        }
     }
     
     private func applyProcessing() {
@@ -150,6 +158,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
             
             present(ac, animated: true)
         }
+    }
+    
+    private func setTitleForChangeFilterButton(title: String) {
+        buttonChangeFilter.setTitle(title, for: .normal)
     }
 }
 
