@@ -76,7 +76,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
     }
     
     @IBAction private func save(_ sender: Any) {
+        guard let imageToBeSaved = imageView.image else { return }
         
+        UIImageWriteToSavedPhotosAlbum(imageToBeSaved, self, #selector(handleResultOfSavingImage(image:didFinishSavingWithError:contextInfo:)), nil)
     }
     
     // MARK: - Extra Functions
@@ -123,6 +125,24 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         currentFilter.setValue(beginImage, forKey: kCIInputImageKey)
         
         applyProcessing()
+    }
+    //  - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo;
+
+    //func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+
+    @objc private func handleResultOfSavingImage(image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: UnsafeRawPointer) {
+        
+        if let error = error {
+            let ac = UIAlertController(title: "Error!", message: "Saving image failed. It caused by \(error.localizedDescription)", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "Got it!", style: .cancel))
+            
+            present(ac, animated: true)
+        } else {
+            let ac = UIAlertController(title: "Saved Image Successfully!", message: nil, preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "Got it!", style: .cancel))
+            
+            present(ac, animated: true)
+        }
     }
 }
 
