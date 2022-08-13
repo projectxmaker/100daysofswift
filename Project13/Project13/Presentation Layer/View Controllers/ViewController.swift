@@ -11,6 +11,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var intensity: UISlider!
+    @IBOutlet weak var radius: UISlider!
+    @IBOutlet weak var scale: UISlider!
     @IBOutlet weak var buttonChangeFilter: UIButton!
     
     var currentImage: UIImage!
@@ -35,12 +37,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         title = "Instafilter"
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleSelectImageFromPhotoButtonTapped))
         
-        let defaultFilter = filterList[0]
-        
-        context = CIContext()
-        currentFilter = CIFilter(name: defaultFilter)
-        
-        setTitleForChangeFilterButton(title: defaultFilter)
+        setupFilterSystem()
     }
 
     // MARK: - Button Functions
@@ -68,11 +65,19 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         applyProcessing()
     }
     
-    @IBAction private func changeFilter(_ sender: Any) {
+    @IBAction private func radiusChanged(_ sender: Any) {
+        applyProcessing()
+    }
+    
+    @IBAction private func scaleChanged(_ sender: Any) {
+        applyProcessing()
+    }
+    
+    @IBAction private func handleChangeFilterButtonTapped(_ sender: Any) {
         let ac = UIAlertController(title: "Change Filter", message: nil, preferredStyle: .alert)
         
         for eachFilterName in filterList {
-            ac.addAction(UIAlertAction(title: eachFilterName, style: .default, handler: setFilter))
+            ac.addAction(UIAlertAction(title: eachFilterName, style: .default, handler: handleFilterOptionTapped))
         }
         
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
@@ -80,29 +85,34 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         present(ac, animated: true)
     }
     
-    @IBAction private func save(_ sender: Any) {
+    @IBAction private func handleSaveButtonTapped(_ sender: Any) {
         guard let imageToBeSaved = imageView.image else {
             let ac = UIAlertController(title: "No Image To Save!", message: "There is no Image to be saved!", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "Got It!", style: .cancel))
-            
+
             present(ac, animated: true)
-            
+
             return
         }
-        
+
         UIImageWriteToSavedPhotosAlbum(imageToBeSaved, self, #selector(handleResultOfSavingImage(image:didFinishSavingWithError:contextInfo:)), nil)
     }
     
     // MARK: - Extra Functions
-    private func setFilter(action: UIAlertAction) {
+    private func handleFilterOptionTapped(action: UIAlertAction) {
         // ensure there is an image ready to be filtered, and a filter is selected
         guard
             let filterName = action.title
         else { return}
         
-        setTitleForChangeFilterButton(title: filterName)
-        
+        setFilter(filterName: filterName)
+    }
+    
+    private func setFilter(filterName: String) {
         currentFilter = CIFilter(name: filterName)
+        
+        setTitleForChangeFilterButton(title: filterName)
+        setupSliderVisibility()
         
         if currentImage != nil {
             setCurrentImageToCurrentFilter()
@@ -110,21 +120,19 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
     }
     
     private func applyProcessing() {
-        let supportedKeys = currentFilter.inputKeys
-        
-        if supportedKeys.contains(kCIInputIntensityKey) {
+        if supportIntensitySlider() {
             currentFilter.setValue(intensity.value, forKey: kCIInputIntensityKey)
         }
         
-        if supportedKeys.contains(kCIInputRadiusKey) {
-            currentFilter.setValue(intensity.value * 200, forKey: kCIInputRadiusKey)
+        if supportRadiusSlider() {
+            currentFilter.setValue(radius.value, forKey: kCIInputRadiusKey)
         }
         
-        if supportedKeys.contains(kCIInputScaleKey) {
-            currentFilter.setValue(intensity.value * 10, forKey: kCIInputScaleKey)
+        if supportScaleSlider() {
+            currentFilter.setValue(scale.value, forKey: kCIInputScaleKey)
         }
         
-        if supportedKeys.contains(kCIInputCenterKey) {
+        if supportCenterKey() {
             currentFilter.setValue(CIVector(x: currentImage.size.width / 2, y: currentImage.size.height / 2), forKey: kCIInputCenterKey)
         }
         
@@ -159,6 +167,39 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
     
     private func setTitleForChangeFilterButton(title: String) {
         buttonChangeFilter.setTitle(title, for: .normal)
+    }
+    
+    private func supportIntensitySlider() -> Bool {
+        currentFilter.inputKeys.contains(kCIInputIntensityKey)
+    }
+    
+    private func supportRadiusSlider() -> Bool {
+        currentFilter.inputKeys.contains(kCIInputRadiusKey)
+    }
+    
+    private func supportScaleSlider() -> Bool {
+        currentFilter.inputKeys.contains(kCIInputScaleKey)
+    }
+    
+    private func supportCenterKey() -> Bool {
+        currentFilter.inputKeys.contains(kCIInputCenterKey)
+    }
+    
+    private func setupSliderVisibility() {
+        enableSlider(intensity, isEnabled: supportIntensitySlider())
+        enableSlider(radius, isEnabled: supportRadiusSlider())
+        enableSlider(scale, isEnabled: supportScaleSlider())
+    }
+    
+    private func setupFilterSystem() {
+        context = CIContext()
+        
+        setFilter(filterName: filterList[0])
+    }
+    
+    private func enableSlider(_ slider: UISlider, isEnabled: Bool) {
+        slider.isSelected = isEnabled
+        slider.isEnabled = isEnabled
     }
 }
 
