@@ -14,6 +14,13 @@ class WhackSlot: SKNode {
     
     var penguin: SKSpriteNode!
     
+    private(set) var hitToWhichCharType: CharType?
+    
+    enum CharType {
+    case charGood
+    case charEvil
+    }
+    
     func config(at: CGPoint) {
         position = at
         
@@ -40,10 +47,10 @@ class WhackSlot: SKNode {
         
         if Int.random(in: 0..<2) == 0 {
             penguin.texture = SKTexture(imageNamed: "penguinGood")
-            penguin.name = "penguinGood"
+            penguin.name = "charGood"
         } else {
             penguin.texture = SKTexture(imageNamed: "penguinEvil")
-            penguin.name = "penguinEvil"
+            penguin.name = "charEvil"
         }
 
         isVisible = true
@@ -60,6 +67,45 @@ class WhackSlot: SKNode {
         penguin.run(SKAction.moveBy(x: 0, y: -80, duration: 0.05))
         
         isVisible = false
-        isHit = false
+        
+        penguin.xScale = 1
+        penguin.xScale = 1
+    }
+    
+    func hit(next doNext: @escaping (WhackSlot) -> Void) {
+        guard
+            isVisible,
+            !isHit
+        else {
+            return
+        }
+
+        isHit = true
+        
+        let wait = SKAction.wait(forDuration: 0.25)
+        let hide = SKAction.moveBy(x: 0, y: -80, duration: 0.05)
+        let hitEffect = SKAction.run { [weak penguin, weak self] in
+            if penguin?.name == "charEvil" {
+                penguin?.xScale = 0.8
+                penguin?.xScale = 0.8
+    
+                penguin?.run(SKAction.playSoundFileNamed("whack.caf", waitForCompletion: false))
+    
+                self?.hitToWhichCharType = .charEvil
+            } else {
+                penguin?.run(SKAction.playSoundFileNamed("whackBad.caf", waitForCompletion: false))
+    
+                self?.hitToWhichCharType = .charGood
+            }
+        }
+        let notVisible = SKAction.run { [weak self] in
+            self?.hide()
+        }
+        let callNext = SKAction.run { [doNext] in
+            doNext(self)
+        }
+        
+        penguin.run(SKAction.sequence([wait, hide, hitEffect, notVisible, callNext]))
+
     }
 }
