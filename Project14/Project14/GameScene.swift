@@ -19,6 +19,9 @@ class GameScene: SKScene {
     
     var slots = [WhackSlot]()
     
+    private var numberOfWaves = 0
+    private var maximumWaves = 30
+    
     override func didMove(to view: SKView) {
         let background = SKSpriteNode(imageNamed: "whackBackground")
         background.position = CGPoint(x: 512, y: 384)
@@ -85,6 +88,21 @@ class GameScene: SKScene {
     }
 
     private func newWave() {
+        numberOfWaves += 1
+        
+        if numberOfWaves > maximumWaves {
+            for eachSlot in slots {
+                eachSlot.hide()
+            }
+            
+            let gameOver = SKSpriteNode(imageNamed: "gameOver")
+            gameOver.position = CGPoint(x: 512, y: 384)
+            gameOver.zPosition = 1
+            addChild(gameOver)
+
+            return
+        }
+        
         popupTime *= 0.991
         
         slots.shuffle()

@@ -55,6 +55,7 @@ class WhackSlot: SKNode {
 
         isVisible = true
         isHit = false
+        hitToWhichCharType = nil
         
         DispatchQueue.main.asyncAfter(deadline: .now() + (hideTime*3.5)) { [weak self] in
             self?.hide()
