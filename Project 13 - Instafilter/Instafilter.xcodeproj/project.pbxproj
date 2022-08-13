@@ -16,7 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8AE31E1928A64F2C00EB17EA /* Project13.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project13.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8AE31E1928A64F2C00EB17EA /* Instafilter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Instafilter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8AE31E1C28A64F2C00EB17EA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8AE31E1E28A64F2C00EB17EA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		8AE31E2028A64F2C00EB17EA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -40,7 +40,7 @@
 		8AE31E1028A64F2C00EB17EA = {
 			isa = PBXGroup;
 			children = (
-				8AE31E1B28A64F2C00EB17EA /* Project13 */,
+				8AE31E1B28A64F2C00EB17EA /* Instafilter */,
 				8AE31E1A28A64F2C00EB17EA /* Products */,
 			);
 			sourceTree = "<group>";
@@ -48,19 +48,19 @@
 		8AE31E1A28A64F2C00EB17EA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8AE31E1928A64F2C00EB17EA /* Project13.app */,
+				8AE31E1928A64F2C00EB17EA /* Instafilter.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		8AE31E1B28A64F2C00EB17EA /* Project13 */ = {
+		8AE31E1B28A64F2C00EB17EA /* Instafilter */ = {
 			isa = PBXGroup;
 			children = (
 				8AE31E3028A64F3700EB17EA /* Presentation Layer */,
 				8AE31E2528A64F2D00EB17EA /* Assets.xcassets */,
 				8AE31E2A28A64F2D00EB17EA /* Info.plist */,
 			);
-			path = Project13;
+			path = Instafilter;
 			sourceTree = "<group>";
 		};
 		8AE31E3028A64F3700EB17EA /* Presentation Layer */ = {
@@ -94,9 +94,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8AE31E1828A64F2C00EB17EA /* Project13 */ = {
+		8AE31E1828A64F2C00EB17EA /* Instafilter */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8AE31E2D28A64F2D00EB17EA /* Build configuration list for PBXNativeTarget "Project13" */;
+			buildConfigurationList = 8AE31E2D28A64F2D00EB17EA /* Build configuration list for PBXNativeTarget "Instafilter" */;
 			buildPhases = (
 				8AE31E1528A64F2C00EB17EA /* Sources */,
 				8AE31E1628A64F2C00EB17EA /* Frameworks */,
@@ -106,9 +106,9 @@
 			);
 			dependencies = (
 			);
-			name = Project13;
+			name = Instafilter;
 			productName = Project13;
-			productReference = 8AE31E1928A64F2C00EB17EA /* Project13.app */;
+			productReference = 8AE31E1928A64F2C00EB17EA /* Instafilter.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -126,7 +126,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 8AE31E1428A64F2C00EB17EA /* Build configuration list for PBXProject "Project13" */;
+			buildConfigurationList = 8AE31E1428A64F2C00EB17EA /* Build configuration list for PBXProject "Instafilter" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -139,7 +139,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8AE31E1828A64F2C00EB17EA /* Project13 */,
+				8AE31E1828A64F2C00EB17EA /* Instafilter */,
 			);
 		};
 /* End PBXProject section */
@@ -313,7 +313,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TT8TA55RWH;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Project13/Info.plist;
+				INFOPLIST_FILE = Instafilter/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -324,7 +324,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.Project13;
+				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.Instafilter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -341,7 +341,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TT8TA55RWH;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Project13/Info.plist;
+				INFOPLIST_FILE = Instafilter/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -352,7 +352,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.Project13;
+				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.Instafilter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -363,7 +363,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		8AE31E1428A64F2C00EB17EA /* Build configuration list for PBXProject "Project13" */ = {
+		8AE31E1428A64F2C00EB17EA /* Build configuration list for PBXProject "Instafilter" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8AE31E2B28A64F2D00EB17EA /* Debug */,
@@ -372,7 +372,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8AE31E2D28A64F2D00EB17EA /* Build configuration list for PBXNativeTarget "Project13" */ = {
+		8AE31E2D28A64F2D00EB17EA /* Build configuration list for PBXNativeTarget "Instafilter" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8AE31E2E28A64F2D00EB17EA /* Debug */,
