@@ -21,10 +21,12 @@ class WhackSlot: SKNode {
         case charEvil
     }
     
+    var hole: SKSpriteNode!
+    
     func config(at: CGPoint) {
         position = at
         
-        let hole = SKSpriteNode(imageNamed: "whackHole")
+        hole = SKSpriteNode(imageNamed: "whackHole")
         addChild(hole)
         
         let mask = SKCropNode()
@@ -42,6 +44,12 @@ class WhackSlot: SKNode {
     
     func show(hideTime: Double) {
         guard !isVisible else { return }
+        
+        if let mudEffect = SKEmitterNode(fileNamed: "mud") {
+            mudEffect.position = hole.position
+            mudEffect.zPosition = 2
+            addChild(mudEffect)
+        }
         
         penguin.run(SKAction.moveBy(x: 0, y: 80, duration: 0.05))
         
@@ -64,6 +72,12 @@ class WhackSlot: SKNode {
     
     func hide() {
         guard isVisible else { return }
+        
+        if let mudEffect = SKEmitterNode(fileNamed: "spark") {
+            mudEffect.position = hole.position
+            mudEffect.zPosition = 2
+            addChild(mudEffect)
+        }
         
         penguin.run(SKAction.moveBy(x: 0, y: -80, duration: 0.05))
         
@@ -98,11 +112,18 @@ class WhackSlot: SKNode {
     
                 self?.hitToWhichCharType = .charGood
             }
+            
+            if let smokeEffect = SKEmitterNode(fileNamed: "smoke") {
+                smokeEffect.position = self?.hole.position ?? CGPoint()
+                smokeEffect.zPosition = 2
+                self?.addChild(smokeEffect)
+            }
+            
         }
         let notVisible = SKAction.run { [weak self] in
             self?.hide()
         }
-        let callNext = SKAction.run { [doNext] in
+        let callNext = SKAction.run {
             doNext(self)
         }
         
