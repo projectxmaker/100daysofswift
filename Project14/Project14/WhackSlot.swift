@@ -17,8 +17,8 @@ class WhackSlot: SKNode {
     private(set) var hitToWhichCharType: CharType?
     
     enum CharType {
-    case charGood
-    case charEvil
+        case charGood
+        case charEvil
     }
     
     func config(at: CGPoint) {

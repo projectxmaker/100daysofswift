@@ -20,7 +20,7 @@ class GameScene: SKScene {
     var slots = [WhackSlot]()
     
     private var numberOfWaves = 0
-    private var maximumWaves = 2
+    private var maximumWaves = 30
     
     override func didMove(to view: SKView) {
         let background = SKSpriteNode(imageNamed: "whackBackground")
@@ -98,9 +98,17 @@ class GameScene: SKScene {
             let gameOver = SKSpriteNode(imageNamed: "gameOver")
             gameOver.position = CGPoint(x: 512, y: 384)
             gameOver.zPosition = 1
+            
+            let scoreNote = SKLabelNode(fontNamed: "Chalkduster")
+            scoreNote.fontSize = 40
+            scoreNote.text = "Final Score: \(score)"
+            scoreNote.position = CGPoint(x: 0, y: -100)
+            scoreNote.horizontalAlignmentMode = .center
+            gameOver.addChild(scoreNote)
+            
             addChild(gameOver)
 
-            run(SKAction.playSoundFileNamed("gameOverSound.aifc", waitForCompletion: false)) 
+            run(SKAction.playSoundFileNamed("gameOverSound.aifc", waitForCompletion: false))
             
             return
         }
