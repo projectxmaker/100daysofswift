@@ -7,8 +7,10 @@
 
 import SpriteKit
 
+let defaultPopupTime = 0.85
+
 class GameScene: SKScene {
-    var popupTime = 0.85
+    var popupTime = defaultPopupTime
     
     var gameScore: SKLabelNode!
     var score = 0 {
@@ -23,7 +25,7 @@ class GameScene: SKScene {
     private var maximumWaves = 30
     
     private var gameOver: SKSpriteNode!
-    
+
     override func didMove(to view: SKView) {
         let background = SKSpriteNode(imageNamed: "whackBackground")
         background.position = CGPoint(x: 512, y: 384)
@@ -149,6 +151,7 @@ class GameScene: SKScene {
     }
     
     private func restartGame() {
+        popupTime = defaultPopupTime
         numberOfWaves = 0
         
         gameOver.removeAllChildren()
