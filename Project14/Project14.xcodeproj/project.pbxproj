@@ -17,6 +17,7 @@
 		8AE31E7728A79E6600EB17EA /* WhackSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE31E7628A79E6600EB17EA /* WhackSlot.swift */; };
 		8AE31E7C28A8026000EB17EA /* whack.caf in Resources */ = {isa = PBXBuildFile; fileRef = 8AE31E7A28A8026000EB17EA /* whack.caf */; };
 		8AE31E7D28A8026000EB17EA /* whackBad.caf in Resources */ = {isa = PBXBuildFile; fileRef = 8AE31E7B28A8026000EB17EA /* whackBad.caf */; };
+		8AE31E8328A88CEE00EB17EA /* gameOverSound.aifc in Resources */ = {isa = PBXBuildFile; fileRef = 8AE31E8228A88CEE00EB17EA /* gameOverSound.aifc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		8AE31E7628A79E6600EB17EA /* WhackSlot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhackSlot.swift; sourceTree = "<group>"; };
 		8AE31E7A28A8026000EB17EA /* whack.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = whack.caf; sourceTree = "<group>"; };
 		8AE31E7B28A8026000EB17EA /* whackBad.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = whackBad.caf; sourceTree = "<group>"; };
+		8AE31E8228A88CEE00EB17EA /* gameOverSound.aifc */ = {isa = PBXFileReference; lastKnownFileType = file; path = gameOverSound.aifc; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +75,7 @@
 				8AE31E6E28A7928500EB17EA /* LaunchScreen.storyboard */,
 				8AE31E7A28A8026000EB17EA /* whack.caf */,
 				8AE31E7B28A8026000EB17EA /* whackBad.caf */,
+				8AE31E8228A88CEE00EB17EA /* gameOverSound.aifc */,
 			);
 			path = Project14;
 			sourceTree = "<group>";
@@ -141,6 +144,7 @@
 				8AE31E6D28A7928500EB17EA /* Assets.xcassets in Resources */,
 				8AE31E7028A7928500EB17EA /* LaunchScreen.storyboard in Resources */,
 				8AE31E7D28A8026000EB17EA /* whackBad.caf in Resources */,
+				8AE31E8328A88CEE00EB17EA /* gameOverSound.aifc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

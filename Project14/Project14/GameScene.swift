@@ -20,7 +20,7 @@ class GameScene: SKScene {
     var slots = [WhackSlot]()
     
     private var numberOfWaves = 0
-    private var maximumWaves = 30
+    private var maximumWaves = 2
     
     override func didMove(to view: SKView) {
         let background = SKSpriteNode(imageNamed: "whackBackground")
@@ -100,6 +100,8 @@ class GameScene: SKScene {
             gameOver.zPosition = 1
             addChild(gameOver)
 
+            run(SKAction.playSoundFileNamed("gameOverSound.aifc", waitForCompletion: false)) 
+            
             return
         }
         
