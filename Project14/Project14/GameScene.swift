@@ -20,7 +20,7 @@ class GameScene: SKScene {
     var slots = [WhackSlot]()
     
     private var numberOfWaves = 0
-    private var maximumWaves = 2
+    private var maximumWaves = 30
     
     private var gameOver: SKSpriteNode!
     
