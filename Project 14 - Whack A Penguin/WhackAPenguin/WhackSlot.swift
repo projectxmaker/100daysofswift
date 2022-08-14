@@ -45,13 +45,14 @@ class WhackSlot: SKNode {
     func show(hideTime: Double) {
         guard !isVisible else { return }
         
+        penguin.xScale = 1
+        penguin.xScale = 1
+        
         if let mudEffect = SKEmitterNode(fileNamed: "mud") {
             mudEffect.position = hole.position
             mudEffect.zPosition = 2
             addChild(mudEffect)
         }
-        
-        penguin.run(SKAction.moveBy(x: 0, y: 80, duration: 0.05))
         
         if Int.random(in: 0..<2) == 0 {
             penguin.texture = SKTexture(imageNamed: "penguinGood")
@@ -60,6 +61,8 @@ class WhackSlot: SKNode {
             penguin.texture = SKTexture(imageNamed: "penguinEvil")
             penguin.name = "charEvil"
         }
+        
+        penguin.run(SKAction.moveBy(x: 0, y: 80, duration: 0.05))
 
         isVisible = true
         isHit = false
@@ -70,21 +73,18 @@ class WhackSlot: SKNode {
         }
     }
     
-    func hide() {
-        guard isVisible else { return }
-        
-        if let mudEffect = SKEmitterNode(fileNamed: "spark") {
-            mudEffect.position = hole.position
-            mudEffect.zPosition = 2
-            addChild(mudEffect)
+    func hide(byWhacked: Bool = false) {
+        if byWhacked || isVisible {
+            if let sparkEffect = SKEmitterNode(fileNamed: "spark") {
+                sparkEffect.position = hole.position
+                sparkEffect.zPosition = 2
+                addChild(sparkEffect)
+            }
+            
+            penguin.run(SKAction.moveBy(x: 0, y: -80, duration: 0.05))
+            
+            isVisible = false
         }
-        
-        penguin.run(SKAction.moveBy(x: 0, y: -80, duration: 0.05))
-        
-        isVisible = false
-        
-        penguin.xScale = 1
-        penguin.xScale = 1
     }
     
     func hit(next doNext: @escaping (WhackSlot) -> Void) {
@@ -98,11 +98,10 @@ class WhackSlot: SKNode {
         isHit = true
         
         let wait = SKAction.wait(forDuration: 0.25)
-        let hide = SKAction.moveBy(x: 0, y: -80, duration: 0.05)
         let hitEffect = SKAction.run { [weak penguin, weak self] in
             if penguin?.name == "charEvil" {
-                penguin?.xScale = 0.8
-                penguin?.xScale = 0.8
+                penguin?.xScale = 0.85
+                penguin?.xScale = 0.85
     
                 penguin?.run(SKAction.playSoundFileNamed("whack.caf", waitForCompletion: false))
     
@@ -121,13 +120,13 @@ class WhackSlot: SKNode {
             
         }
         let notVisible = SKAction.run { [weak self] in
-            self?.hide()
+            self?.hide(byWhacked: true)
         }
         let callNext = SKAction.run {
             doNext(self)
         }
         
-        penguin.run(SKAction.sequence([wait, hide, hitEffect, notVisible, callNext]))
+        penguin.run(SKAction.sequence([wait, hitEffect, notVisible, callNext]))
 
     }
 }

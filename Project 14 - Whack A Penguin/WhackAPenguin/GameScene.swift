@@ -136,10 +136,6 @@ class GameScene: SKScene {
         }
     }
     
-    @objc private func handleRestartButotnTapped() {
-        print("heello")
-    }
-    
     private func updateScore(_ whackSlot: WhackSlot) {
         let hitToCharType = whackSlot.hitToWhichCharType
 
@@ -153,6 +149,7 @@ class GameScene: SKScene {
     private func restartGame() {
         popupTime = defaultPopupTime
         numberOfWaves = 0
+        score = 0
         
         gameOver.removeAllChildren()
         gameOver.removeFromParent()
