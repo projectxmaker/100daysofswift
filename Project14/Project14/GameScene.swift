@@ -53,12 +53,7 @@ class GameScene: SKScene {
         
         for eachNode in nodes {
             if eachNode.name == "restartButton" {
-                numberOfWaves = 0
-                
-                gameOver.removeAllChildren()
-                gameOver.removeFromParent()
-                
-                newWave()
+                restartGame()
                 break
             }
             
@@ -103,32 +98,7 @@ class GameScene: SKScene {
         numberOfWaves += 1
         
         if numberOfWaves > maximumWaves {
-            for eachSlot in slots {
-                eachSlot.hide()
-            }
-            
-            gameOver = SKSpriteNode(imageNamed: "gameOver")
-            gameOver.position = CGPoint(x: 512, y: 384)
-            gameOver.zPosition = 1
-            
-            let scoreNote = SKLabelNode(fontNamed: "Chalkduster")
-            scoreNote.fontSize = 40
-            scoreNote.text = "Final Score: \(score)"
-            scoreNote.position = CGPoint(x: 0, y: -100)
-            scoreNote.horizontalAlignmentMode = .center
-            gameOver.addChild(scoreNote)
-            
-            let restartLabel = SKLabelNode(fontNamed: "Andale")
-            restartLabel.fontSize = 40
-            restartLabel.text = "Restart"
-            restartLabel.position = CGPoint(x: 0, y: -200)
-            restartLabel.horizontalAlignmentMode = .center
-            restartLabel.name = "restartButton"
-            gameOver.addChild(restartLabel)
-            
-            addChild(gameOver)
-
-            run(SKAction.playSoundFileNamed("gameOverSound.aifc", waitForCompletion: false))
+            runGameOver()
             
             return
         }
@@ -176,5 +146,43 @@ class GameScene: SKScene {
         } else if hitToCharType == .charEvil {
             self.score += 1
         }
+    }
+    
+    private func restartGame() {
+        numberOfWaves = 0
+        
+        gameOver.removeAllChildren()
+        gameOver.removeFromParent()
+        
+        newWave()
+    }
+    
+    private func runGameOver() {
+        for eachSlot in slots {
+            eachSlot.hide()
+        }
+        
+        gameOver = SKSpriteNode(imageNamed: "gameOver")
+        gameOver.position = CGPoint(x: 512, y: 384)
+        gameOver.zPosition = 1
+        
+        let scoreNote = SKLabelNode(fontNamed: "Chalkduster")
+        scoreNote.fontSize = 40
+        scoreNote.text = "Final Score: \(score)"
+        scoreNote.position = CGPoint(x: 0, y: -100)
+        scoreNote.horizontalAlignmentMode = .center
+        gameOver.addChild(scoreNote)
+        
+        let restartLabel = SKLabelNode(fontNamed: "Andale")
+        restartLabel.fontSize = 40
+        restartLabel.text = "Restart"
+        restartLabel.position = CGPoint(x: 0, y: -200)
+        restartLabel.horizontalAlignmentMode = .center
+        restartLabel.name = "restartButton"
+        gameOver.addChild(restartLabel)
+        
+        addChild(gameOver)
+
+        run(SKAction.playSoundFileNamed("gameOverSound.aifc", waitForCompletion: false))
     }
 }
