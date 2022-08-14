@@ -20,7 +20,9 @@ class GameScene: SKScene {
     var slots = [WhackSlot]()
     
     private var numberOfWaves = 0
-    private var maximumWaves = 30
+    private var maximumWaves = 2
+    
+    private var gameOver: SKSpriteNode!
     
     override func didMove(to view: SKView) {
         let background = SKSpriteNode(imageNamed: "whackBackground")
@@ -50,6 +52,16 @@ class GameScene: SKScene {
         let nodes = nodes(at: location)
         
         for eachNode in nodes {
+            if eachNode.name == "restartButton" {
+                numberOfWaves = 0
+                
+                gameOver.removeAllChildren()
+                gameOver.removeFromParent()
+                
+                newWave()
+                break
+            }
+            
             guard let whackSlot = eachNode.parent?.parent as? WhackSlot else {
                 continue
             }
@@ -95,7 +107,7 @@ class GameScene: SKScene {
                 eachSlot.hide()
             }
             
-            let gameOver = SKSpriteNode(imageNamed: "gameOver")
+            gameOver = SKSpriteNode(imageNamed: "gameOver")
             gameOver.position = CGPoint(x: 512, y: 384)
             gameOver.zPosition = 1
             
@@ -105,6 +117,14 @@ class GameScene: SKScene {
             scoreNote.position = CGPoint(x: 0, y: -100)
             scoreNote.horizontalAlignmentMode = .center
             gameOver.addChild(scoreNote)
+            
+            let restartLabel = SKLabelNode(fontNamed: "Andale")
+            restartLabel.fontSize = 40
+            restartLabel.text = "Restart"
+            restartLabel.position = CGPoint(x: 0, y: -200)
+            restartLabel.horizontalAlignmentMode = .center
+            restartLabel.name = "restartButton"
+            gameOver.addChild(restartLabel)
             
             addChild(gameOver)
 
@@ -142,6 +162,10 @@ class GameScene: SKScene {
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
             self?.newWave()
         }
+    }
+    
+    @objc private func handleRestartButotnTapped() {
+        print("heello")
     }
     
     private func updateScore(_ whackSlot: WhackSlot) {
