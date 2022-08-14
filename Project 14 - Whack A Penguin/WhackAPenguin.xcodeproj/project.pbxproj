@@ -24,7 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8AE31E5C28A7928400EB17EA /* Project14.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project14.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8AE31E5C28A7928400EB17EA /* WhackAPenguin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhackAPenguin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8AE31E5F28A7928400EB17EA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8AE31E6128A7928400EB17EA /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		8AE31E6528A7928400EB17EA /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -55,7 +55,7 @@
 		8AE31E5328A7928400EB17EA = {
 			isa = PBXGroup;
 			children = (
-				8AE31E5E28A7928400EB17EA /* Project14 */,
+				8AE31E5E28A7928400EB17EA /* WhackAPenguin */,
 				8AE31E5D28A7928400EB17EA /* Products */,
 			);
 			sourceTree = "<group>";
@@ -63,38 +63,38 @@
 		8AE31E5D28A7928400EB17EA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8AE31E5C28A7928400EB17EA /* Project14.app */,
+				8AE31E5C28A7928400EB17EA /* WhackAPenguin.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		8AE31E5E28A7928400EB17EA /* Project14 */ = {
+		8AE31E5E28A7928400EB17EA /* WhackAPenguin */ = {
 			isa = PBXGroup;
 			children = (
 				8AE31E5F28A7928400EB17EA /* AppDelegate.swift */,
 				8AE31E6128A7928400EB17EA /* GameScene.sks */,
 				8AE31E8428A890AF00EB17EA /* smoke.sks */,
+				8AE31E9228A89CC500EB17EA /* mud.sks */,
+				8AE31E8828A8962600EB17EA /* spark.sks */,
 				8AE31E6528A7928400EB17EA /* GameScene.swift */,
 				8AE31E7628A79E6600EB17EA /* WhackSlot.swift */,
 				8AE31E6728A7928400EB17EA /* GameViewController.swift */,
 				8AE31E6928A7928400EB17EA /* Main.storyboard */,
 				8AE31E6C28A7928500EB17EA /* Assets.xcassets */,
-				8AE31E8828A8962600EB17EA /* spark.sks */,
 				8AE31E6E28A7928500EB17EA /* LaunchScreen.storyboard */,
-				8AE31E9228A89CC500EB17EA /* mud.sks */,
 				8AE31E7A28A8026000EB17EA /* whack.caf */,
 				8AE31E7B28A8026000EB17EA /* whackBad.caf */,
 				8AE31E8228A88CEE00EB17EA /* gameOverSound.aifc */,
 			);
-			path = Project14;
+			path = WhackAPenguin;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8AE31E5B28A7928400EB17EA /* Project14 */ = {
+		8AE31E5B28A7928400EB17EA /* WhackAPenguin */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8AE31E7328A7928500EB17EA /* Build configuration list for PBXNativeTarget "Project14" */;
+			buildConfigurationList = 8AE31E7328A7928500EB17EA /* Build configuration list for PBXNativeTarget "WhackAPenguin" */;
 			buildPhases = (
 				8AE31E5828A7928400EB17EA /* Sources */,
 				8AE31E5928A7928400EB17EA /* Frameworks */,
@@ -104,9 +104,9 @@
 			);
 			dependencies = (
 			);
-			name = Project14;
+			name = WhackAPenguin;
 			productName = Project14;
-			productReference = 8AE31E5C28A7928400EB17EA /* Project14.app */;
+			productReference = 8AE31E5C28A7928400EB17EA /* WhackAPenguin.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -124,7 +124,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 8AE31E5728A7928400EB17EA /* Build configuration list for PBXProject "Project14" */;
+			buildConfigurationList = 8AE31E5728A7928400EB17EA /* Build configuration list for PBXProject "WhackAPenguin" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -137,7 +137,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8AE31E5B28A7928400EB17EA /* Project14 */,
+				8AE31E5B28A7928400EB17EA /* WhackAPenguin */,
 			);
 		};
 /* End PBXProject section */
@@ -330,7 +330,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.Project14;
+				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.WhackAPenguin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -358,7 +358,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.Project14;
+				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.WhackAPenguin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -369,7 +369,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		8AE31E5728A7928400EB17EA /* Build configuration list for PBXProject "Project14" */ = {
+		8AE31E5728A7928400EB17EA /* Build configuration list for PBXProject "WhackAPenguin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8AE31E7128A7928500EB17EA /* Debug */,
@@ -378,7 +378,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8AE31E7328A7928500EB17EA /* Build configuration list for PBXNativeTarget "Project14" */ = {
+		8AE31E7328A7928500EB17EA /* Build configuration list for PBXNativeTarget "WhackAPenguin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8AE31E7428A7928500EB17EA /* Debug */,
