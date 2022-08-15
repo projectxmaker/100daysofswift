@@ -7,7 +7,23 @@
 
 import Foundation
 
+// MARK: - Country
 class Country: Codable {
     var name: String
-    var alpha3Code: String
+    var topLevelDomain: [String]?
+    var alpha2Code, alpha3Code: String?
+    var callingCodes: [String]?
+    var capital: String?
+    var altSpellings: [String]?
+    var subregion, region: String?
+    var population: Int?
+    var latlng: [Int]?
+    var demonym: String?
+    var area: Int?
+    var timezones, borders: [String]?
+    var nativeName, numericCode: String?
+    var flag: String?
+    var cioc: String?
+    var independent: Bool?
 }
+
