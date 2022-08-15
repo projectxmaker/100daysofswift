@@ -19,7 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8AE556E628AAA2C50087F2B5 /* MilestoneP13To15.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MilestoneP13To15.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8AE556E628AAA2C50087F2B5 /* CountryBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CountryBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8AE556E928AAA2C50087F2B5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8AE556EB28AAA2C50087F2B5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		8AE556F028AAA2C50087F2B5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -46,7 +46,7 @@
 		8AE556DD28AAA2C50087F2B5 = {
 			isa = PBXGroup;
 			children = (
-				8AE556E828AAA2C50087F2B5 /* MilestoneP13To15 */,
+				8AE556E828AAA2C50087F2B5 /* CountryBook */,
 				8AE556E728AAA2C50087F2B5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -54,12 +54,12 @@
 		8AE556E728AAA2C50087F2B5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8AE556E628AAA2C50087F2B5 /* MilestoneP13To15.app */,
+				8AE556E628AAA2C50087F2B5 /* CountryBook.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		8AE556E828AAA2C50087F2B5 /* MilestoneP13To15 */ = {
+		8AE556E828AAA2C50087F2B5 /* CountryBook */ = {
 			isa = PBXGroup;
 			children = (
 				8AE5570928AAC0FD0087F2B5 /* Constants.swift */,
@@ -68,7 +68,7 @@
 				8AE556F228AAA2C60087F2B5 /* Assets.xcassets */,
 				8AE556F728AAA2C60087F2B5 /* Info.plist */,
 			);
-			path = MilestoneP13To15;
+			path = CountryBook;
 			sourceTree = "<group>";
 		};
 		8AE556FD28AAA2CF0087F2B5 /* Presentation Layer */ = {
@@ -111,9 +111,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8AE556E528AAA2C50087F2B5 /* MilestoneP13To15 */ = {
+		8AE556E528AAA2C50087F2B5 /* CountryBook */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8AE556FA28AAA2C60087F2B5 /* Build configuration list for PBXNativeTarget "MilestoneP13To15" */;
+			buildConfigurationList = 8AE556FA28AAA2C60087F2B5 /* Build configuration list for PBXNativeTarget "CountryBook" */;
 			buildPhases = (
 				8AE556E228AAA2C50087F2B5 /* Sources */,
 				8AE556E328AAA2C50087F2B5 /* Frameworks */,
@@ -123,9 +123,9 @@
 			);
 			dependencies = (
 			);
-			name = MilestoneP13To15;
+			name = CountryBook;
 			productName = MilestoneP13To15;
-			productReference = 8AE556E628AAA2C50087F2B5 /* MilestoneP13To15.app */;
+			productReference = 8AE556E628AAA2C50087F2B5 /* CountryBook.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -143,7 +143,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 8AE556E128AAA2C50087F2B5 /* Build configuration list for PBXProject "MilestoneP13To15" */;
+			buildConfigurationList = 8AE556E128AAA2C50087F2B5 /* Build configuration list for PBXProject "CountryBook" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -156,7 +156,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8AE556E528AAA2C50087F2B5 /* MilestoneP13To15 */,
+				8AE556E528AAA2C50087F2B5 /* CountryBook */,
 			);
 		};
 /* End PBXProject section */
@@ -333,7 +333,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TT8TA55RWH;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MilestoneP13To15/Info.plist;
+				INFOPLIST_FILE = CountryBook/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -344,7 +344,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.MilestoneP13To15;
+				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.CountryBook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -361,7 +361,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TT8TA55RWH;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MilestoneP13To15/Info.plist;
+				INFOPLIST_FILE = CountryBook/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -372,7 +372,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.MilestoneP13To15;
+				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.CountryBook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -383,7 +383,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		8AE556E128AAA2C50087F2B5 /* Build configuration list for PBXProject "MilestoneP13To15" */ = {
+		8AE556E128AAA2C50087F2B5 /* Build configuration list for PBXProject "CountryBook" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8AE556F828AAA2C60087F2B5 /* Debug */,
@@ -392,7 +392,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8AE556FA28AAA2C60087F2B5 /* Build configuration list for PBXNativeTarget "MilestoneP13To15" */ = {
+		8AE556FA28AAA2C60087F2B5 /* Build configuration list for PBXNativeTarget "CountryBook" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8AE556FB28AAA2C60087F2B5 /* Debug */,
