@@ -16,7 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8AE556B928A9C8950087F2B5 /* Project15.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project15.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8AE556B928A9C8950087F2B5 /* AnimateAPenguin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AnimateAPenguin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8AE556BC28A9C8950087F2B5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8AE556BE28A9C8950087F2B5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		8AE556C328A9C8950087F2B5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -40,7 +40,7 @@
 		8AE556B028A9C8950087F2B5 = {
 			isa = PBXGroup;
 			children = (
-				8AE556BB28A9C8950087F2B5 /* Project15 */,
+				8AE556BB28A9C8950087F2B5 /* AnimateAPenguin */,
 				8AE556BA28A9C8950087F2B5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -48,19 +48,19 @@
 		8AE556BA28A9C8950087F2B5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8AE556B928A9C8950087F2B5 /* Project15.app */,
+				8AE556B928A9C8950087F2B5 /* AnimateAPenguin.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		8AE556BB28A9C8950087F2B5 /* Project15 */ = {
+		8AE556BB28A9C8950087F2B5 /* AnimateAPenguin */ = {
 			isa = PBXGroup;
 			children = (
 				8AE556D028A9C8A30087F2B5 /* Presentation Layer */,
 				8AE556C528A9C8990087F2B5 /* Assets.xcassets */,
 				8AE556CA28A9C8990087F2B5 /* Info.plist */,
 			);
-			path = Project15;
+			path = AnimateAPenguin;
 			sourceTree = "<group>";
 		};
 		8AE556D028A9C8A30087F2B5 /* Presentation Layer */ = {
@@ -94,9 +94,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8AE556B828A9C8950087F2B5 /* Project15 */ = {
+		8AE556B828A9C8950087F2B5 /* AnimateAPenguin */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8AE556CD28A9C8990087F2B5 /* Build configuration list for PBXNativeTarget "Project15" */;
+			buildConfigurationList = 8AE556CD28A9C8990087F2B5 /* Build configuration list for PBXNativeTarget "AnimateAPenguin" */;
 			buildPhases = (
 				8AE556B528A9C8950087F2B5 /* Sources */,
 				8AE556B628A9C8950087F2B5 /* Frameworks */,
@@ -106,9 +106,9 @@
 			);
 			dependencies = (
 			);
-			name = Project15;
+			name = AnimateAPenguin;
 			productName = Project15;
-			productReference = 8AE556B928A9C8950087F2B5 /* Project15.app */;
+			productReference = 8AE556B928A9C8950087F2B5 /* AnimateAPenguin.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -126,7 +126,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 8AE556B428A9C8950087F2B5 /* Build configuration list for PBXProject "Project15" */;
+			buildConfigurationList = 8AE556B428A9C8950087F2B5 /* Build configuration list for PBXProject "AnimateAPenguin" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -139,7 +139,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8AE556B828A9C8950087F2B5 /* Project15 */,
+				8AE556B828A9C8950087F2B5 /* AnimateAPenguin */,
 			);
 		};
 /* End PBXProject section */
@@ -313,7 +313,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TT8TA55RWH;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Project15/Info.plist;
+				INFOPLIST_FILE = AnimateAPenguin/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -325,7 +325,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.Project15;
+				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.AnimateAPenguin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -342,7 +342,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TT8TA55RWH;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Project15/Info.plist;
+				INFOPLIST_FILE = AnimateAPenguin/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -354,7 +354,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.Project15;
+				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.AnimateAPenguin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -365,7 +365,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		8AE556B428A9C8950087F2B5 /* Build configuration list for PBXProject "Project15" */ = {
+		8AE556B428A9C8950087F2B5 /* Build configuration list for PBXProject "AnimateAPenguin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8AE556CB28A9C8990087F2B5 /* Debug */,
@@ -374,7 +374,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8AE556CD28A9C8990087F2B5 /* Build configuration list for PBXNativeTarget "Project15" */ = {
+		8AE556CD28A9C8990087F2B5 /* Build configuration list for PBXNativeTarget "AnimateAPenguin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8AE556CE28A9C8990087F2B5 /* Debug */,
