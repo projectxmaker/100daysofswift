@@ -17,9 +17,9 @@ class Country: Codable {
     var altSpellings: [String]?
     var subregion, region: String?
     var population: Int?
-    var latlng: [Int]?
+    var latlng: [Double]?
     var demonym: String?
-    var area: Int?
+    var area: Double?
     var timezones, borders: [String]?
     var nativeName, numericCode: String?
     var flag: String?

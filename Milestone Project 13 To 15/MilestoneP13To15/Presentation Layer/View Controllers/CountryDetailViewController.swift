@@ -71,10 +71,16 @@ class CountryDetailViewController: UITableViewController {
                 for eachValue in arrayValues {
                     tmpInfoText.append(eachValue.formatted())
                 }
+            } else if let arrayValues = eachProperty.value as? [Double] {
+                for eachValue in arrayValues {
+                    tmpInfoText.append(eachValue.formatted())
+                }
             } else if let valueOfBool = eachProperty.value as? Bool {
                 tmpInfoText.append(valueOfBool ? "true" : "false")
             } else if let valueOfInt = eachProperty.value as? Int {
                 tmpInfoText.append(valueOfInt.formatted())
+            } else if let valueOfDouble = eachProperty.value as? Double {
+                tmpInfoText.append(valueOfDouble.formatted())
             } else {
                 tmpInfoText.append(eachProperty.value as? String ?? "")
             }
