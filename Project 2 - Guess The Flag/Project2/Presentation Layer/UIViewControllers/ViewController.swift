@@ -82,6 +82,10 @@ class ViewController: UIViewController {
         title = "\(randomCorrectAnswer) | \(currentQuestionNumber)/\(totalOfQuestions) | Score: \(score)"
     }
     
+    private func flagTapped(_ sender: UIButton) {
+        bounceTheButton(sender, nextAction: evaluteAnswer)
+    }
+    
     private func evaluteAnswer(_ sender: UIButton) {
         let selectedAnswer = sender.tag
         if selectedAnswer == correctAnswer {
@@ -142,10 +146,19 @@ class ViewController: UIViewController {
         present(ac, animated: true, completion: nil)
     }
     
+    private func bounceTheButton(_ sender: UIButton, nextAction: @escaping (UIButton) -> Void) {
+        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 3, options: []) {
+            sender.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+        } completion: { _ in
+            sender.transform = CGAffineTransform.identity
+            nextAction(sender)
+        }
+    }
+    
     // MARK: - IBAction
     @IBAction func buttonTapped(_ sender: UIButton) {
         currentQuestionNumber += 1
-        evaluteAnswer(sender)
+        flagTapped(sender)
     }
 }
 
