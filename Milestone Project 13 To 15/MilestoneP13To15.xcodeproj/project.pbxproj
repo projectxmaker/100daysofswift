@@ -15,6 +15,7 @@
 		8AE5570128AAA63D0087F2B5 /* CountryListControllerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE5570028AAA63D0087F2B5 /* CountryListControllerTableViewController.swift */; };
 		8AE5570328AAA6CF0087F2B5 /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE5570228AAA6CF0087F2B5 /* Country.swift */; };
 		8AE5570628AAB2720087F2B5 /* CountryDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE5570528AAB2720087F2B5 /* CountryDetailViewController.swift */; };
+		8AE5570A28AAC0FD0087F2B5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE5570928AAC0FD0087F2B5 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		8AE5570028AAA63D0087F2B5 /* CountryListControllerTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryListControllerTableViewController.swift; sourceTree = "<group>"; };
 		8AE5570228AAA6CF0087F2B5 /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
 		8AE5570528AAB2720087F2B5 /* CountryDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryDetailViewController.swift; sourceTree = "<group>"; };
+		8AE5570928AAC0FD0087F2B5 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 		8AE556E828AAA2C50087F2B5 /* MilestoneP13To15 */ = {
 			isa = PBXGroup;
 			children = (
+				8AE5570928AAC0FD0087F2B5 /* Constants.swift */,
 				8AE556FD28AAA2CF0087F2B5 /* Presentation Layer */,
 				8AE5570428AAA8780087F2B5 /* Data Layer */,
 				8AE556F228AAA2C60087F2B5 /* Assets.xcassets */,
@@ -181,6 +184,7 @@
 				8AE556EC28AAA2C50087F2B5 /* SceneDelegate.swift in Sources */,
 				8AE5570628AAB2720087F2B5 /* CountryDetailViewController.swift in Sources */,
 				8AE5570128AAA63D0087F2B5 /* CountryListControllerTableViewController.swift in Sources */,
+				8AE5570A28AAC0FD0087F2B5 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

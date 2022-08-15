@@ -32,7 +32,7 @@ class CountryListControllerTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CountryCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: CountryListControllerTableViewController.keys.countryCellIdentifier, for: indexPath)
 
         let country = countries[indexPath.row]
         
@@ -50,7 +50,7 @@ class CountryListControllerTableViewController: UITableViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard
             let countryAlpha3Code = country.alpha3Code,
-            let countryDetailController = storyboard.instantiateViewController(withIdentifier: "CountryDetail") as? CountryDetailViewController else { return }
+            let countryDetailController = storyboard.instantiateViewController(withIdentifier: CountryDetailViewController.keys.countryDetailIdentifier) as? CountryDetailViewController else { return }
         
         countryDetailController.alpha3CodeOfSelectedCountry = countryAlpha3Code
         
@@ -60,7 +60,7 @@ class CountryListControllerTableViewController: UITableViewController {
     // MARK: - Extra Function
     
     @objc private func getCountryData() {
-        let countryListEndpoint = "https://restcountries.com/v2/all?fields=name,alpha3Code"
+        let countryListEndpoint = CountryListControllerTableViewController.keys.countryListAPIUrl
         guard
             let countryListUrl = URL(string: countryListEndpoint),
             let data = try? Data(contentsOf: countryListUrl),

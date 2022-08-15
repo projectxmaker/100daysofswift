@@ -31,7 +31,7 @@ class CountryDetailViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "DetailCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: CountryDetailViewController.keys.countryDetailCellIdentifier, for: indexPath)
 
         let detail = countryDetails[indexPath.row]
         
@@ -47,7 +47,7 @@ class CountryDetailViewController: UITableViewController {
     
     @objc private func getCountryDataByAlpha3Code() {
         let alpha3code = alpha3CodeOfSelectedCountry
-        let countryDetailEndpoint = "https://restcountries.com/v2/alpha/\(alpha3code)"
+        let countryDetailEndpoint = CountryDetailViewController.keys.countryDetailAPIUrl + alpha3code
         guard
             let countryDetailUrl = URL(string: countryDetailEndpoint),
             let data = try? Data(contentsOf: countryDetailUrl),
