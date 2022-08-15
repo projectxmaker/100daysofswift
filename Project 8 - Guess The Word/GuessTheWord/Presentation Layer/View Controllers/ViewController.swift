@@ -215,7 +215,7 @@ class ViewController: UIViewController {
         currentAnswerTextField.text = ""
         
         for eachActivatedButton in activatedAnswerButtons {
-            eachActivatedButton.isHidden = false
+            faceInTheButton(eachActivatedButton)
         }
         
         activatedAnswerButtons.removeAll(keepingCapacity: true)
@@ -299,7 +299,20 @@ class ViewController: UIViewController {
         currentAnswerTextField.text = currentAnswerTextField.text?.appending(buttonTitle)
         
         activatedAnswerButtons.append(button)
-        button.isHidden = true
+        
+        faceOutTheButton(button)
+    }
+    
+    private func faceOutTheButton(_ button: UIButton) {
+        UIView.animate(withDuration: 2, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 5, options: [], animations: {
+            button.alpha = 0
+        }, completion: nil)
+    }
+    
+    private func faceInTheButton(_ button: UIButton) {
+        UIView.animate(withDuration: 2, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 5, options: [], animations: {
+            button.alpha = 1
+        }, completion: nil)
     }
 }
 
