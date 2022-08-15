@@ -57,7 +57,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 
         dismiss(animated: true)
         
-        setCurrentImageToCurrentFilter()
+        fadeOutTheImageView(nextAction: setCurrentImageToCurrentFilter)
     }
     
     // MARK: - IB Actions
@@ -141,6 +141,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         guard let cgImage = context.createCGImage(image, from: image.extent) else { return }
         let newImage = UIImage(cgImage: cgImage)
         imageView.image = newImage
+        
+        fadeInTheImageView()
     }
     
     private func setCurrentImageToCurrentFilter() {
@@ -200,6 +202,21 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
     private func enableSlider(_ slider: UISlider, isEnabled: Bool) {
         slider.isSelected = isEnabled
         slider.isEnabled = isEnabled
+    }
+    
+    private func fadeOutTheImageView(nextAction: @escaping () -> Void) {
+        UIView.animate(withDuration: 1, delay: 0, options: []) { [weak self] in
+            self?.imageView.alpha = 0
+        } completion: { _ in
+            nextAction()
+        }
+    }
+    
+    private func fadeInTheImageView() {
+        UIView.animate(withDuration: 1, delay: 0, options: []) { [weak self] in
+            self?.imageView.alpha = 1
+        } completion: { _ in
+        }
     }
 }
 
