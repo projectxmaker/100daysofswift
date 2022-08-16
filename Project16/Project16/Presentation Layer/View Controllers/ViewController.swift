@@ -23,11 +23,11 @@ class ViewController: UIViewController, MKMapViewDelegate {
 
     // MARK: - Extra Functions
     private func initCapitals() {
-        let london = Capital(title: "London", coordinate: CLLocationCoordinate2D(latitude: 51.507222, longitude: -0.1275), info: "Home to the 2012 Summer Olympics.")
-        let oslo = Capital(title: "Oslo", coordinate: CLLocationCoordinate2D(latitude: 59.95, longitude: 10.75), info: "Founded over a thousand years ago.")
-        let paris = Capital(title: "Paris", coordinate: CLLocationCoordinate2D(latitude: 48.8567, longitude: 2.3508), info: "Often called the City of Light.")
-        let rome = Capital(title: "Rome", coordinate: CLLocationCoordinate2D(latitude: 41.9, longitude: 12.5), info: "Has a whole country inside it.")
-        let washington = Capital(title: "Washington DC", coordinate: CLLocationCoordinate2D(latitude: 38.895111, longitude: -77.036667), info: "Named after George himself.")
+        let london = Capital(title: "London", coordinate: CLLocationCoordinate2D(latitude: 51.507222, longitude: -0.1275), info: "Home to the 2012 Summer Olympics.", wikipediaUrl: "https://en.wikipedia.org/wiki/london")
+        let oslo = Capital(title: "Oslo", coordinate: CLLocationCoordinate2D(latitude: 59.95, longitude: 10.75), info: "Founded over a thousand years ago.", wikipediaUrl: "https://en.wikipedia.org/wiki/oslo")
+        let paris = Capital(title: "Paris", coordinate: CLLocationCoordinate2D(latitude: 48.8567, longitude: 2.3508), info: "Often called the City of Light.", wikipediaUrl: "https://en.wikipedia.org/wiki/paris")
+        let rome = Capital(title: "Rome", coordinate: CLLocationCoordinate2D(latitude: 41.9, longitude: 12.5), info: "Has a whole country inside it.", wikipediaUrl: "https://en.wikipedia.org/wiki/rome")
+        let washington = Capital(title: "Washington DC", coordinate: CLLocationCoordinate2D(latitude: 38.895111, longitude: -77.036667), info: "Named after George himself.", wikipediaUrl: "https://en.wikipedia.org/wiki/Washington,_D.C.")
         
         mapView.addAnnotations([london, oslo, paris, rome, washington])
     }
@@ -51,15 +51,17 @@ class ViewController: UIViewController, MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        guard let capital = view.annotation as? Capital else { return }
+        guard
+            let capital = view.annotation as? Capital,
+            let wikipediaUrl = capital.wikipediaUrl
+        else { return }
         
-        let name = capital.title ?? ""
-        let info = capital.info ?? ""
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let wikipediaViewController = storyboard.instantiateViewController(withIdentifier: "Wikipedia") as? WikipediaViewController else { return }
         
-        let ac = UIAlertController(title: "Info", message: "Name: \(name)\nInfo: \(info)", preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "Ok", style: .cancel))
+        wikipediaViewController.wikipediaUrl = wikipediaUrl
         
-        present(ac, animated: true)
+        navigationController?.pushViewController(wikipediaViewController, animated: true)
     }
     
     private func setupChangeMapTypeButton() {
