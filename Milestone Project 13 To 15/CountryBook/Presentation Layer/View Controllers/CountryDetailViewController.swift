@@ -75,6 +75,8 @@ class CountryDetailViewController: UITableViewController {
                 for eachValue in arrayValues {
                     tmpInfoText.append(eachValue.formatted())
                 }
+            } else if let arrayCurrencies = eachProperty.value as? [CountryDetail] {
+                tmpInfoText.append(getDescriptionOf(arrinfo: arrayCurrencies))
             } else if let valueOfBool = eachProperty.value as? Bool {
                 tmpInfoText.append(valueOfBool ? "true" : "false")
             } else if let valueOfInt = eachProperty.value as? Int {
@@ -93,5 +95,22 @@ class CountryDetailViewController: UITableViewController {
         DispatchQueue.main.async { [weak self] in
             self?.tableView.reloadData()
         }
+    }
+    
+    private func getDescriptionOf(arrinfo: [CountryDetail]) -> String {
+        var counter = 0
+        var tempArrInfo = [String]()
+        for eachInfo in arrinfo {
+            if counter > 0 {
+                tempArrInfo.append("---")
+            } else {
+                tempArrInfo.append("")
+            }
+            counter += 1
+            
+            tempArrInfo.append(eachInfo.description())
+        }
+        
+        return tempArrInfo.joined(separator: "\n")
     }
 }

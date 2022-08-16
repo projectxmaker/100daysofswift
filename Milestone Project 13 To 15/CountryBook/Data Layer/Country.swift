@@ -23,7 +23,8 @@ class Country: Codable {
     var timezones, borders: [String]?
     var nativeName, numericCode: String?
     var flag: String?
+    var currencies: [Currency]?
+    var languages: [Language]?
     var cioc: String?
     var independent: Bool?
 }
-

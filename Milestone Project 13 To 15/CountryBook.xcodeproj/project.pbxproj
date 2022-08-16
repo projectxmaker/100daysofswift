@@ -16,6 +16,9 @@
 		8AE5570328AAA6CF0087F2B5 /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE5570228AAA6CF0087F2B5 /* Country.swift */; };
 		8AE5570628AAB2720087F2B5 /* CountryDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE5570528AAB2720087F2B5 /* CountryDetailViewController.swift */; };
 		8AE5570A28AAC0FD0087F2B5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE5570928AAC0FD0087F2B5 /* Constants.swift */; };
+		8AE5570C28AB50470087F2B5 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE5570B28AB50470087F2B5 /* Currency.swift */; };
+		8AE5570E28AB50A10087F2B5 /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE5570D28AB50A10087F2B5 /* Language.swift */; };
+		8AE5571028AB56490087F2B5 /* CountryDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE5570F28AB56490087F2B5 /* CountryDetail.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +33,9 @@
 		8AE5570228AAA6CF0087F2B5 /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
 		8AE5570528AAB2720087F2B5 /* CountryDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryDetailViewController.swift; sourceTree = "<group>"; };
 		8AE5570928AAC0FD0087F2B5 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		8AE5570B28AB50470087F2B5 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
+		8AE5570D28AB50A10087F2B5 /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
+		8AE5570F28AB56490087F2B5 /* CountryDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryDetail.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +110,9 @@
 			isa = PBXGroup;
 			children = (
 				8AE5570228AAA6CF0087F2B5 /* Country.swift */,
+				8AE5570B28AB50470087F2B5 /* Currency.swift */,
+				8AE5570D28AB50A10087F2B5 /* Language.swift */,
+				8AE5570F28AB56490087F2B5 /* CountryDetail.swift */,
 			);
 			path = "Data Layer";
 			sourceTree = "<group>";
@@ -183,7 +192,10 @@
 				8AE556EA28AAA2C50087F2B5 /* AppDelegate.swift in Sources */,
 				8AE556EC28AAA2C50087F2B5 /* SceneDelegate.swift in Sources */,
 				8AE5570628AAB2720087F2B5 /* CountryDetailViewController.swift in Sources */,
+				8AE5571028AB56490087F2B5 /* CountryDetail.swift in Sources */,
 				8AE5570128AAA63D0087F2B5 /* CountryListControllerTableViewController.swift in Sources */,
+				8AE5570E28AB50A10087F2B5 /* Language.swift in Sources */,
+				8AE5570C28AB50470087F2B5 /* Currency.swift in Sources */,
 				8AE5570A28AAC0FD0087F2B5 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
