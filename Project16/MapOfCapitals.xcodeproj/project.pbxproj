@@ -44,7 +44,7 @@
 		8A18BC1A28AB96E0005D1B55 = {
 			isa = PBXGroup;
 			children = (
-				8A18BC2528AB96E0005D1B55 /* Project16 */,
+				8A18BC2528AB96E0005D1B55 /* MapOfCapitals */,
 				8A18BC2428AB96E0005D1B55 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -57,7 +57,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		8A18BC2528AB96E0005D1B55 /* Project16 */ = {
+		8A18BC2528AB96E0005D1B55 /* MapOfCapitals */ = {
 			isa = PBXGroup;
 			children = (
 				8A18BC3A28AB96E9005D1B55 /* Presentation Layer */,
@@ -65,7 +65,7 @@
 				8A18BC2F28AB96E1005D1B55 /* Assets.xcassets */,
 				8A18BC3428AB96E1005D1B55 /* Info.plist */,
 			);
-			path = Project16;
+			path = MapOfCapitals;
 			sourceTree = "<group>";
 		};
 		8A18BC3A28AB96E9005D1B55 /* Presentation Layer */ = {
