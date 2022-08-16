@@ -25,6 +25,7 @@ class Country: Codable {
     var flag: String?
     var currencies: [Currency]?
     var languages: [Language]?
+    var regionalBlocs: [RegionalBloc]?
     var cioc: String?
     var independent: Bool?
 }
