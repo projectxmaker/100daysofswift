@@ -17,6 +17,8 @@ class ViewController: UIViewController, MKMapViewDelegate {
         // Do any additional setup after loading the view.
         
         initCapitals()
+        
+        setupChangeMapTypeButton()
     }
 
     // MARK: - Extra Functions
@@ -56,6 +58,38 @@ class ViewController: UIViewController, MKMapViewDelegate {
         
         let ac = UIAlertController(title: "Info", message: "Name: \(name)\nInfo: \(info)", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Ok", style: .cancel))
+        
+        present(ac, animated: true)
+    }
+    
+    private func setupChangeMapTypeButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(handleChangeMapTypeButtonTapped))
+    }
+    
+    @objc private func handleChangeMapTypeButtonTapped() {
+        let ac = UIAlertController(title: "Change Map Type", message: "Choose map type", preferredStyle: .alert)
+
+        ac.addAction(UIAlertAction(title: "Standard", style: .default, handler: { [weak self] _ in
+            self?.mapView.mapType = .standard
+        }))
+        
+        ac.addAction(UIAlertAction(title: "Satellite", style: .default, handler: { [weak self] _ in
+            self?.mapView.mapType = .satellite
+        }))
+
+        ac.addAction(UIAlertAction(title: "Hybrid", style: .default, handler: { [weak self] _ in
+            self?.mapView.mapType = .hybrid
+        }))
+        
+        ac.addAction(UIAlertAction(title: "Hybrid Flyover", style: .default, handler: { [weak self] _ in
+            self?.mapView.mapType = .hybridFlyover
+        }))
+        
+        ac.addAction(UIAlertAction(title: "Muted Standard", style: .default, handler: { [weak self] _ in
+            self?.mapView.mapType = .mutedStandard
+        }))
+        
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         
         present(ac, animated: true)
     }
