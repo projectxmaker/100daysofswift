@@ -69,14 +69,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let location = touch.location(in: self)
         let nodes = nodes(at: location)
-        
+
         for eachNode in nodes {
             if eachNode.name == "player" {
                 allowToMovePlayer = true
                 continue
             } else if eachNode.name == "restartButton" {
                 restartGame()
-                continue
+                break
             }
         }
     }
@@ -101,11 +101,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
+        guard isGameOver == false else { return }
+        
         guard let explosion = SKEmitterNode(fileNamed: "explosion") else { return }
         explosion.position = player.position
         addChild(explosion)
         
         player.removeFromParent()
+        
+        for eachNode in children {
+            if eachNode.name == "enemy" {
+                eachNode.removeFromParent()
+            }
+        }
         
         isGameOver = true
         
@@ -132,6 +140,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         enemy.physicsBody?.angularVelocity = 5
         enemy.physicsBody?.linearDamping = 0
         enemy.physicsBody?.angularDamping = 0
+        enemy.name = "enemy"
         addChild(enemy)
         
         currentNumberOfEnemiesCreatedPerWave += 1
@@ -179,7 +188,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scoreNote.horizontalAlignmentMode = .center
         gameOver.addChild(scoreNote)
         
-        let restartLabel = SKLabelNode(fontNamed: "Andale")
+        let restartLabel = SKLabelNode()
         restartLabel.fontSize = 40
         restartLabel.text = "Restart"
         restartLabel.position = CGPoint(x: 0, y: -200)
@@ -188,14 +197,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         gameOver.addChild(restartLabel)
         
         addChild(gameOver)
-
-        run(SKAction.playSoundFileNamed("gameOverSound.aifc", waitForCompletion: false))
     }
 
     private func restartGame() {
         gameOver.removeAllChildren()
         gameOver.removeFromParent()
-        
+
         isGameOver = false
         currentTimerInterval = 0
         score = 0
