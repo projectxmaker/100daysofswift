@@ -19,6 +19,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    private var possibleEnemy = ["ball", "hammer", "tv"]
+    private var isGameOver = false
+    private var timer: Timer?
+    
     override func didMove(to view: SKView) {
         backgroundColor = .black
         
@@ -43,9 +47,42 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         physicsWorld.contactDelegate = self
+        
+        timer = Timer.scheduledTimer(timeInterval: 0.35, target: self, selector: #selector(createEnemy), userInfo: nil, repeats: true)
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 
+    }
+    
+    // MARK: - Extra Functions
+    @objc private func createEnemy() {
+        guard let enemyName = possibleEnemy.randomElement() else { return}
+        
+        let enemy = SKSpriteNode(imageNamed: enemyName)
+        enemy.position = CGPoint(x: 2000, y: Int.random(in: 50...736))
+        
+        guard let enemyTexture = enemy.texture else { return }
+        
+        enemy.physicsBody = SKPhysicsBody(texture: enemyTexture, size: enemy.size)
+        enemy.physicsBody?.velocity = CGVector(dx: -500, dy: 0)
+        enemy.physicsBody?.categoryBitMask = 1
+        enemy.physicsBody?.angularVelocity = 5
+        enemy.physicsBody?.linearDamping = 0
+        enemy.physicsBody?.angularDamping = 0
+        addChild(enemy)
+        
+    }
+    
+    override func update(_ currentTime: TimeInterval) {
+        for node in children {
+            if node.position.x < -200 {
+                node.removeFromParent()
+            }
+        }
+        
+        if !isGameOver {
+            score += 1
+        }
     }
 }
