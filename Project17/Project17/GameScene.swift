@@ -23,6 +23,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var isGameOver = false
     private var timer: Timer?
     
+    private var allowToMovePlayer = false
+    
     override func didMove(to view: SKView) {
         backgroundColor = .black
         
@@ -34,6 +36,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         player = SKSpriteNode(imageNamed: "player")
         player.position = CGPoint(x: 100, y: 384)
+        player.name = "player"
         
         guard let playerTexture = player.texture else { return }
         player.physicsBody = SKPhysicsBody(texture: playerTexture, size: player.size)
@@ -52,21 +55,36 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-
+        guard let touch = touches.first else { return }
+        
+        let location = touch.location(in: self)
+        let nodes = nodes(at: location)
+        
+        for eachNode in nodes {
+            if eachNode.name == "player" {
+                allowToMovePlayer = true
+                break
+            }
+        }
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        allowToMovePlayer = false
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else { return }
-        
         var location = touch.location(in: self)
         
-        if location.y < 100 {
-            location.y = 100
-        } else if location.y > 668 {
-            location.y = 668
+        if allowToMovePlayer {
+            if location.y < 100 {
+                location.y = 100
+            } else if location.y > 668 {
+                location.y = 668
+            }
+            
+            player.position = location
         }
-        
-        player.position = location
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
