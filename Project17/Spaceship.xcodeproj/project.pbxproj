@@ -47,7 +47,7 @@
 		8A18BC4228ACEF88005D1B55 = {
 			isa = PBXGroup;
 			children = (
-				8A18BC4D28ACEF88005D1B55 /* Project17 */,
+				8A18BC4D28ACEF88005D1B55 /* Spaceship */,
 				8A18BC4C28ACEF88005D1B55 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -60,7 +60,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		8A18BC4D28ACEF88005D1B55 /* Project17 */ = {
+		8A18BC4D28ACEF88005D1B55 /* Spaceship */ = {
 			isa = PBXGroup;
 			children = (
 				8A18BC4E28ACEF88005D1B55 /* AppDelegate.swift */,
@@ -74,7 +74,7 @@
 				8A18BC6728ACFA93005D1B55 /* explosion.sks */,
 				8A18BC6928AD2BB2005D1B55 /* gameOverSound.aifc */,
 			);
-			path = Project17;
+			path = Spaceship;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
