@@ -101,6 +101,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.removeFromParent()
         
         isGameOver = true
+        
+        stopGame()
     }
     
     // MARK: - Extra Functions
@@ -152,9 +154,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         currentNumberOfEnemiesCreatedPerWave = 0
 
-        print("interval: \(currentTimerInterval) : \(currentTimerInterval < 0 ? "true" : "false")")
         gameTimer?.invalidate()
         
         gameTimer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(createEnemy), userInfo: nil, repeats: true)
+    }
+    
+    private func stopGame() {
+        gameTimer?.invalidate()
     }
 }
