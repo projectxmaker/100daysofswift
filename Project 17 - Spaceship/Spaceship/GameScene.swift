@@ -27,7 +27,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     private let defaultTimerInterval: Float = 1
     private let deducedTimerIntervalEachWave: Float = 0.1
-    private let maximumNumberOfEnemiesPerWave = 1
+    private let maximumNumberOfEnemiesPerWave = 20
     private var currentTimerInterval: Float = 0
     private var currentNumberOfEnemiesCreatedPerWave = 0
     
