@@ -21,9 +21,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     private var possibleEnemy = ["ball", "hammer", "tv"]
     private var isGameOver = false
-    private var timer: Timer?
+    private var gameTimer: Timer?
     
     private var allowToMovePlayer = false
+    
+    private let defaultTimerInterval: Float = 1
+    private let deducedTimerIntervalEachWave: Float = 0.1
+    private let maximumNumberOfEnemiesPerWave = 1
+    private var currentTimerInterval: Float = 0
+    private var currentNumberOfEnemiesCreatedPerWave = 0
     
     override func didMove(to view: SKView) {
         backgroundColor = .black
@@ -51,7 +57,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         physicsWorld.contactDelegate = self
         
-        timer = Timer.scheduledTimer(timeInterval: 0.35, target: self, selector: #selector(createEnemy), userInfo: nil, repeats: true)
+        createWave()
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -99,6 +105,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // MARK: - Extra Functions
     @objc private func createEnemy() {
+        guard currentNumberOfEnemiesCreatedPerWave < maximumNumberOfEnemiesPerWave else {
+            createWave()
+            return
+        }
+        
         guard let enemyName = possibleEnemy.randomElement() else { return}
         
         let enemy = SKSpriteNode(imageNamed: enemyName)
@@ -114,6 +125,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         enemy.physicsBody?.angularDamping = 0
         addChild(enemy)
         
+        currentNumberOfEnemiesCreatedPerWave += 1
+        print("enemies: \(currentNumberOfEnemiesCreatedPerWave)")
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -126,5 +139,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if !isGameOver {
             score += 1
         }
+    }
+    
+    private func createWave() {
+        if currentTimerInterval == 0 {
+            currentTimerInterval = defaultTimerInterval
+        } else {
+            currentTimerInterval -= deducedTimerIntervalEachWave
+        }
+        
+        let timeInterval = TimeInterval(currentTimerInterval)
+        
+        currentNumberOfEnemiesCreatedPerWave = 0
+
+        print("interval: \(currentTimerInterval) : \(currentTimerInterval < 0 ? "true" : "false")")
+        gameTimer?.invalidate()
+        
+        gameTimer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(createEnemy), userInfo: nil, repeats: true)
     }
 }
