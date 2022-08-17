@@ -16,6 +16,7 @@
 		8A18BC5F28ACEF8A005D1B55 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A18BC5D28ACEF8A005D1B55 /* LaunchScreen.storyboard */; };
 		8A18BC6628ACFA8A005D1B55 /* starfield.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8A18BC6528ACFA8A005D1B55 /* starfield.sks */; };
 		8A18BC6828ACFA93005D1B55 /* explosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8A18BC6728ACFA93005D1B55 /* explosion.sks */; };
+		8A18BC6A28AD2BB2005D1B55 /* gameOverSound.aifc in Resources */ = {isa = PBXBuildFile; fileRef = 8A18BC6928AD2BB2005D1B55 /* gameOverSound.aifc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		8A18BC5E28ACEF8A005D1B55 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8A18BC6528ACFA8A005D1B55 /* starfield.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = starfield.sks; sourceTree = "<group>"; };
 		8A18BC6728ACFA93005D1B55 /* explosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = explosion.sks; sourceTree = "<group>"; };
+		8A18BC6928AD2BB2005D1B55 /* gameOverSound.aifc */ = {isa = PBXFileReference; lastKnownFileType = file; name = gameOverSound.aifc; path = "../../Project 14 - Whack A Penguin/WhackAPenguin/gameOverSound.aifc"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 				8A18BC5D28ACEF8A005D1B55 /* LaunchScreen.storyboard */,
 				8A18BC6528ACFA8A005D1B55 /* starfield.sks */,
 				8A18BC6728ACFA93005D1B55 /* explosion.sks */,
+				8A18BC6928AD2BB2005D1B55 /* gameOverSound.aifc */,
 			);
 			path = Project17;
 			sourceTree = "<group>";
@@ -138,6 +141,7 @@
 				8A18BC6828ACFA93005D1B55 /* explosion.sks in Resources */,
 				8A18BC6628ACFA8A005D1B55 /* starfield.sks in Resources */,
 				8A18BC5F28ACEF8A005D1B55 /* LaunchScreen.storyboard in Resources */,
+				8A18BC6A28AD2BB2005D1B55 /* gameOverSound.aifc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

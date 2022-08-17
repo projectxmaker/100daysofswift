@@ -31,6 +31,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var currentTimerInterval: Float = 0
     private var currentNumberOfEnemiesCreatedPerWave = 0
     
+    private let defaultPlayerPosition = CGPoint(x: 100, y: 384)
+    
+    private var gameOver: SKSpriteNode!
+    
     override func didMove(to view: SKView) {
         backgroundColor = .black
         
@@ -41,7 +45,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(startField)
         
         player = SKSpriteNode(imageNamed: "player")
-        player.position = CGPoint(x: 100, y: 384)
+        player.position = defaultPlayerPosition
         player.name = "player"
         
         guard let playerTexture = player.texture else { return }
@@ -69,7 +73,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         for eachNode in nodes {
             if eachNode.name == "player" {
                 allowToMovePlayer = true
-                break
+                continue
+            } else if eachNode.name == "restartButton" {
+                restartGame()
+                continue
             }
         }
     }
@@ -128,7 +135,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(enemy)
         
         currentNumberOfEnemiesCreatedPerWave += 1
-        print("enemies: \(currentNumberOfEnemiesCreatedPerWave)")
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -161,5 +167,42 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     private func stopGame() {
         gameTimer?.invalidate()
+        
+        gameOver = SKSpriteNode(imageNamed: "gameOver")
+        gameOver.position = CGPoint(x: 512, y: 384)
+        gameOver.zPosition = 1
+        
+        let scoreNote = SKLabelNode(fontNamed: "Chalkduster")
+        scoreNote.fontSize = 40
+        scoreNote.text = "Final Score: \(score)"
+        scoreNote.position = CGPoint(x: 0, y: -100)
+        scoreNote.horizontalAlignmentMode = .center
+        gameOver.addChild(scoreNote)
+        
+        let restartLabel = SKLabelNode(fontNamed: "Andale")
+        restartLabel.fontSize = 40
+        restartLabel.text = "Restart"
+        restartLabel.position = CGPoint(x: 0, y: -200)
+        restartLabel.horizontalAlignmentMode = .center
+        restartLabel.name = "restartButton"
+        gameOver.addChild(restartLabel)
+        
+        addChild(gameOver)
+
+        run(SKAction.playSoundFileNamed("gameOverSound.aifc", waitForCompletion: false))
+    }
+
+    private func restartGame() {
+        gameOver.removeAllChildren()
+        gameOver.removeFromParent()
+        
+        isGameOver = false
+        currentTimerInterval = 0
+        score = 0
+        
+        player.position = defaultPlayerPosition
+        addChild(player)
+        
+        createWave()
     }
 }
