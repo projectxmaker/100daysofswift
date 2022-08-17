@@ -11,7 +11,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Project16" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="MapOfCapitals" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -44,7 +44,7 @@
         <!--Wikipedia View Controller-->
         <scene sceneID="EQL-nf-w7F">
             <objects>
-                <viewController storyboardIdentifier="Wikipedia" id="qMR-Wq-hsQ" customClass="WikipediaViewController" customModule="Project16" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Wikipedia" id="qMR-Wq-hsQ" customClass="WikipediaViewController" customModule="MapOfCapitals" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mbz-pf-x6M">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -54,7 +54,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JQd-Qb-Nl3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1866.6666666666667" y="104.46428571428571"/>
+            <point key="canvasLocation" x="1867" y="98"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="UUi-pu-6cp">
