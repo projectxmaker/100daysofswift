@@ -34,6 +34,17 @@ class GameScene: SKScene {
     
     private let characters = ["donald", "mickey", "goofy"]
     private var gameTimers = [RunningLine: Timer]()
+    private var mainGameTimer: Timer!
+    private var mainGameTimerForCountDown: Timer!
+    
+    private var remainingTimeLabel: SKLabelNode!
+    private var remainingTime = 0 {
+        didSet {
+            remainingTimeLabel.text = "Timeleft: \(remainingTime)"
+        }
+    }
+    
+    private let mainGameTimeLimit = 5
     
     private var currentNumberOfCharactersPerLine = 0
     private var maximumNumberOfCharactersPerLine = 0
@@ -50,6 +61,8 @@ class GameScene: SKScene {
             scoreLabel.text = "Score: \(score)"
         }
     }
+    
+    private var gameOverPopup: SKSpriteNode!
     
     private let waveCharLineYAxis = [
         RunningLine.top: 650,
@@ -69,11 +82,15 @@ class GameScene: SKScene {
         scoreLabel.text = "Score: 0"
         addChild(scoreLabel)
         
-        createWave(type: SpeedType.fast, direction: FlowDirection.ltr, line: RunningLine.top)
-        createWave(type: SpeedType.slow, direction: FlowDirection.rtl, line: RunningLine.middle)
-        createWave(type: SpeedType.fast, direction: FlowDirection.ltr, line: RunningLine.bottom)
+        remainingTimeLabel = SKLabelNode(fontNamed: "Chalkduster")
+        remainingTimeLabel.position = CGPoint(x: 1000, y: 15)
+        remainingTimeLabel.horizontalAlignmentMode = .right
+        remainingTimeLabel.text = "Timeleft: \(mainGameTimeLimit)"
+        addChild(remainingTimeLabel)
         
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
+        
+        startGame()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -144,5 +161,58 @@ class GameScene: SKScene {
         addChild(charNode)
        
         currentNumberOfCharactersPerLine += 1
+    }
+    
+    private func startGame() {
+        remainingTime = mainGameTimeLimit
+        
+        createWave(type: SpeedType.fast, direction: FlowDirection.ltr, line: RunningLine.top)
+        createWave(type: SpeedType.slow, direction: FlowDirection.rtl, line: RunningLine.middle)
+        createWave(type: SpeedType.fast, direction: FlowDirection.ltr, line: RunningLine.bottom)
+        
+        mainGameTimerForCountDown = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateMainGameTimerCountDown), userInfo: nil, repeats: true)
+        
+        mainGameTimer = Timer.scheduledTimer(timeInterval: Double(mainGameTimeLimit), target: self, selector: #selector(gameOver), userInfo: nil, repeats: false)
+    }
+    
+    @objc private func gameOver() {
+        for eachCharacter in children {
+            if eachCharacter.name == "character" {
+                eachCharacter.removeFromParent()
+            }
+        }
+        
+        for eachGameTimer in gameTimers.enumerated() {
+            eachGameTimer.element.value.invalidate()
+        }
+        
+        mainGameTimer.invalidate()
+        mainGameTimerForCountDown.invalidate()
+        
+        gameOverPopup = SKSpriteNode(imageNamed: "gameOver")
+        gameOverPopup.position = CGPoint(x: 512, y: 450)
+        gameOverPopup.zPosition = 1
+        
+        let scoreNote = SKLabelNode(fontNamed: "Chalkduster")
+        scoreNote.fontSize = 40
+        scoreNote.text = "Final Score: \(score)"
+        scoreNote.position = CGPoint(x: 0, y: -100)
+        scoreNote.horizontalAlignmentMode = .center
+        gameOverPopup.addChild(scoreNote)
+        
+        let restartLabel = SKLabelNode()
+        restartLabel.fontSize = 40
+        restartLabel.text = "Restart"
+        restartLabel.position = CGPoint(x: 0, y: -200)
+        restartLabel.horizontalAlignmentMode = .center
+        restartLabel.name = "restartButton"
+        gameOverPopup.addChild(restartLabel)
+        
+        addChild(gameOverPopup)
+    }
+    
+    @objc private func updateMainGameTimerCountDown() {
+        guard remainingTime > 0 else { return }
+        remainingTime -= 1
     }
 }
