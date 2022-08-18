@@ -14,6 +14,9 @@ struct TimerUserInfo {
     var line: GameScene.RunningLine
 }
 
+let goodCharacter = "goodCharacter"
+let badCharacter = "badCharacter"
+
 class GameScene: SKScene {
     
     enum FlowDirection {
@@ -32,11 +35,21 @@ class GameScene: SKScene {
         case bottom
     }
     
-    private let characters = ["donald", "mickey", "goofy"]
+    private let characters = [
+        "donald": goodCharacter,
+        "mickey": goodCharacter,
+        "goofy": goodCharacter,
+        "donaldBad": badCharacter,
+        "mickeyBad": badCharacter,
+        "goofyBad": badCharacter
+    ]
+    
+    private let characteristics = [goodCharacter, badCharacter]
+    
     private var gameTimers = [RunningLine: Timer]()
     private var mainGameTimer: Timer!
     private var mainGameTimerForCountDown: Timer!
-    
+
     private var remainingTimeLabel: SKLabelNode!
     private var remainingTime = 0 {
         didSet {
@@ -44,7 +57,7 @@ class GameScene: SKScene {
         }
     }
     
-    private let mainGameTimeLimit = 5
+    private let mainGameTimeLimit = 60
     
     private var currentNumberOfCharactersPerLine = 0
     private var maximumNumberOfCharactersPerLine = 0
@@ -94,16 +107,24 @@ class GameScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-
+        guard let touch = touches.first else { return }
+        
+        let location = touch.location(in: self)
+        
+        let nodes = nodes(at: location)
+        
+        for eachNode in nodes {
+            print("Tapped on \(eachNode.name ?? "Unknow")")
+        }
     }
 
     override func update(_ currentTime: TimeInterval) {
         for eachCharacter in children {
+            guard let eachCharacterName = eachCharacter.name else { continue }
+            
             let charPositionX = eachCharacter.position.x
-            let charPositionY = eachCharacter.position.y
-            if eachCharacter.name == "character" && (charPositionX < -200 || charPositionX > 1200) {
+            if characteristics.contains(eachCharacterName) && (charPositionX < -200 || charPositionX > 1200) {
                 eachCharacter.removeFromParent()
-                print("destroy \(eachCharacter.name ?? "character") at \(charPositionX):\(charPositionY)")
             }
         }
     }
@@ -135,7 +156,7 @@ class GameScene: SKScene {
             let characterSize = waveCharSize[timerUserInfo.type],
             let characterPositionY = waveCharLineYAxis[timerUserInfo.line],
             let characterPositionX = waveCharLineXAxis[timerUserInfo.direction],
-            let charType = characters.randomElement()
+            let selectedCharacter = characters.randomElement()
         else {
             sender.invalidate()
             return
@@ -150,14 +171,14 @@ class GameScene: SKScene {
         
         let characterPosition = CGPoint(x: characterPositionX, y: characterPositionY)
         
-        let charNode = SKSpriteNode(imageNamed: charType)
+        let charNode = SKSpriteNode(imageNamed: selectedCharacter.key)
+        charNode.name = selectedCharacter.value
         charNode.physicsBody = SKPhysicsBody()
         charNode.physicsBody?.velocity = CGVector(dx: characterSpeed, dy: 0)
         charNode.physicsBody?.linearDamping = 0
         charNode.physicsBody?.angularDamping = 0
         charNode.position = characterPosition
         charNode.setScale(Double(characterSize))
-        charNode.name = "character"
         addChild(charNode)
        
         currentNumberOfCharactersPerLine += 1
@@ -177,7 +198,8 @@ class GameScene: SKScene {
     
     @objc private func gameOver() {
         for eachCharacter in children {
-            if eachCharacter.name == "character" {
+            guard let eachCharacterName = eachCharacter.name else { continue }
+            if characteristics.contains(eachCharacterName) {
                 eachCharacter.removeFromParent()
             }
         }
