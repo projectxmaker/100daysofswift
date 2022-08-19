@@ -361,7 +361,7 @@ class GameScene: SKScene {
         target.position = touchLocation
         target.zPosition = 1
         
-        guard let explosion = SKEmitterNode(fileNamed: "fire") else { return }
+        guard let explosion = SKEmitterNode(fileNamed: "spark") else { return }
         explosion.zPosition = 1
         explosion.position = touchLocation
         
