@@ -21,7 +21,7 @@ class GameScene: SKScene {
         }
     }
     
-    private let mainGameTimeLimit = 10
+    private let mainGameTimeLimit = 60
     
     private var currentNumberOfCharactersPerLine = 0
     private var maximumNumberOfCharactersPerLine = 0
@@ -134,7 +134,6 @@ class GameScene: SKScene {
                         run(SKAction.playSoundFileNamed("jam.mp3", waitForCompletion: false))
                     }
                     
-                    print("\(eachNodeName) is tapped!")
                     nothingIsTapped = false
                     break
                 }
@@ -327,7 +326,6 @@ class GameScene: SKScene {
             if nothingIsTapped {
                 reloadBullets()
             } else {
-                print("WARNING TO RELOAD BULLETS")
                 // warning: reload clip
                 warnToReloadBullets()
             }
@@ -336,8 +334,6 @@ class GameScene: SKScene {
             guard let lastBullet = bullets.last else { return }
             lastBullet.removeFromParent()
             bullets = bullets.dropLast()
-            
-            print("bullets: \(bullets.count)")
         }
     }
     
