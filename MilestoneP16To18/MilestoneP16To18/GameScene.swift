@@ -263,7 +263,7 @@ class GameScene: SKScene {
         scoreNote.horizontalAlignmentMode = .center
         gameOverPopup.addChild(scoreNote)
         
-        let restartLabel = SKLabelNode()
+        let restartLabel = SKLabelNode(fontNamed: "Chalkduster")
         restartLabel.fontSize = 40
         restartLabel.text = "Restart"
         restartLabel.position = CGPoint(x: 0, y: -200)
@@ -334,6 +334,10 @@ class GameScene: SKScene {
             guard let lastBullet = bullets.last else { return }
             lastBullet.removeFromParent()
             bullets = bullets.dropLast()
+            
+            if bullets.count == 0 {
+                warnToReloadBullets()
+            }
         }
     }
     
