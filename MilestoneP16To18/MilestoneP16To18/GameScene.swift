@@ -68,7 +68,7 @@ class GameScene: SKScene {
         }
     }
     
-    private let mainGameTimeLimit = 60
+    private let mainGameTimeLimit = 3
     
     private var currentNumberOfCharactersPerLine = 0
     private var maximumNumberOfCharactersPerLine = 0
@@ -143,16 +143,21 @@ class GameScene: SKScene {
         for eachNode in nodes {
             guard let eachNodeName = eachNode.name else { continue }
             
-            // if a character is tapped
-            if isACharacterWithName(eachNodeName) {
-                // if one character is shooted
-                if bullets.count > 0 {
-                    shootACharacter(eachNode, touchLocation: location)
-                }
-                
-                print("\(eachNodeName) is tapped!")
-                nothingIsTapped = false
+            if eachNodeName == "restartButton" {
+                startGame()
                 break
+            } else {
+                // if a character is tapped
+                if isACharacterWithName(eachNodeName) {
+                    // if one character is shooted
+                    if bullets.count > 0 {
+                        shootACharacter(eachNode, touchLocation: location)
+                    }
+                    
+                    print("\(eachNodeName) is tapped!")
+                    nothingIsTapped = false
+                    break
+                }
             }
         }
         
@@ -227,8 +232,15 @@ class GameScene: SKScene {
     }
     
     private func startGame() {
+        score = 0
         isGameOver = false
+        isShowingWarningOfReloadBullets = false
         remainingTime = mainGameTimeLimit
+        
+        if gameOverPopup != nil {
+            gameOverPopup.removeAllChildren()
+            gameOverPopup.removeFromParent()
+        }
         
         reloadBullets()
         
@@ -312,6 +324,7 @@ class GameScene: SKScene {
     // MARK: Bullets
     private func reloadBullets() {
         stopWarningOfReloadBullets()
+        bullets.removeAll(keepingCapacity: true)
         
         for i in 1...maximumBulletsPerClip {
             let bullet = SKSpriteNode(imageNamed: "bullet")
