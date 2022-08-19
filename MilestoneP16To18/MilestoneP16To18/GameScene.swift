@@ -14,8 +14,10 @@ struct TimerUserInfo {
     var line: GameScene.RunningLine
 }
 
-let goodCharacter = "goodCharacter"
-let badCharacter = "badCharacter"
+let goodCharacter = "good"
+let badCharacter = "bad"
+let smallCharacter = "small"
+let bigCharacter = "big"
 
 class GameScene: SKScene {
     
@@ -35,6 +37,13 @@ class GameScene: SKScene {
         case bottom
     }
     
+    private let scoreRules = [
+        "small|bad": -1,
+        "small|good": 3,
+        "big|bad": -3,
+        "big|good": 1
+    ]
+    
     private let characters = [
         "donald": goodCharacter,
         "mickey": goodCharacter,
@@ -45,6 +54,7 @@ class GameScene: SKScene {
     ]
     
     private let characteristics = [goodCharacter, badCharacter]
+    private let characterScaleTypes = [smallCharacter, bigCharacter]
     
     private var gameTimers = [RunningLine: Timer]()
     private var mainGameTimer: Timer!
@@ -64,7 +74,8 @@ class GameScene: SKScene {
     private var maximumNumberOfCharactersPerLine = 0
     
     //let speedAndNumberOfCharacterPerLine = [-100:]
-    private let waveCharSize = [SpeedType.fast: 1, SpeedType.slow: 1.5]
+    private let waveCharScaleTitle = [SpeedType.fast: smallCharacter, SpeedType.slow: bigCharacter]
+    private let waveCharScale = [SpeedType.fast: 1, SpeedType.slow: 1.5]
     private let waveCharSpeed = [FlowDirection.ltr: [SpeedType.fast: 500, SpeedType.slow: 250], FlowDirection.rtl: [SpeedType.fast: -700, SpeedType.slow: -250]]
     private let waveCharQuantity = [SpeedType.fast: 10, SpeedType.slow: 5]
     private let waveCharInterval = [SpeedType.fast: 0.38, SpeedType.slow: 1]
@@ -133,7 +144,7 @@ class GameScene: SKScene {
             guard let eachNodeName = eachNode.name else { continue }
             
             // if a character is tapped
-            if characteristics.contains(eachNodeName) {
+            if isACharacterWithName(eachNodeName) {
                 // if one character is shooted
                 if bullets.count > 0 {
                     shootACharacter(eachNode, touchLocation: location)
@@ -153,7 +164,7 @@ class GameScene: SKScene {
             guard let eachCharacterName = eachCharacter.name else { continue }
             
             let charPositionX = eachCharacter.position.x
-            if characteristics.contains(eachCharacterName) && (charPositionX < -200 || charPositionX > 1200) {
+            if isACharacterWithName(eachCharacterName) && (charPositionX < -200 || charPositionX > 1200) {
                 eachCharacter.removeFromParent()
             }
         }
@@ -183,7 +194,8 @@ class GameScene: SKScene {
         guard
             let timerUserInfo = sender.userInfo as? TimerUserInfo,
             let characterSpeed = waveCharSpeed[timerUserInfo.direction]?[timerUserInfo.type],
-            let characterSize = waveCharSize[timerUserInfo.type],
+            let characterScale = waveCharScale[timerUserInfo.type],
+            let characterScaleTitle = waveCharScaleTitle[timerUserInfo.type],
             let characterPositionY = waveCharLineYAxis[timerUserInfo.line],
             let characterPositionX = waveCharLineXAxis[timerUserInfo.direction],
             let selectedCharacter = characters.randomElement()
@@ -202,13 +214,13 @@ class GameScene: SKScene {
         let characterPosition = CGPoint(x: characterPositionX, y: characterPositionY)
         
         let charNode = SKSpriteNode(imageNamed: selectedCharacter.key)
-        charNode.name = selectedCharacter.value
+        charNode.name = ("\(characterScaleTitle)|\(selectedCharacter.value)")
         charNode.physicsBody = SKPhysicsBody()
         charNode.physicsBody?.velocity = CGVector(dx: characterSpeed, dy: 0)
         charNode.physicsBody?.linearDamping = 0
         charNode.physicsBody?.angularDamping = 0
         charNode.position = characterPosition
-        charNode.setScale(Double(characterSize))
+        charNode.setScale(Double(characterScale))
         addChild(charNode)
        
         currentNumberOfCharactersPerLine += 1
@@ -234,7 +246,7 @@ class GameScene: SKScene {
         
         for eachCharacter in children {
             guard let eachCharacterName = eachCharacter.name else { continue }
-            if characteristics.contains(eachCharacterName) {
+            if isACharacterWithName(eachCharacterName) {
                 eachCharacter.removeFromParent()
             }
         }
@@ -275,6 +287,27 @@ class GameScene: SKScene {
         remainingTime -= 1
     }
     
+    private func isACharacterWithName(_ name: String) -> Bool {
+        guard let _ = extractCharacterName(name) else { return false }
+        return true
+    }
+    
+    private func extractCharacterName(_ name: String) -> [String:String]? {
+        let substrings = name.components(separatedBy: "|")
+        
+        guard
+            substrings.count == 2
+        else { return nil }
+        
+        let scaleType = substrings[0]
+        let characteristicType = substrings[1]
+        
+        if !characterScaleTypes.contains(scaleType) || !characteristics.contains(characteristicType) {
+            return nil
+        }
+        
+        return ["scale": scaleType, "characteristic": characteristicType]
+    }
     
     // MARK: Bullets
     private func reloadBullets() {
@@ -357,6 +390,13 @@ class GameScene: SKScene {
     }
     
     private func shootACharacter(_ character: SKNode, touchLocation: CGPoint) {
+        showShootingEffect(character, touchLocation: touchLocation)
+        
+        evaluteTheShootAtCharacter(character)
+    }
+    
+    private func showShootingEffect(_ character: SKNode, touchLocation: CGPoint) {
+        
         let target = SKSpriteNode(imageNamed: "target")
         target.position = touchLocation
         target.zPosition = 1
@@ -416,6 +456,20 @@ class GameScene: SKScene {
             hideExplosionAction,
             hideCharacterAction
         ]))
+    }
+    
+    private func evaluteTheShootAtCharacter(_ character: SKNode) {
+        guard
+            let characterName = character.name,
+            let characterNames = extractCharacterName(characterName),
+            let scale = characterNames["scale"],
+            let characteristic = characterNames["characteristic"]
+        else { return }
         
+        let combinedKey = "\(scale)|\(characteristic)"
+        
+        if scoreRules.keys.contains(combinedKey) {
+            score += scoreRules[combinedKey] ?? 0
+        }
     }
 }
