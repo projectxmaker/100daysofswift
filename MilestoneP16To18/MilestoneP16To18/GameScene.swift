@@ -130,6 +130,8 @@ class GameScene: SKScene {
                     // if one character is shooted
                     if bullets.count > 0 {
                         shootACharacter(eachNode, touchLocation: location)
+                    } else {
+                        run(SKAction.playSoundFileNamed("jam.mp3", waitForCompletion: false))
                     }
                     
                     print("\(eachNodeName) is tapped!")
@@ -305,6 +307,8 @@ class GameScene: SKScene {
         stopWarningOfReloadBullets()
         bullets.removeAll(keepingCapacity: true)
         
+        run(SKAction.playSoundFileNamed("reload.mp3", waitForCompletion: false))
+        
         for i in 1...maximumBulletsPerClip {
             let bullet = SKSpriteNode(imageNamed: "bullet")
             bullet.position = CGPoint(x: 440 + (i*20), y: 30)
@@ -422,6 +426,7 @@ class GameScene: SKScene {
         character.run(SKAction.sequence([
             showTargetAction,
             SKAction.wait(forDuration: 0.1),
+            SKAction.playSoundFileNamed("shoot.mp3", waitForCompletion: false),
             hideTargetAction,
             showExplosionAction,
             SKAction.wait(forDuration: waitForScaling),
