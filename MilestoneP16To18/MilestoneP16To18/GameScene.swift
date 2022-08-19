@@ -58,7 +58,7 @@ class GameScene: SKScene {
         }
     }
     
-    private let mainGameTimeLimit = 60
+    private let mainGameTimeLimit = 3
     
     private var currentNumberOfCharactersPerLine = 0
     private var maximumNumberOfCharactersPerLine = 0
@@ -82,6 +82,7 @@ class GameScene: SKScene {
     private var warningOfReloadBulletsLabel: SKLabelNode!
     
     private var gameOverPopup: SKSpriteNode!
+    private var isGameOver = false
     
     private let waveCharLineYAxis = [
         RunningLine.top: 650,
@@ -134,7 +135,7 @@ class GameScene: SKScene {
             if characteristics.contains(eachNodeName) {
                 // if one character is shooted
                 if bullets.count > 0 {
-                    shootACharacter(character: eachNode)
+                    shootACharacter(eachNode)
                 }
                 
                 print("\(eachNodeName) is tapped!")
@@ -213,6 +214,7 @@ class GameScene: SKScene {
     }
     
     private func startGame() {
+        isGameOver = false
         remainingTime = mainGameTimeLimit
         
         reloadBullets()
@@ -227,6 +229,8 @@ class GameScene: SKScene {
     }
     
     @objc private func gameOver() {
+        isGameOver = true
+        
         for eachCharacter in children {
             guard let eachCharacterName = eachCharacter.name else { continue }
             if characteristics.contains(eachCharacterName) {
@@ -286,6 +290,8 @@ class GameScene: SKScene {
     }
     
     private func updateBulletClip(_ nothingIsTapped: Bool) {
+        guard isGameOver == false else { return }
+        
         if bullets.count == 0 {
             // reload clip if nothing is tapped
             if nothingIsTapped {
@@ -337,7 +343,7 @@ class GameScene: SKScene {
         warningOfReloadBulletsLabel.removeFromParent()
     }
     
-    private func shootACharacter(character: SKNode) {
+    private func shootACharacter(_ character: SKNode) {
         
     }
 }
