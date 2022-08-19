@@ -75,6 +75,11 @@ class GameScene: SKScene {
         }
     }
     
+    private var bullets = [SKSpriteNode]()
+    private let maximumBulletsPerClip = 6
+    private var timerForWarningOfReloadBullets: Timer!
+    private var warningOfReloadBulletsLabel: SKLabelNode!
+    
     private var gameOverPopup: SKSpriteNode!
     
     private let waveCharLineYAxis = [
@@ -111,11 +116,27 @@ class GameScene: SKScene {
         
         let location = touch.location(in: self)
         
+        var nothingIsTapped = true
+        
         let nodes = nodes(at: location)
         
         for eachNode in nodes {
-            print("Tapped on \(eachNode.name ?? "Unknow")")
+            guard let eachNodeName = eachNode.name else { continue }
+            
+            // if a character is tapped
+            if characteristics.contains(eachNodeName) {
+                // if one character is shooted
+                if bullets.count > 0 {
+                    shootACharacter(character: eachNode)
+                }
+                
+                print("\(eachNodeName) is tapped!")
+                nothingIsTapped = false
+                break
+            }
         }
+        
+        updateBulletClip(nothingIsTapped)
     }
 
     override func update(_ currentTime: TimeInterval) {
@@ -187,6 +208,8 @@ class GameScene: SKScene {
     private func startGame() {
         remainingTime = mainGameTimeLimit
         
+        reloadBullets()
+        
         createWave(type: SpeedType.fast, direction: FlowDirection.ltr, line: RunningLine.top)
         createWave(type: SpeedType.slow, direction: FlowDirection.rtl, line: RunningLine.middle)
         createWave(type: SpeedType.fast, direction: FlowDirection.ltr, line: RunningLine.bottom)
@@ -207,6 +230,8 @@ class GameScene: SKScene {
         for eachGameTimer in gameTimers.enumerated() {
             eachGameTimer.element.value.invalidate()
         }
+        
+        stopWarningOfReloadBullets()
         
         mainGameTimer.invalidate()
         mainGameTimerForCountDown.invalidate()
@@ -236,5 +261,76 @@ class GameScene: SKScene {
     @objc private func updateMainGameTimerCountDown() {
         guard remainingTime > 0 else { return }
         remainingTime -= 1
+    }
+    
+    
+    // MARK: Bullets
+    private func reloadBullets() {
+        stopWarningOfReloadBullets()
+        
+        for i in 1...maximumBulletsPerClip {
+            let bullet = SKSpriteNode(imageNamed: "bullet")
+            bullet.position = CGPoint(x: 440 + (i*20), y: 30)
+            bullet.name = "bullet\(i)"
+            addChild(bullet)
+            
+            bullets.append(bullet)
+        }
+    }
+    
+    private func updateBulletClip(_ nothingIsTapped: Bool) {
+        if bullets.count == 0 {
+            // reload clip if nothing is tapped
+            if nothingIsTapped {
+                reloadBullets()
+            } else {
+                print("WARNING TO RELOAD BULLETS")
+                // warning: reload clip
+                warnToReloadBullets()
+            }
+        } else {
+            // remove one bullet from clip
+            guard let lastBullet = bullets.last else { return }
+            lastBullet.removeFromParent()
+            bullets = bullets.dropLast()
+            
+            print("bullets: \(bullets.count)")
+        }
+    }
+    
+    private func warnToReloadBullets() {
+        timerForWarningOfReloadBullets = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(showWarningOfReloadBullets), userInfo: nil, repeats: true)
+    }
+    
+    @objc private func showWarningOfReloadBullets() {
+        if warningOfReloadBulletsLabel == nil {
+            warningOfReloadBulletsLabel = SKLabelNode(fontNamed: "Chalkduster")
+            warningOfReloadBulletsLabel.text = "RELOAD!"
+            warningOfReloadBulletsLabel.position = CGPoint(x: 512, y: 15)
+            warningOfReloadBulletsLabel.name = "warningOfReloadBullets"
+        }
+        
+        if childNode(withName: "warningOfReloadBullets") == nil {
+            addChild(warningOfReloadBulletsLabel)
+        } else {
+            hideWarningOfreloadBulletsLabel()
+        }
+    }
+    
+    private func stopWarningOfReloadBullets() {
+        if timerForWarningOfReloadBullets != nil {
+            timerForWarningOfReloadBullets.invalidate()
+        }
+        
+        hideWarningOfreloadBulletsLabel()
+    }
+    
+    private func hideWarningOfreloadBulletsLabel() {
+        guard warningOfReloadBulletsLabel != nil else { return }
+        warningOfReloadBulletsLabel.removeFromParent()
+    }
+    
+    private func shootACharacter(character: SKNode) {
+        
     }
 }
