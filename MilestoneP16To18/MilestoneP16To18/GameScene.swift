@@ -80,6 +80,7 @@ class GameScene: SKScene {
     private let maximumBulletsPerClip = 6
     private var timerForWarningOfReloadBullets: Timer!
     private var warningOfReloadBulletsLabel: SKLabelNode!
+    private var isShowingWarningOfReloadBullets = false
     
     private var gameOverPopup: SKSpriteNode!
     private var isGameOver = false
@@ -312,10 +313,16 @@ class GameScene: SKScene {
     }
     
     private func warnToReloadBullets() {
-        timerForWarningOfReloadBullets = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(showWarningOfReloadBullets), userInfo: nil, repeats: true)
+        guard !isShowingWarningOfReloadBullets else { return }
+        
+        stopTimerForWarningOfReloadBullets()
+        
+        timerForWarningOfReloadBullets = Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(showWarningOfReloadBullets), userInfo: nil, repeats: true)
     }
     
     @objc private func showWarningOfReloadBullets() {
+        isShowingWarningOfReloadBullets = true
+        
         if warningOfReloadBulletsLabel == nil {
             warningOfReloadBulletsLabel = SKLabelNode(fontNamed: "Chalkduster")
             warningOfReloadBulletsLabel.text = "RELOAD!"
@@ -326,16 +333,22 @@ class GameScene: SKScene {
         if childNode(withName: "warningOfReloadBullets") == nil {
             addChild(warningOfReloadBulletsLabel)
         } else {
+            // hide to create a blinking effect
             hideWarningOfreloadBulletsLabel()
         }
     }
     
-    private func stopWarningOfReloadBullets() {
+    private func stopTimerForWarningOfReloadBullets() {
         if timerForWarningOfReloadBullets != nil {
             timerForWarningOfReloadBullets.invalidate()
         }
-        
+    }
+    
+    private func stopWarningOfReloadBullets() {
+        stopTimerForWarningOfReloadBullets()
         hideWarningOfreloadBulletsLabel()
+        
+        isShowingWarningOfReloadBullets = false
     }
     
     private func hideWarningOfreloadBulletsLabel() {
