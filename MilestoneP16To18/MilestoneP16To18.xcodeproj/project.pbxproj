@@ -15,6 +15,8 @@
 		8A18BCC828AE3427005D1B55 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A18BCC728AE3427005D1B55 /* Assets.xcassets */; };
 		8A18BCCB28AE3427005D1B55 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A18BCC928AE3427005D1B55 /* LaunchScreen.storyboard */; };
 		8A18BCD428AF8951005D1B55 /* spark.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8A18BCD328AF8951005D1B55 /* spark.sks */; };
+		8A18BCD628AFA269005D1B55 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A18BCD528AFA269005D1B55 /* Constants.swift */; };
+		8A18BCD828AFA2FF005D1B55 /* TimerUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A18BCD728AFA2FF005D1B55 /* TimerUserInfo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +29,8 @@
 		8A18BCC728AE3427005D1B55 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8A18BCCA28AE3427005D1B55 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8A18BCD328AF8951005D1B55 /* spark.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = spark.sks; sourceTree = "<group>"; };
+		8A18BCD528AFA269005D1B55 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		8A18BCD728AFA2FF005D1B55 /* TimerUserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerUserInfo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,14 +63,16 @@
 		8A18BCB928AE3426005D1B55 /* MilestoneP16To18 */ = {
 			isa = PBXGroup;
 			children = (
-				8A18BCBA28AE3426005D1B55 /* AppDelegate.swift */,
 				8A18BCBC28AE3426005D1B55 /* GameScene.sks */,
-				8A18BCC028AE3426005D1B55 /* GameScene.swift */,
 				8A18BCD328AF8951005D1B55 /* spark.sks */,
+				8A18BCBA28AE3426005D1B55 /* AppDelegate.swift */,
+				8A18BCC028AE3426005D1B55 /* GameScene.swift */,
+				8A18BCD728AFA2FF005D1B55 /* TimerUserInfo.swift */,
+				8A18BCD528AFA269005D1B55 /* Constants.swift */,
 				8A18BCC228AE3426005D1B55 /* GameViewController.swift */,
 				8A18BCC428AE3426005D1B55 /* Main.storyboard */,
-				8A18BCC728AE3427005D1B55 /* Assets.xcassets */,
 				8A18BCC928AE3427005D1B55 /* LaunchScreen.storyboard */,
+				8A18BCC728AE3427005D1B55 /* Assets.xcassets */,
 			);
 			path = MilestoneP16To18;
 			sourceTree = "<group>";
@@ -146,7 +152,9 @@
 			files = (
 				8A18BCC128AE3426005D1B55 /* GameScene.swift in Sources */,
 				8A18BCC328AE3426005D1B55 /* GameViewController.swift in Sources */,
+				8A18BCD828AFA2FF005D1B55 /* TimerUserInfo.swift in Sources */,
 				8A18BCBB28AE3426005D1B55 /* AppDelegate.swift in Sources */,
+				8A18BCD628AFA269005D1B55 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

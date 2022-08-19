@@ -8,18 +8,63 @@
 import SpriteKit
 import GameplayKit
 
-struct TimerUserInfo {
-    var type: GameScene.SpeedType
-    var direction: GameScene.FlowDirection
-    var line: GameScene.RunningLine
-}
-
-let goodCharacter = "good"
-let badCharacter = "bad"
-let smallCharacter = "small"
-let bigCharacter = "big"
-
 class GameScene: SKScene {
+    private var gameTimers = [RunningLine: Timer]()
+    private var mainGameTimer: Timer!
+    private var mainGameTimerForCountDown: Timer!
+
+    private var remainingTimeLabel: SKLabelNode!
+    private var remainingTimeValueLabel: SKLabelNode!
+    private var remainingTime = 0 {
+        didSet {
+            remainingTimeValueLabel.text = "\(remainingTime)"
+        }
+    }
+    
+    private let mainGameTimeLimit = 60
+    
+    private var currentNumberOfCharactersPerLine = 0
+    private var maximumNumberOfCharactersPerLine = 0
+    
+    // MARK: - Variables of Wave
+    
+    private let waveCharScaleTitle = [SpeedType.fast: GameScene.keys.smallCharacter, SpeedType.slow: GameScene.keys.bigCharacter]
+    private let waveCharScale = [SpeedType.fast: 1, SpeedType.slow: 1.5]
+    private let waveCharSpeed = [FlowDirection.ltr: [SpeedType.fast: 500, SpeedType.slow: 250], FlowDirection.rtl: [SpeedType.fast: -700, SpeedType.slow: -250]]
+    private let waveCharQuantity = [SpeedType.fast: 10, SpeedType.slow: 5]
+    private let waveCharInterval = [SpeedType.fast: 0.38, SpeedType.slow: 1]
+    
+    private let waveCharLineYAxis = [
+        RunningLine.top: 650,
+        RunningLine.middle: 384,
+        RunningLine.bottom: 148,
+    ]
+    
+    private let waveCharLineXAxis = [
+        FlowDirection.ltr: -100,
+        FlowDirection.rtl: 1100
+    ]
+    
+    // MARK: - Variables of Score
+    private var scoreLabel: SKLabelNode!
+    private var score = 0 {
+        didSet {
+            scoreLabel.text = "Score: \(score)"
+        }
+    }
+    
+    // MARK: - Variables of Bullet & Shoot
+    private var bullets = [SKSpriteNode]()
+    private let maximumBulletsPerClip = 6
+    private var timerForWarningOfReloadBullets: Timer!
+    private var warningOfReloadBulletsLabel: SKLabelNode!
+    private var isShowingWarningOfReloadBullets = false
+    
+    // MARK: - Variables of GameOver
+    private var gameOverPopup: SKSpriteNode!
+    private var isGameOver = false
+    
+    // MARK: - Enum Definitions
     
     enum FlowDirection {
         case ltr
@@ -37,75 +82,7 @@ class GameScene: SKScene {
         case bottom
     }
     
-    private let scoreRules = [
-        "small|bad": -1,
-        "small|good": 3,
-        "big|bad": -3,
-        "big|good": 1
-    ]
-    
-    private let characters = [
-        "donald": goodCharacter,
-        "mickey": goodCharacter,
-        "goofy": goodCharacter,
-        "donaldBad": badCharacter,
-        "mickeyBad": badCharacter,
-        "goofyBad": badCharacter
-    ]
-    
-    private let characteristics = [goodCharacter, badCharacter]
-    private let characterScaleTypes = [smallCharacter, bigCharacter]
-    
-    private var gameTimers = [RunningLine: Timer]()
-    private var mainGameTimer: Timer!
-    private var mainGameTimerForCountDown: Timer!
-
-    private var remainingTimeLabel: SKLabelNode!
-    private var remainingTimeValueLabel: SKLabelNode!
-    private var remainingTime = 0 {
-        didSet {
-            remainingTimeValueLabel.text = "\(remainingTime)"
-        }
-    }
-    
-    private let mainGameTimeLimit = 3
-    
-    private var currentNumberOfCharactersPerLine = 0
-    private var maximumNumberOfCharactersPerLine = 0
-    
-    //let speedAndNumberOfCharacterPerLine = [-100:]
-    private let waveCharScaleTitle = [SpeedType.fast: smallCharacter, SpeedType.slow: bigCharacter]
-    private let waveCharScale = [SpeedType.fast: 1, SpeedType.slow: 1.5]
-    private let waveCharSpeed = [FlowDirection.ltr: [SpeedType.fast: 500, SpeedType.slow: 250], FlowDirection.rtl: [SpeedType.fast: -700, SpeedType.slow: -250]]
-    private let waveCharQuantity = [SpeedType.fast: 10, SpeedType.slow: 5]
-    private let waveCharInterval = [SpeedType.fast: 0.38, SpeedType.slow: 1]
-    
-    private var scoreLabel: SKLabelNode!
-    private var score = 0 {
-        didSet {
-            scoreLabel.text = "Score: \(score)"
-        }
-    }
-    
-    private var bullets = [SKSpriteNode]()
-    private let maximumBulletsPerClip = 6
-    private var timerForWarningOfReloadBullets: Timer!
-    private var warningOfReloadBulletsLabel: SKLabelNode!
-    private var isShowingWarningOfReloadBullets = false
-    
-    private var gameOverPopup: SKSpriteNode!
-    private var isGameOver = false
-    
-    private let waveCharLineYAxis = [
-        RunningLine.top: 650,
-        RunningLine.middle: 384,
-        RunningLine.bottom: 148,
-    ]
-    
-    private let waveCharLineXAxis = [
-        FlowDirection.ltr: -100,
-        FlowDirection.rtl: 1100
-    ]
+    // MARK: - SKScene Functions
     
     override func didMove(to view: SKView) {
         scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
@@ -203,7 +180,7 @@ class GameScene: SKScene {
             let characterScaleTitle = waveCharScaleTitle[timerUserInfo.type],
             let characterPositionY = waveCharLineYAxis[timerUserInfo.line],
             let characterPositionX = waveCharLineXAxis[timerUserInfo.direction],
-            let selectedCharacter = characters.randomElement()
+            let selectedCharacter = GameScene.keys.characters.randomElement()
         else {
             sender.invalidate()
             return
@@ -314,7 +291,7 @@ class GameScene: SKScene {
         let scaleType = substrings[0]
         let characteristicType = substrings[1]
         
-        if !characterScaleTypes.contains(scaleType) || !characteristics.contains(characteristicType) {
+        if !GameScene.keys.characterScaleTypes.contains(scaleType) || !GameScene.keys.characteristics.contains(characteristicType) {
             return nil
         }
         
@@ -481,6 +458,7 @@ class GameScene: SKScene {
         
         let combinedKey = "\(scale)|\(characteristic)"
         
+        let scoreRules = GameScene.keys.scoreRules
         if scoreRules.keys.contains(combinedKey) {
             score += scoreRules[combinedKey] ?? 0
         }
