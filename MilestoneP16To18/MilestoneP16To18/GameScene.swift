@@ -53,6 +53,8 @@ class GameScene: SKScene {
         }
     }
     
+    private var shotCharacters = [SKSpriteNode]()
+    
     // MARK: - Variables of Bullet & Shoot
     private var bullets = [SKSpriteNode]()
     private let maximumBulletsPerClip = 6
@@ -457,10 +459,13 @@ class GameScene: SKScene {
         else { return }
         
         let combinedKey = "\(scale)|\(characteristic)"
-        
+
         let scoreRules = GameScene.keys.scoreRules
         if scoreRules.keys.contains(combinedKey) {
             score += scoreRules[combinedKey] ?? 0
         }
+        
+        // to prevent multi shoots on single character
+        character.name = ""
     }
 }
