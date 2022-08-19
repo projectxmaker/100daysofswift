@@ -21,7 +21,7 @@ class GameScene: SKScene {
         }
     }
     
-    private let mainGameTimeLimit = 60
+    private let mainGameTimeLimit = 10
     
     private var currentNumberOfCharactersPerLine = 0
     private var maximumNumberOfCharactersPerLine = 0
@@ -89,19 +89,18 @@ class GameScene: SKScene {
         scoreLabel.position = CGPoint(x: 90, y: 15)
         scoreLabel.horizontalAlignmentMode = .center
         scoreLabel.text = "Score: 0"
-        addChild(scoreLabel)
         
         remainingTimeLabel = SKLabelNode(fontNamed: "Chalkduster")
         remainingTimeLabel.position = CGPoint(x: 950, y: 15)
         remainingTimeLabel.horizontalAlignmentMode = .right
         remainingTimeLabel.text = "Timeleft: "
-        addChild(remainingTimeLabel)
+        remainingTimeLabel.name = "TimeLeftLabel"
         
         remainingTimeValueLabel = SKLabelNode(fontNamed: "Chalkduster")
         remainingTimeValueLabel.position = CGPoint(x: 1005, y: 15)
         remainingTimeValueLabel.horizontalAlignmentMode = .right
         remainingTimeValueLabel.text = "\(mainGameTimeLimit)"
-        addChild(remainingTimeValueLabel)
+        remainingTimeValueLabel.name = "TimeLeftValue"
         
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         
@@ -209,16 +208,20 @@ class GameScene: SKScene {
     }
     
     private func startGame() {
-        score = 0
-        isGameOver = false
-        isShowingWarningOfReloadBullets = false
-        remainingTime = mainGameTimeLimit
-        
         if gameOverPopup != nil {
             gameOverPopup.removeAllChildren()
             gameOverPopup.removeFromParent()
         }
         
+        addChild(scoreLabel)
+        addChild(remainingTimeLabel)
+        addChild(remainingTimeValueLabel)
+        
+        score = 0
+        isGameOver = false
+        isShowingWarningOfReloadBullets = false
+        remainingTime = mainGameTimeLimit
+
         reloadBullets()
         
         createWave(type: SpeedType.fast, direction: FlowDirection.ltr, line: RunningLine.top)
@@ -233,11 +236,8 @@ class GameScene: SKScene {
     @objc private func gameOver() {
         isGameOver = true
         
-        for eachCharacter in children {
-            guard let eachCharacterName = eachCharacter.name else { continue }
-            if isACharacterWithName(eachCharacterName) {
-                eachCharacter.removeFromParent()
-            }
+        for eachChild in children {
+            eachChild.removeFromParent()
         }
         
         for eachGameTimer in gameTimers.enumerated() {
