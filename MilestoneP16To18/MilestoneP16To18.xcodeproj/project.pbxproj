@@ -14,6 +14,7 @@
 		8A18BCC628AE3426005D1B55 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A18BCC428AE3426005D1B55 /* Main.storyboard */; };
 		8A18BCC828AE3427005D1B55 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A18BCC728AE3427005D1B55 /* Assets.xcassets */; };
 		8A18BCCB28AE3427005D1B55 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A18BCC928AE3427005D1B55 /* LaunchScreen.storyboard */; };
+		8A18BCD228AF61F9005D1B55 /* fire.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8A18BCD128AF61F9005D1B55 /* fire.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		8A18BCC528AE3426005D1B55 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8A18BCC728AE3427005D1B55 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8A18BCCA28AE3427005D1B55 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		8A18BCD128AF61F9005D1B55 /* fire.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = fire.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 				8A18BCBA28AE3426005D1B55 /* AppDelegate.swift */,
 				8A18BCBC28AE3426005D1B55 /* GameScene.sks */,
 				8A18BCC028AE3426005D1B55 /* GameScene.swift */,
+				8A18BCD128AF61F9005D1B55 /* fire.sks */,
 				8A18BCC228AE3426005D1B55 /* GameViewController.swift */,
 				8A18BCC428AE3426005D1B55 /* Main.storyboard */,
 				8A18BCC728AE3427005D1B55 /* Assets.xcassets */,
@@ -128,6 +131,7 @@
 			files = (
 				8A18BCC628AE3426005D1B55 /* Main.storyboard in Resources */,
 				8A18BCBD28AE3426005D1B55 /* GameScene.sks in Resources */,
+				8A18BCD228AF61F9005D1B55 /* fire.sks in Resources */,
 				8A18BCC828AE3427005D1B55 /* Assets.xcassets in Resources */,
 				8A18BCCB28AE3427005D1B55 /* LaunchScreen.storyboard in Resources */,
 			);

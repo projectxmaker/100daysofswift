@@ -58,7 +58,7 @@ class GameScene: SKScene {
         }
     }
     
-    private let mainGameTimeLimit = 3
+    private let mainGameTimeLimit = 60
     
     private var currentNumberOfCharactersPerLine = 0
     private var maximumNumberOfCharactersPerLine = 0
@@ -135,7 +135,7 @@ class GameScene: SKScene {
             if characteristics.contains(eachNodeName) {
                 // if one character is shooted
                 if bullets.count > 0 {
-                    shootACharacter(eachNode)
+                    shootACharacter(eachNode, touchLocation: location)
                 }
                 
                 print("\(eachNodeName) is tapped!")
@@ -343,7 +343,66 @@ class GameScene: SKScene {
         warningOfReloadBulletsLabel.removeFromParent()
     }
     
-    private func shootACharacter(_ character: SKNode) {
+    private func shootACharacter(_ character: SKNode, touchLocation: CGPoint) {
+        let target = SKSpriteNode(imageNamed: "target")
+        target.position = touchLocation
+        target.zPosition = 1
+        
+        guard let explosion = SKEmitterNode(fileNamed: "fire") else { return }
+        explosion.zPosition = 1
+        explosion.position = touchLocation
+        
+        let showTargetAction = SKAction.run {
+            self.addChild(target)
+        }
+        
+        let hideTargetAction = SKAction.run {
+            target.removeFromParent()
+        }
+        
+        let showExplosionAction = SKAction.run {
+            self.addChild(explosion)
+        }
+        
+        let hideExplosionAction = SKAction.run {
+            explosion.removeFromParent()
+        }
+        
+        let hideCharacterAction = SKAction.run {
+            character.removeFromParent()
+        }
+
+        let waitForScaling = 0.05
+        
+        character.run(SKAction.sequence([
+            showTargetAction,
+            SKAction.wait(forDuration: 0.1),
+            hideTargetAction,
+            showExplosionAction,
+            SKAction.wait(forDuration: waitForScaling),
+            SKAction.run {
+                character.setScale(0.8)
+            },
+            SKAction.wait(forDuration: waitForScaling),
+            SKAction.run {
+                character.setScale(0.6)
+            },
+            SKAction.wait(forDuration: waitForScaling),
+            SKAction.run {
+                character.setScale(0.4)
+            },
+            SKAction.wait(forDuration: waitForScaling),
+            SKAction.run {
+                character.setScale(0.2)
+            },
+            SKAction.wait(forDuration: waitForScaling),
+            SKAction.run {
+                character.setScale(0)
+            },
+            SKAction.wait(forDuration: 0.5),
+            hideExplosionAction,
+            hideCharacterAction
+        ]))
         
     }
 }
