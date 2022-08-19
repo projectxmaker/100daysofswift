@@ -51,9 +51,10 @@ class GameScene: SKScene {
     private var mainGameTimerForCountDown: Timer!
 
     private var remainingTimeLabel: SKLabelNode!
+    private var remainingTimeValueLabel: SKLabelNode!
     private var remainingTime = 0 {
         didSet {
-            remainingTimeLabel.text = "Timeleft: \(remainingTime)"
+            remainingTimeValueLabel.text = "\(remainingTime)"
         }
     }
     
@@ -101,10 +102,16 @@ class GameScene: SKScene {
         addChild(scoreLabel)
         
         remainingTimeLabel = SKLabelNode(fontNamed: "Chalkduster")
-        remainingTimeLabel.position = CGPoint(x: 1000, y: 15)
+        remainingTimeLabel.position = CGPoint(x: 950, y: 15)
         remainingTimeLabel.horizontalAlignmentMode = .right
-        remainingTimeLabel.text = "Timeleft: \(mainGameTimeLimit)"
+        remainingTimeLabel.text = "Timeleft: "
         addChild(remainingTimeLabel)
+        
+        remainingTimeValueLabel = SKLabelNode(fontNamed: "Chalkduster")
+        remainingTimeValueLabel.position = CGPoint(x: 1005, y: 15)
+        remainingTimeValueLabel.horizontalAlignmentMode = .right
+        remainingTimeValueLabel.text = "\(mainGameTimeLimit)"
+        addChild(remainingTimeValueLabel)
         
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         
