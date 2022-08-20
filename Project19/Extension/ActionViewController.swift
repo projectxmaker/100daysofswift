@@ -20,6 +20,8 @@ class ActionViewController: UIViewController {
         super.viewDidLoad()
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .play, target: self, action: #selector(handleShowPrewrittenScripts))
 
         let notification = NotificationCenter.default
         notification.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -42,13 +44,7 @@ class ActionViewController: UIViewController {
     }
 
     @IBAction func done() {
-        let item = NSExtensionItem()
-        let argument: NSDictionary = ["customJavaScript": script.text ?? ""]
-        let webDictionary: NSDictionary = [NSExtensionJavaScriptFinalizeArgumentKey: argument]
-        let customJavascript = NSItemProvider(item: webDictionary, typeIdentifier: kUTTypePropertyList as String)
-        item.attachments = [customJavascript]
-        
-        extensionContext?.completeRequest(returningItems: [item])
+        sendToSafariSomething(script.text ?? "")
     }
     
     @objc func adjustForKeyboard(notification: Notification) {
@@ -69,4 +65,39 @@ class ActionViewController: UIViewController {
         script.scrollRangeToVisible(selectedRange)
     }
 
+    @objc private func handleShowPrewrittenScripts() {
+        let ac = UIAlertController(title: "Prewritten Scripts", message: nil, preferredStyle: .alert)
+        
+        ac.addAction(UIAlertAction(title: "Alert: Hello world", style: .default, handler: { [weak self] _ in
+            self?.showAlertOfHelloWord()
+        }))
+        
+        ac.addAction(UIAlertAction(title: "Go: VnExpress", style: .default, handler: { [weak self] _ in
+            self?.redirectToAWebsite("https://vnexpress.net")
+        }))
+        
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
+        present(ac, animated: true)
+    }
+    
+    private func showAlertOfHelloWord() {
+        let scriptText = "alert('Hello World')"
+        sendToSafariSomething(scriptText)
+    }
+    
+    private func redirectToAWebsite(_ websiteUrl: String) {
+        let scriptText = "document.location.href = '\(websiteUrl)'"
+        sendToSafariSomething(scriptText)
+    }
+    
+    private func sendToSafariSomething(_ scriptText: String) {
+        let item = NSExtensionItem()
+        let argument: NSDictionary = ["customJavaScript": scriptText]
+        let webDictionary: NSDictionary = [NSExtensionJavaScriptFinalizeArgumentKey: argument]
+        let customJavascript = NSItemProvider(item: webDictionary, typeIdentifier: kUTTypePropertyList as String)
+        item.attachments = [customJavascript]
+        
+        extensionContext?.completeRequest(returningItems: [item])
+    }
 }
