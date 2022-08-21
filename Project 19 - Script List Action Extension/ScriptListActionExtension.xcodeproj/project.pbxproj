@@ -50,7 +50,7 @@
 /* Begin PBXFileReference section */
 		8A4DDFF128B1B1CC00534499 /* ScriptListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptListViewController.swift; sourceTree = "<group>"; };
 		8A4DDFF328B1B5AB00534499 /* Script.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Script.swift; sourceTree = "<group>"; };
-		8AFEF60628B08F250044DECC /* Project19.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project19.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8AFEF60628B08F250044DECC /* ScriptListActionExtension.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScriptListActionExtension.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8AFEF60928B08F250044DECC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8AFEF60B28B08F250044DECC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		8AFEF60D28B08F250044DECC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -89,7 +89,7 @@
 		8AFEF5FD28B08F250044DECC = {
 			isa = PBXGroup;
 			children = (
-				8AFEF60828B08F250044DECC /* Project19 */,
+				8AFEF60828B08F250044DECC /* ScriptListActionExtension */,
 				8AFEF62828B0C71B0044DECC /* Extension */,
 				8AFEF62528B0C71B0044DECC /* Frameworks */,
 				8AFEF60728B08F250044DECC /* Products */,
@@ -99,20 +99,20 @@
 		8AFEF60728B08F250044DECC /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8AFEF60628B08F250044DECC /* Project19.app */,
+				8AFEF60628B08F250044DECC /* ScriptListActionExtension.app */,
 				8AFEF62428B0C71B0044DECC /* Extension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		8AFEF60828B08F250044DECC /* Project19 */ = {
+		8AFEF60828B08F250044DECC /* ScriptListActionExtension */ = {
 			isa = PBXGroup;
 			children = (
 				8AFEF61D28B08F390044DECC /* Presentation Layer */,
 				8AFEF61228B08F260044DECC /* Assets.xcassets */,
 				8AFEF61728B08F260044DECC /* Info.plist */,
 			);
-			path = Project19;
+			path = ScriptListActionExtension;
 			sourceTree = "<group>";
 		};
 		8AFEF61D28B08F390044DECC /* Presentation Layer */ = {
@@ -156,8 +156,8 @@
 			children = (
 				8AFEF62928B0C71B0044DECC /* Media.xcassets */,
 				8AFEF62B28B0C71B0044DECC /* ScriptDetailViewController.swift */,
-				8A4DDFF328B1B5AB00534499 /* Script.swift */,
 				8A4DDFF128B1B1CC00534499 /* ScriptListViewController.swift */,
+				8A4DDFF328B1B5AB00534499 /* Script.swift */,
 				8AFEF62D28B0C71B0044DECC /* MainInterface.storyboard */,
 				8AFEF63028B0C71B0044DECC /* Info.plist */,
 				8AFEF63828B0CE020044DECC /* Action.js */,
@@ -168,9 +168,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8AFEF60528B08F250044DECC /* Project19 */ = {
+		8AFEF60528B08F250044DECC /* ScriptListActionExtension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8AFEF61A28B08F260044DECC /* Build configuration list for PBXNativeTarget "Project19" */;
+			buildConfigurationList = 8AFEF61A28B08F260044DECC /* Build configuration list for PBXNativeTarget "ScriptListActionExtension" */;
 			buildPhases = (
 				8AFEF60228B08F250044DECC /* Sources */,
 				8AFEF60328B08F250044DECC /* Frameworks */,
@@ -182,9 +182,9 @@
 			dependencies = (
 				8AFEF63228B0C71B0044DECC /* PBXTargetDependency */,
 			);
-			name = Project19;
+			name = ScriptListActionExtension;
 			productName = Project19;
-			productReference = 8AFEF60628B08F250044DECC /* Project19.app */;
+			productReference = 8AFEF60628B08F250044DECC /* ScriptListActionExtension.app */;
 			productType = "com.apple.product-type.application";
 		};
 		8AFEF62328B0C71B0044DECC /* Extension */ = {
@@ -222,7 +222,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 8AFEF60128B08F250044DECC /* Build configuration list for PBXProject "Project19" */;
+			buildConfigurationList = 8AFEF60128B08F250044DECC /* Build configuration list for PBXProject "ScriptListActionExtension" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -235,7 +235,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8AFEF60528B08F250044DECC /* Project19 */,
+				8AFEF60528B08F250044DECC /* ScriptListActionExtension */,
 				8AFEF62328B0C71B0044DECC /* Extension */,
 			);
 		};
@@ -447,7 +447,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TT8TA55RWH;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Project19/Info.plist;
+				INFOPLIST_FILE = ScriptListActionExtension/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -458,7 +458,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.Project19;
+				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.ScriptListActionExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -476,7 +476,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TT8TA55RWH;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Project19/Info.plist;
+				INFOPLIST_FILE = ScriptListActionExtension/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -487,7 +487,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.Project19;
+				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.ScriptListActionExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -511,7 +511,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.Project19.Extension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.ScriptListActionExtension.Extension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -536,7 +536,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.Project19.Extension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.ScriptListActionExtension.Extension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -548,7 +548,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		8AFEF60128B08F250044DECC /* Build configuration list for PBXProject "Project19" */ = {
+		8AFEF60128B08F250044DECC /* Build configuration list for PBXProject "ScriptListActionExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8AFEF61828B08F260044DECC /* Debug */,
@@ -557,7 +557,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8AFEF61A28B08F260044DECC /* Build configuration list for PBXNativeTarget "Project19" */ = {
+		8AFEF61A28B08F260044DECC /* Build configuration list for PBXNativeTarget "ScriptListActionExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8AFEF61B28B08F260044DECC /* Debug */,
