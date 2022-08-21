@@ -7,6 +7,7 @@
 
 import UIKit
 import MobileCoreServices
+import UniformTypeIdentifiers
 
 class ScriptListViewController: UITableViewController {
 
@@ -23,6 +24,8 @@ class ScriptListViewController: UITableViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleNotificationNewScriptIsCreated), name: Notification.Name("com.projectxmaker.ScriptExtension.NewScriptIsCreated"), object: nil)
 
+        NotificationCenter.default.addObserver(self, selector: #selector(handleNotificationScriptIsUpdated), name: Notification.Name("com.projectxmaker.ScriptExtension.ScriptIsUpdated"), object: nil)
+        
         reloadScriptList()
     }
 
@@ -166,37 +169,12 @@ class ScriptListViewController: UITableViewController {
         let item = NSExtensionItem()
         let argument: NSDictionary = ["customJavaScript": scriptText]
         let webDictionary: NSDictionary = [NSExtensionJavaScriptFinalizeArgumentKey: argument]
-        let customJavascript = NSItemProvider(item: webDictionary, typeIdentifier: kUTTypePropertyList as String)
+        //let customJavascript = NSItemProvider(item: webDictionary, typeIdentifier: kUTTypePropertyList as String)
+        let customJavascript = NSItemProvider(item: webDictionary, typeIdentifier: UTType.propertyList.identifier)
+        
         item.attachments = [customJavascript]
         
         extensionContext?.completeRequest(returningItems: [item])
-    }
-    
-    @objc private func handleNotificationNewScriptIsCreated(_ notifcation: Notification) {
-        guard
-            let userInfo = notifcation.userInfo,
-            let newScript = userInfo["script"] as? Script
-        else { return }
-        
-        let ac = UIAlertController(title: "Name Your Script", message: nil, preferredStyle: .alert)
-        ac.addTextField { textfield in
-            textfield.placeholder = "New Script \(Date.now.formatted(.dateTime))"
-        }
-        ac.addAction(UIAlertAction(title: "Save", style: .default, handler: { [weak self] _ in
-            var scriptName = "New Script"
-            if let inputtedName = ac.textFields?[0].text {
-                scriptName = inputtedName
-            }
-            
-            newScript.name = scriptName
-            
-            _ = self?.insertScript(newScript, at: 0)
-            
-            self?.reloadScriptList()
-            self?.dismiss(animated: true)
-        }))
-        
-        present(ac, animated: true)
     }
     
     private func loadScripts() -> [Script]? {
@@ -234,5 +212,44 @@ class ScriptListViewController: UITableViewController {
         scripts = tmpScripts
         
         tableView.reloadData()
+    }
+    
+    // MARK: - Notification Handlers
+    @objc private func handleNotificationNewScriptIsCreated(_ notification: Notification) {
+        guard
+            let userInfo = notification.userInfo,
+            let newScript = userInfo["script"] as? Script
+        else { return }
+        
+        let ac = UIAlertController(title: "Name Your Script", message: nil, preferredStyle: .alert)
+        ac.addTextField { textfield in
+            textfield.placeholder = "New Script \(Date.now.formatted(.dateTime))"
+        }
+        ac.addAction(UIAlertAction(title: "Save", style: .default, handler: { [weak self] _ in
+            var scriptName = "New Script"
+            if let inputtedName = ac.textFields?[0].text {
+                scriptName = inputtedName
+            }
+            
+            newScript.name = scriptName
+            
+            _ = self?.insertScript(newScript, at: 0)
+            
+            self?.reloadScriptList()
+            self?.dismiss(animated: true)
+        }))
+        
+        present(ac, animated: true)
+    }
+    
+    @objc private func handleNotificationScriptIsUpdated(_ notification: Notification) {
+        guard
+            let userInfo = notification.userInfo,
+            let tmpScriptIndex = userInfo["index"] as? String,
+            let scriptIndex = NumberFormatter().number(from: tmpScriptIndex)?.intValue as? Int,
+            let newCode = userInfo["code"] as? String
+        else { return }
+
+        scripts[scriptIndex].code = newCode
     }
 }

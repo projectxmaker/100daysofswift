@@ -50,7 +50,7 @@ class ScriptDetailViewController: UIViewController {
         
         if let inputItem = extensionContext?.inputItems.first as? NSExtensionItem {
             if let itemProvider = inputItem.attachments?.first {
-                itemProvider.loadItem(forTypeIdentifier: kUTTypePropertyList as String) { [weak self] (dict, error) in
+                itemProvider.loadItem(forTypeIdentifier: UTType.propertyList.identifier as String) { [weak self] (dict, error) in
                     guard let itemDictionary = dict as? NSDictionary else { return }
                     guard let javaScriptValues = itemDictionary[NSExtensionJavaScriptPreprocessingResultsKey] as? NSDictionary else { return }
                     self?.pageTitle = javaScriptValues["title"] as? String ?? ""
@@ -64,6 +64,7 @@ class ScriptDetailViewController: UIViewController {
         }
     }
     
+    // tap Back button on Navigation Bar
     override func viewWillDisappear(_ animated: Bool) {
         script?.code = codeView.text
         if isCreationProcess {
@@ -71,7 +72,14 @@ class ScriptDetailViewController: UIViewController {
             let notification = NotificationCenter.default
             notification.post(name: Notification.Name("com.projectxmaker.ScriptExtension.NewScriptIsCreated"), object: nil, userInfo: userInfo)
         } else {
-            _ = updateScript(script ?? Script(), at: scriptIndex ?? 0)
+            if updateScript(script ?? Script(), at: scriptIndex ?? 0) {
+                let userInfo: [String: String] = [
+                    "index": Int(scriptIndex ?? 0).formatted(),
+                    "code": codeView.text
+                ]
+                let notification = NotificationCenter.default
+                notification.post(name: Notification.Name("com.projectxmaker.ScriptExtension.ScriptIsUpdated"), object: nil, userInfo: userInfo)
+            }
         }
     }
 
@@ -137,7 +145,7 @@ class ScriptDetailViewController: UIViewController {
         let item = NSExtensionItem()
         let argument: NSDictionary = ["customJavaScript": scriptText]
         let webDictionary: NSDictionary = [NSExtensionJavaScriptFinalizeArgumentKey: argument]
-        let customJavascript = NSItemProvider(item: webDictionary, typeIdentifier: kUTTypePropertyList as String)
+        let customJavascript = NSItemProvider(item: webDictionary, typeIdentifier: UTType.propertyList.identifier as String)
         item.attachments = [customJavascript]
         
         extensionContext?.completeRequest(returningItems: [item])
