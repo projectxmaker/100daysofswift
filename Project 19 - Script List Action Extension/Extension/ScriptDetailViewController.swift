@@ -96,48 +96,31 @@ class ScriptDetailViewController: UIViewController {
             _ = updateScript(tmpScript, at: scriptIndex ?? 0)
         }
 
-        sendToSafariSomething(codeView.text ?? "")
+        ScriptListViewController.sendToSafariSomething(codeView.text ?? "", context: extensionContext)
     }
 
     // MARK: - Extra Funcs
-    
-    private func loadScripts() -> [Script]? {
-        let datastore = UserDefaults.standard
-        guard
-            let encodedData = datastore.data(forKey: "scripts"),
-            let decodedData = try? JSONDecoder().decode([Script].self, from: encodedData)
-        else { return nil }
-
-        return decodedData
-    }
-    
-    private func saveScripts(_ scripts: [Script]) {
-        guard let encodedData = try? JSONEncoder().encode(scripts) else { return }
-        
-        let datastore = UserDefaults.standard
-        datastore.set(encodedData, forKey: "scripts")
-    }
 
     private func updateScript(_ script: Script, at: Int) -> Bool {
-        guard var scripts = loadScripts() else { return false }
+        guard var scripts = ScriptListViewController.loadScripts() else { return false }
 
         scripts[at] = script
-        saveScripts(scripts)
+        ScriptListViewController.saveScripts(scripts)
 
         return true
     }
     
     private func createScript(_ script: Script) -> Bool {
-        guard var scripts = loadScripts() else { return false }
+        guard var scripts = ScriptListViewController.loadScripts() else { return false }
 
         scripts.insert(script, at: 0)
-        saveScripts(scripts)
+        ScriptListViewController.saveScripts(scripts)
 
         return true
     }
     
     private func loadScriptWithIndex(_ i: Int) -> Script? {
-        guard let scripts = loadScripts() else { return nil }
+        guard let scripts = ScriptListViewController.loadScripts() else { return nil }
         
         return scripts[i]
     }
@@ -158,15 +141,5 @@ class ScriptDetailViewController: UIViewController {
 
         let selectedRange = codeView.selectedRange
         codeView.scrollRangeToVisible(selectedRange)
-    }
-    
-    private func sendToSafariSomething(_ scriptText: String) {
-        let item = NSExtensionItem()
-        let argument: NSDictionary = ["customJavaScript": scriptText]
-        let webDictionary: NSDictionary = [NSExtensionJavaScriptFinalizeArgumentKey: argument]
-        let customJavascript = NSItemProvider(item: webDictionary, typeIdentifier: UTType.propertyList.identifier as String)
-        item.attachments = [customJavascript]
-        
-        extensionContext?.completeRequest(returningItems: [item])
     }
 }

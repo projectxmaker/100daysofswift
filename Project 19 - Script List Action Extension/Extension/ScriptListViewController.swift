@@ -101,12 +101,12 @@ class ScriptListViewController: UITableViewController {
     
     private func showAlertOfHelloWord() {
         let scriptText = "alert('Hello World')"
-        sendToSafariSomething(scriptText)
+        ScriptListViewController.sendToSafariSomething(scriptText, context: extensionContext)
     }
     
     private func redirectToAWebsite(_ websiteUrl: String) {
         let scriptText = "document.location.href = '\(websiteUrl)'"
-        sendToSafariSomething(scriptText)
+        ScriptListViewController.sendToSafariSomething(scriptText, context: extensionContext)
     }
     
     // MARK: - Button Add New Script
@@ -121,7 +121,7 @@ class ScriptListViewController: UITableViewController {
     private func deleteScript(at indexPath: IndexPath) {
         scripts.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .automatic)
-        saveScripts()
+        ScriptListViewController.saveScripts(scripts)
     }
     
     private func editNameOfScript(_ script: Script, at indexPath: IndexPath) {
@@ -146,7 +146,7 @@ class ScriptListViewController: UITableViewController {
         script.name = newName
         scripts[indexPath.row] = script
         
-        saveScripts()
+        ScriptListViewController.saveScripts(scripts)
         
         let cell = tableView.cellForRow(at: indexPath)
         var contentConfig = cell?.defaultContentConfiguration()
@@ -166,22 +166,21 @@ class ScriptListViewController: UITableViewController {
     }
     
     private func executeScript(_ script: Script) {
-        sendToSafariSomething(script.code)
+        ScriptListViewController.sendToSafariSomething(script.code, context: extensionContext)
     }
     
-    private func sendToSafariSomething(_ scriptText: String) {
+    static public func sendToSafariSomething(_ scriptText: String, context: NSExtensionContext?) {
         let item = NSExtensionItem()
         let argument: NSDictionary = ["customJavaScript": scriptText]
         let webDictionary: NSDictionary = [NSExtensionJavaScriptFinalizeArgumentKey: argument]
-        //let customJavascript = NSItemProvider(item: webDictionary, typeIdentifier: kUTTypePropertyList as String)
         let customJavascript = NSItemProvider(item: webDictionary, typeIdentifier: UTType.propertyList.identifier)
         
         item.attachments = [customJavascript]
         
-        extensionContext?.completeRequest(returningItems: [item])
+        context?.completeRequest(returningItems: [item])
     }
     
-    private func loadScripts() -> [Script]? {
+    static public func loadScripts() -> [Script]? {
         let datastore = UserDefaults.standard
         guard
             let encodedData = datastore.data(forKey: "scripts"),
@@ -191,26 +190,26 @@ class ScriptListViewController: UITableViewController {
         return decodedData
     }
     
-    private func saveScripts() {
-        guard let encodedData = try? JSONEncoder().encode(scripts) else { return }
+    static public func saveScripts(_ tmpScripts: [Script]) {
+        guard let encodedData = try? JSONEncoder().encode(tmpScripts) else { return }
         
         let datastore = UserDefaults.standard
         datastore.set(encodedData, forKey: "scripts")
     }
     
     private func insertScript(_ script: Script, at: Int) -> Bool {
-        if let tmpScripts = loadScripts() {
+        if let tmpScripts = ScriptListViewController.loadScripts() {
             scripts = tmpScripts
         }
         
         scripts.insert(script, at: at)
-        saveScripts()
+        ScriptListViewController.saveScripts(scripts)
         
         return true
     }
     
     private func reloadScriptList() {
-        guard let tmpScripts = loadScripts() else {
+        guard let tmpScripts = ScriptListViewController.loadScripts() else {
             return
         }
         scripts = tmpScripts
