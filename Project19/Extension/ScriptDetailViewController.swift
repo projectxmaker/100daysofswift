@@ -9,9 +9,11 @@ import UIKit
 import MobileCoreServices
 import UniformTypeIdentifiers
 
-class ActionViewController: UIViewController {
+class ScriptDetailViewController: UIViewController {
 
-    @IBOutlet weak var script: UITextView!
+    var script: Script?
+
+    @IBOutlet weak var codeView: UITextView!
     
     var pageTitle = ""
     var pageURL = ""
@@ -44,7 +46,7 @@ class ActionViewController: UIViewController {
     }
 
     @IBAction func done() {
-        sendToSafariSomething(script.text ?? "")
+        sendToSafariSomething(codeView.text ?? "")
     }
     
     @objc func adjustForKeyboard(notification: Notification) {
@@ -54,15 +56,15 @@ class ActionViewController: UIViewController {
         let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
 
         if notification.name == UIResponder.keyboardWillHideNotification {
-            script.contentInset = .zero
+            codeView.contentInset = .zero
         } else {
-            script.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom, right: 0)
+            codeView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom, right: 0)
         }
 
-        script.scrollIndicatorInsets = script.contentInset
+        codeView.scrollIndicatorInsets = codeView.contentInset
 
-        let selectedRange = script.selectedRange
-        script.scrollRangeToVisible(selectedRange)
+        let selectedRange = codeView.selectedRange
+        codeView.scrollRangeToVisible(selectedRange)
     }
 
     @objc private func handleShowPrewrittenScripts() {
