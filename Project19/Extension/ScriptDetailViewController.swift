@@ -66,6 +66,7 @@ class ScriptDetailViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         if isCreationProcess {
+            script?.code = codeView.text
             let userInfo = ["script": script ?? Script()]
             let notification = NotificationCenter.default
             notification.post(name: Notification.Name("com.projectxmaker.ScriptExtension.NewScriptIsCreated"), object: nil, userInfo: userInfo)
