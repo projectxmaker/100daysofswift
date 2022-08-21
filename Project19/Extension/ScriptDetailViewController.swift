@@ -65,13 +65,13 @@ class ScriptDetailViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        script?.code = codeView.text
         if isCreationProcess {
-            script?.code = codeView.text
             let userInfo = ["script": script ?? Script()]
             let notification = NotificationCenter.default
             notification.post(name: Notification.Name("com.projectxmaker.ScriptExtension.NewScriptIsCreated"), object: nil, userInfo: userInfo)
         } else {
-            _ = updateScript(script ?? Script(), at: 0)
+            _ = updateScript(script ?? Script(), at: scriptIndex ?? 0)
         }
     }
 
@@ -86,31 +86,26 @@ class ScriptDetailViewController: UIViewController {
     private func loadScripts() -> [Script]? {
         let datastore = UserDefaults.standard
         guard
-            let scripts = datastore.array(forKey: "scripts") as? [Script]
+            let encodedData = datastore.data(forKey: "scripts"),
+            let decodedData = try? JSONDecoder().decode([Script].self, from: encodedData)
         else { return nil }
-        
-        return scripts
+
+        return decodedData
     }
     
     private func saveScripts(_ scripts: [Script]) {
-        let datastore = UserDefaults.standard
-        datastore.set(scripts, forKey: "scripts")
-    }
-    
-    private func insertScript(_ script: Script, at: Int) -> Bool {
-        guard var scripts = loadScripts() else { return false }
+        guard let encodedData = try? JSONEncoder().encode(scripts) else { return }
         
-        scripts.insert(script, at: at)
-        saveScripts(scripts)
-        return true
+        let datastore = UserDefaults.standard
+        datastore.set(encodedData, forKey: "scripts")
     }
-    
+
     private func updateScript(_ script: Script, at: Int) -> Bool {
         guard var scripts = loadScripts() else { return false }
-        
+
         scripts[at] = script
         saveScripts(scripts)
-        
+
         return true
     }
     

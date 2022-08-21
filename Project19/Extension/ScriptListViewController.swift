@@ -22,7 +22,7 @@ class ScriptListViewController: UITableViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(handleShowPrewrittenScripts))
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleNotificationNewScriptIsCreated), name: Notification.Name("com.projectxmaker.ScriptExtension.NewScriptIsCreated"), object: nil)
-        
+
         reloadScriptList()
     }
 
@@ -55,7 +55,7 @@ class ScriptListViewController: UITableViewController {
         
         guard let scriptDetailViewController = storyboard.instantiateViewController(withIdentifier: "ScriptDetail") as? ScriptDetailViewController else { return }
         
-        scriptDetailViewController.script = script
+        scriptDetailViewController.scriptIndex = indexPath.row
         scriptDetailViewController.title = script.name
         
         navigationController?.pushViewController(scriptDetailViewController, animated: true)
@@ -135,14 +135,10 @@ class ScriptListViewController: UITableViewController {
         present(ac, animated: true)
     }
     
-    
     private func loadScripts() -> [Script]? {
         let datastore = UserDefaults.standard
         guard
-            let encodedData = datastore.data(forKey: "scripts")
-        else { return nil }
-        
-        guard
+            let encodedData = datastore.data(forKey: "scripts"),
             let decodedData = try? JSONDecoder().decode([Script].self, from: encodedData)
         else { return nil }
 
@@ -160,8 +156,10 @@ class ScriptListViewController: UITableViewController {
         if let tmpScripts = loadScripts() {
             scripts = tmpScripts
         }
+        
         scripts.insert(script, at: at)
         saveScripts()
+        
         return true
     }
     
