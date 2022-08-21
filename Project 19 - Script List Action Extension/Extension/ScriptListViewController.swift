@@ -118,6 +118,7 @@ class ScriptListViewController: UITableViewController {
     private func deleteScript(at indexPath: IndexPath) {
         scripts.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .automatic)
+        saveScripts()
     }
     
     private func editNameOfScript(_ script: Script, at indexPath: IndexPath) {
