@@ -12,19 +12,38 @@ import UniformTypeIdentifiers
 class ScriptDetailViewController: UIViewController {
 
     var script: Script?
+    var scriptIndex: Int?
+    var isCreationProcess = false
 
     @IBOutlet weak var codeView: UITextView!
     
     var pageTitle = ""
     var pageURL = ""
-
+    
+    // MARK: - View Funcs
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
+        if scriptIndex == nil {
+            script = Script()
+            isCreationProcess = true
+        } else {
+            guard
+                let tmpIndex = scriptIndex,
+                let tmpScript = loadScriptWithIndex(tmpIndex) else {
+                dismiss(animated: true)
+                return
+            }
+            
+            script = tmpScript
+        }
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .play, target: self, action: #selector(handleShowPrewrittenScripts))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .play, target: self, action: #selector(handleTestButtonTapped))
 
+        codeView.text = script?.code
+        title = script?.name
+        
         let notification = NotificationCenter.default
         notification.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
         notification.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
@@ -44,9 +63,60 @@ class ScriptDetailViewController: UIViewController {
             }
         }
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        if isCreationProcess {
+            let userInfo = ["script": script ?? Script()]
+            let notification = NotificationCenter.default
+            notification.post(name: Notification.Name("com.projectxmaker.ScriptExtension.NewScriptIsCreated"), object: nil, userInfo: userInfo)
+        } else {
+            _ = updateScript(script ?? Script(), at: 0)
+        }
+    }
 
-    @IBAction func done() {
+    // MARK: - Button Funcs
+    
+    @IBAction func handleTestButtonTapped() {
         sendToSafariSomething(codeView.text ?? "")
+    }
+
+    // MARK: - Extra Funcs
+    
+    private func loadScripts() -> [Script]? {
+        let datastore = UserDefaults.standard
+        guard
+            let scripts = datastore.array(forKey: "scripts") as? [Script]
+        else { return nil }
+        
+        return scripts
+    }
+    
+    private func saveScripts(_ scripts: [Script]) {
+        let datastore = UserDefaults.standard
+        datastore.set(scripts, forKey: "scripts")
+    }
+    
+    private func insertScript(_ script: Script, at: Int) -> Bool {
+        guard var scripts = loadScripts() else { return false }
+        
+        scripts.insert(script, at: at)
+        saveScripts(scripts)
+        return true
+    }
+    
+    private func updateScript(_ script: Script, at: Int) -> Bool {
+        guard var scripts = loadScripts() else { return false }
+        
+        scripts[at] = script
+        saveScripts(scripts)
+        
+        return true
+    }
+    
+    private func loadScriptWithIndex(_ i: Int) -> Script? {
+        guard let scripts = loadScripts() else { return nil }
+        
+        return scripts[i]
     }
     
     @objc func adjustForKeyboard(notification: Notification) {
@@ -65,32 +135,6 @@ class ScriptDetailViewController: UIViewController {
 
         let selectedRange = codeView.selectedRange
         codeView.scrollRangeToVisible(selectedRange)
-    }
-
-    @objc private func handleShowPrewrittenScripts() {
-        let ac = UIAlertController(title: "Prewritten Scripts", message: nil, preferredStyle: .alert)
-        
-        ac.addAction(UIAlertAction(title: "Alert: Hello world", style: .default, handler: { [weak self] _ in
-            self?.showAlertOfHelloWord()
-        }))
-        
-        ac.addAction(UIAlertAction(title: "Go: VnExpress", style: .default, handler: { [weak self] _ in
-            self?.redirectToAWebsite("https://vnexpress.net")
-        }))
-        
-        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        
-        present(ac, animated: true)
-    }
-    
-    private func showAlertOfHelloWord() {
-        let scriptText = "alert('Hello World')"
-        sendToSafariSomething(scriptText)
-    }
-    
-    private func redirectToAWebsite(_ websiteUrl: String) {
-        let scriptText = "document.location.href = '\(websiteUrl)'"
-        sendToSafariSomething(scriptText)
     }
     
     private func sendToSafariSomething(_ scriptText: String) {

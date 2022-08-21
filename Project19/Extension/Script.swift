@@ -10,4 +10,14 @@ import Foundation
 class Script: Codable {
     var name: String
     var code: String
+    
+    init() {
+        name = ""
+        code = ""
+    }
+    
+    init(name: String, code: String) {
+        self.name = name
+        self.code = code
+    }
 }

@@ -20,6 +20,10 @@ class ScriptListViewController: UITableViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleAddNewScriptButton))
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(handleShowPrewrittenScripts))
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleNotificationNewScriptIsCreated), name: Notification.Name("com.projectxmaker.ScriptExtension.NewScriptIsCreated"), object: nil)
+        
+        reloadScriptList()
     }
 
     // MARK: - Table view data source
@@ -104,5 +108,69 @@ class ScriptListViewController: UITableViewController {
         extensionContext?.completeRequest(returningItems: [item])
     }
     
+    @objc private func handleNotificationNewScriptIsCreated(_ notifcation: Notification) {
+        guard
+            let userInfo = notifcation.userInfo,
+            let newScript = userInfo["script"] as? Script
+        else { return }
+        
+        let ac = UIAlertController(title: "Name Your Script", message: nil, preferredStyle: .alert)
+        ac.addTextField { textfield in
+            textfield.placeholder = "New Script \(Date.now.formatted(.dateTime))"
+        }
+        ac.addAction(UIAlertAction(title: "Save", style: .default, handler: { [weak self] _ in
+            var scriptName = "New Script"
+            if let inputtedName = ac.textFields?[0].text {
+                scriptName = inputtedName
+            }
+            
+            newScript.name = scriptName
+            
+            _ = self?.insertScript(newScript, at: 0)
+            
+            self?.reloadScriptList()
+            self?.dismiss(animated: true)
+        }))
+        
+        present(ac, animated: true)
+    }
+    
+    
+    private func loadScripts() -> [Script]? {
+        let datastore = UserDefaults.standard
+        guard
+            let encodedData = datastore.data(forKey: "scripts")
+        else { return nil }
+        
+        guard
+            let decodedData = try? JSONDecoder().decode([Script].self, from: encodedData)
+        else { return nil }
 
+        return decodedData
+    }
+    
+    private func saveScripts() {
+        guard let encodedData = try? JSONEncoder().encode(scripts) else { return }
+        
+        let datastore = UserDefaults.standard
+        datastore.set(encodedData, forKey: "scripts")
+    }
+    
+    private func insertScript(_ script: Script, at: Int) -> Bool {
+        if let tmpScripts = loadScripts() {
+            scripts = tmpScripts
+        }
+        scripts.insert(script, at: at)
+        saveScripts()
+        return true
+    }
+    
+    private func reloadScriptList() {
+        guard let tmpScripts = loadScripts() else {
+            return
+        }
+        scripts = tmpScripts
+        
+        tableView.reloadData()
+    }
 }
