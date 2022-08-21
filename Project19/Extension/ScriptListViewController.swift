@@ -51,14 +51,28 @@ class ScriptListViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let script = scripts[indexPath.row]
-        let storyboard = UIStoryboard(name: "MainInterface", bundle: nil)
         
-        guard let scriptDetailViewController = storyboard.instantiateViewController(withIdentifier: "ScriptDetail") as? ScriptDetailViewController else { return }
+        let ac = UIAlertController(title: "Actions", message: "What do you wanna do with script: \n \(script.name)?", preferredStyle: .alert)
         
-        scriptDetailViewController.scriptIndex = indexPath.row
-        scriptDetailViewController.title = script.name
+        ac.addAction(UIAlertAction(title: "Edit Name", style: .default, handler: { [weak self] _ in
+            self?.editNameOfScript(script, at: indexPath)
+        }))
         
-        navigationController?.pushViewController(scriptDetailViewController, animated: true)
+        ac.addAction(UIAlertAction(title: "Edit Code", style: .default, handler: { [weak self] _ in
+            self?.editCodeOfScript(script, at: indexPath)
+        }))
+        
+        ac.addAction(UIAlertAction(title: "Execute It!", style: .default, handler: { [weak self] _ in
+            self?.executeScript(script)
+        }))
+        
+        ac.addAction(UIAlertAction(title: "DELETE", style: .destructive, handler: { [weak self] _ in
+            self?.deleteScript(at: indexPath)
+        }))
+        
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+       
+        present(ac, animated: true)
     }
 
     
@@ -98,6 +112,56 @@ class ScriptListViewController: UITableViewController {
     }
     
     // MARK: - Extra Funcs
+    private func deleteScript(at indexPath: IndexPath) {
+        scripts.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+    }
+    
+    private func editNameOfScript(_ script: Script, at indexPath: IndexPath) {
+        let ac = UIAlertController(title: "Edit Name", message: "Edit name of Script: \(script.name)", preferredStyle: .alert)
+        
+        ac.addTextField { textfield in
+            textfield.placeholder = "Enter name here"
+            textfield.text = script.name
+        }
+        
+        ac.addAction(UIAlertAction(title: "Save", style: .default, handler: { [weak self, weak ac] _ in
+            let inputtedName = ac?.textFields?[0].text ?? script.name
+            self?.updateNameOfScript(script, at: indexPath, newName: inputtedName)
+        }))
+        
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
+        present(ac, animated: true)
+    }
+    
+    private func updateNameOfScript(_ script: Script, at indexPath: IndexPath, newName: String) {
+        script.name = newName
+        scripts[indexPath.row] = script
+        
+        saveScripts()
+        
+        let cell = tableView.cellForRow(at: indexPath)
+        var contentConfig = cell?.defaultContentConfiguration()
+        contentConfig?.text = script.name
+        cell?.contentConfiguration = contentConfig
+    }
+    
+    private func editCodeOfScript(_ script: Script, at indexPath: IndexPath) {
+        let storyboard = UIStoryboard(name: "MainInterface", bundle: nil)
+        
+        guard let scriptDetailViewController = storyboard.instantiateViewController(withIdentifier: "ScriptDetail") as? ScriptDetailViewController else { return }
+        
+        scriptDetailViewController.scriptIndex = indexPath.row
+        scriptDetailViewController.title = script.name
+        
+        navigationController?.pushViewController(scriptDetailViewController, animated: true)
+    }
+    
+    private func executeScript(_ script: Script) {
+        sendToSafariSomething(script.code)
+    }
+    
     private func sendToSafariSomething(_ scriptText: String) {
         let item = NSExtensionItem()
         let argument: NSDictionary = ["customJavaScript": scriptText]
