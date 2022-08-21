@@ -18,9 +18,12 @@ class ScriptListViewController: UITableViewController {
 
         title = "Script List"
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleAddNewScriptButton))
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleAddNewScriptButton)),
+            UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(handleShowPrewrittenScripts))
+        ]
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(handleShowPrewrittenScripts))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(handleDoneButtonTapped))
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleNotificationNewScriptIsCreated), name: Notification.Name("com.projectxmaker.ScriptExtension.NewScriptIsCreated"), object: nil)
 
@@ -252,5 +255,9 @@ class ScriptListViewController: UITableViewController {
         else { return }
 
         scripts[scriptIndex].code = newCode
+    }
+    
+    @objc private func handleDoneButtonTapped() {
+        extensionContext?.completeRequest(returningItems: [])
     }
 }
