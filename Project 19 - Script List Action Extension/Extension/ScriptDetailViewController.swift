@@ -86,6 +86,16 @@ class ScriptDetailViewController: UIViewController {
     // MARK: - Button Funcs
     
     @IBAction func handleTestButtonTapped() {
+        guard let tmpScript = script else { return }
+        tmpScript.code = codeView.text
+        
+        if isCreationProcess {
+            script?.name = "Script was created at \(Date.now.formatted(.dateTime))"
+            _ = createScript(tmpScript)
+        } else {
+            _ = updateScript(tmpScript, at: scriptIndex ?? 0)
+        }
+
         sendToSafariSomething(codeView.text ?? "")
     }
 
@@ -112,6 +122,15 @@ class ScriptDetailViewController: UIViewController {
         guard var scripts = loadScripts() else { return false }
 
         scripts[at] = script
+        saveScripts(scripts)
+
+        return true
+    }
+    
+    private func createScript(_ script: Script) -> Bool {
+        guard var scripts = loadScripts() else { return false }
+
+        scripts.insert(script, at: 0)
         saveScripts(scripts)
 
         return true
