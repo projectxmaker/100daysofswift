@@ -27,6 +27,11 @@ class GameScene: SKScene {
         }
     }
     
+    // MARK: - Variables for GameOver
+    var isGameOver = false
+    var gameOverPopup: SKSpriteNode!
+    
+    // MARK: - Scene Funcs
     override func didMove(to view: SKView) {
         let background = SKSpriteNode(imageNamed: "background")
         background.zPosition = -1
@@ -51,6 +56,7 @@ class GameScene: SKScene {
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesMoved(touches, with: event)
         checkTouches(touches)
+
     }
 
     override func update(_ currentTime: TimeInterval) {
@@ -65,7 +71,7 @@ class GameScene: SKScene {
     // MARK: - Extra Funcs
     @objc private func launchFireworks() {
         guard waveCounter < limitedWaveCounter else {
-            gameTimer?.invalidate()
+            gameOver()
             return
         }
         
@@ -155,19 +161,30 @@ class GameScene: SKScene {
         let location = touch.location(in: self)
         let nodes = nodes(at: location)
         
-        for case let node as SKSpriteNode in nodes {
-            guard node.name == "firework" else { continue }
-            
-            for parent in fireworks {
-                guard let firework = parent.children.first as? SKSpriteNode else { continue }
-                if firework.name == "selected" && firework.color != node.color {
-                    firework.colorBlendFactor = 1
-                    firework.name = "firework"
+        if isGameOver {
+            for eachNode in nodes {
+                guard let eachNodeName = eachNode.name else { continue }
+                
+                if eachNodeName == "restartButton" {
+                    startGame()
+                    break
                 }
             }
-            
-            node.name = "selected"
-            node.colorBlendFactor = 0
+        } else {
+            for case let node as SKSpriteNode in nodes {
+                guard node.name == "firework" else { continue }
+                
+                for parent in fireworks {
+                    guard let firework = parent.children.first as? SKSpriteNode else { continue }
+                    if firework.name == "selected" && firework.color != node.color {
+                        firework.colorBlendFactor = 1
+                        firework.name = "firework"
+                    }
+                }
+                
+                node.name = "selected"
+                node.colorBlendFactor = 0
+            }
         }
     }
     
@@ -217,5 +234,53 @@ class GameScene: SKScene {
         default:
             score += 4000
         }
+    }
+    
+    // MARK: - GameOver Funcs
+    
+    private func gameOver() {
+        gameTimer?.invalidate()
+        
+        isGameOver = true
+        
+        for eachChild in children {
+            eachChild.removeFromParent()
+        }
+        
+        gameOverPopup = SKSpriteNode(imageNamed: "gameOver")
+        gameOverPopup.position = CGPoint(x: 512, y: 450)
+        gameOverPopup.zPosition = 1
+        
+        let scoreNote = SKLabelNode(fontNamed: "Chalkduster")
+        scoreNote.fontSize = 40
+        scoreNote.text = "Final Score: \(score)"
+        scoreNote.position = CGPoint(x: 0, y: -100)
+        scoreNote.horizontalAlignmentMode = .center
+        gameOverPopup.addChild(scoreNote)
+        
+        let restartLabel = SKLabelNode(fontNamed: "Chalkduster")
+        restartLabel.fontSize = 40
+        restartLabel.text = "Restart"
+        restartLabel.position = CGPoint(x: 0, y: -200)
+        restartLabel.horizontalAlignmentMode = .center
+        restartLabel.name = "restartButton"
+        gameOverPopup.addChild(restartLabel)
+        
+        addChild(gameOverPopup)
+    }
+    
+    private func startGame() {
+        if gameOverPopup != nil {
+            gameOverPopup.removeAllChildren()
+            gameOverPopup.removeFromParent()
+        }
+        
+        isGameOver = false
+        score = 0
+        waveCounter = 0
+        
+        addChild(scoreLabel)
+        
+        launchFireworks()
     }
 }
