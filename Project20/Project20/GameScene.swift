@@ -12,6 +12,9 @@ class GameScene: SKScene {
 
     var gameTimer: Timer?
     var fireworks = [SKNode]()
+    
+    var waveCounter = 0
+    var limitedWaveCounter = 2
 
     let leftEdge = -22
     let bottomEdge = -22
@@ -61,8 +64,15 @@ class GameScene: SKScene {
     
     // MARK: - Extra Funcs
     @objc private func launchFireworks() {
+        guard waveCounter < limitedWaveCounter else {
+            gameTimer?.invalidate()
+            return
+        }
+        
         let movementAmount: CGFloat = 1800
 
+        waveCounter += 1
+        
         switch Int.random(in: 0...3) {
         case 0:
             // fire five, straight up
@@ -99,6 +109,8 @@ class GameScene: SKScene {
         default:
             break
         }
+        
+
     }
     
     private func createFirework(xMovement: CGFloat, x: Int, y: Int) {
