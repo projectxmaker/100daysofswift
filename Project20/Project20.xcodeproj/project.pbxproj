@@ -14,6 +14,7 @@
 		8A6B744728B31B4E001A239A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A6B744528B31B4E001A239A /* Main.storyboard */; };
 		8A6B744928B31B50001A239A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A6B744828B31B50001A239A /* Assets.xcassets */; };
 		8A6B744C28B31B50001A239A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A6B744A28B31B50001A239A /* LaunchScreen.storyboard */; };
+		8A6B745328B31C6A001A239A /* Content in Resources */ = {isa = PBXBuildFile; fileRef = 8A6B745228B31C6A001A239A /* Content */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		8A6B744628B31B4E001A239A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8A6B744828B31B50001A239A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8A6B744B28B31B50001A239A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		8A6B745228B31C6A001A239A /* Content */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Content; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 				8A6B744528B31B4E001A239A /* Main.storyboard */,
 				8A6B744828B31B50001A239A /* Assets.xcassets */,
 				8A6B744A28B31B50001A239A /* LaunchScreen.storyboard */,
+				8A6B745228B31C6A001A239A /* Content */,
 			);
 			path = Project20;
 			sourceTree = "<group>";
@@ -128,6 +131,7 @@
 			files = (
 				8A6B744728B31B4E001A239A /* Main.storyboard in Resources */,
 				8A6B743E28B31B4E001A239A /* GameScene.sks in Resources */,
+				8A6B745328B31C6A001A239A /* Content in Resources */,
 				8A6B744928B31B50001A239A /* Assets.xcassets in Resources */,
 				8A6B744C28B31B50001A239A /* LaunchScreen.storyboard in Resources */,
 			);
