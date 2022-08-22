@@ -14,7 +14,7 @@ class GameScene: SKScene {
     var fireworks = [SKNode]()
     
     var waveCounter = 0
-    var limitedWaveCounter = 2
+    var limitedWaveCounter = 5
 
     let leftEdge = -22
     let bottomEdge = -22
