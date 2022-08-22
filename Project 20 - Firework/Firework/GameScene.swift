@@ -41,13 +41,12 @@ class GameScene: SKScene {
         background.position = CGPoint(x: 512, y: 384)
         
         scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
-        scoreLabel.position = CGPoint(x: 150, y: 15)
+        scoreLabel.position = CGPoint(x: 20, y: 15)
         scoreLabel.text = "Score: 0"
-        scoreLabel.horizontalAlignmentMode = .right
+        scoreLabel.horizontalAlignmentMode = .left
         
         startGame()
     }
-    
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
@@ -238,10 +237,19 @@ class GameScene: SKScene {
         }
     }
     
+    func stopGametimer() {
+        gameTimer?.invalidate()
+    }
+    
+    func startGametimer() {
+        stopGametimer()
+        gameTimer = Timer.scheduledTimer(timeInterval: 6, target: self, selector: #selector(launchFireworks), userInfo: nil, repeats: true)
+    }
+    
     // MARK: - GameOver Funcs
     
     private func gameOver() {
-        gameTimer?.invalidate()
+        stopGametimer()
         
         isGameOver = true
         
@@ -284,6 +292,6 @@ class GameScene: SKScene {
         addChild(background)
         addChild(scoreLabel)
         
-        gameTimer = Timer.scheduledTimer(timeInterval: 6, target: self, selector: #selector(launchFireworks), userInfo: nil, repeats: true)
+        startGametimer()
     }
 }
