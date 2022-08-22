@@ -10,6 +10,8 @@ import GameplayKit
 
 class GameScene: SKScene {
 
+    var background: SKSpriteNode!
+    
     var gameTimer: Timer?
     var fireworks = [SKNode]()
     
@@ -33,18 +35,17 @@ class GameScene: SKScene {
     
     // MARK: - Scene Funcs
     override func didMove(to view: SKView) {
-        let background = SKSpriteNode(imageNamed: "background")
+        background = SKSpriteNode(imageNamed: "background")
         background.zPosition = -1
         background.blendMode = .replace
         background.position = CGPoint(x: 512, y: 384)
-        addChild(background)
         
         scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
-        scoreLabel.position = CGPoint(x: 80, y: 15)
+        scoreLabel.position = CGPoint(x: 150, y: 15)
         scoreLabel.text = "Score: 0"
-        addChild(scoreLabel)
+        scoreLabel.horizontalAlignmentMode = .right
         
-        gameTimer = Timer.scheduledTimer(timeInterval: 6, target: self, selector: #selector(launchFireworks), userInfo: nil, repeats: true)
+        startGame()
     }
     
     
@@ -195,6 +196,7 @@ class GameScene: SKScene {
                     emitter.position = firework.position
                     self?.addChild(emitter)
                 },
+                SKAction.playSoundFileNamed("shoot.mp3", waitForCompletion: false),
                 SKAction.wait(forDuration: TimeInterval(0.5)),
                 SKAction.run {
                     emitter.removeFromParent()
@@ -279,8 +281,9 @@ class GameScene: SKScene {
         score = 0
         waveCounter = 0
         
+        addChild(background)
         addChild(scoreLabel)
         
-        launchFireworks()
+        gameTimer = Timer.scheduledTimer(timeInterval: 6, target: self, selector: #selector(launchFireworks), userInfo: nil, repeats: true)
     }
 }
