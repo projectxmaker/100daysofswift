@@ -32,7 +32,7 @@
 		8A6B745428B37F6F001A239A /* fuse.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = fuse.sks; sourceTree = "<group>"; };
 		8A6B745628B37FE7001A239A /* explode.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = explode.sks; sourceTree = "<group>"; };
 		8A6B745828B385C1001A239A /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
-		8A6B745A28B39843001A239A /* shoot.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = shoot.mp3; path = "../Milestone Project 16 To 18/ShootingGalleryGame/shoot.mp3"; sourceTree = "<group>"; };
+		8A6B745A28B39843001A239A /* shoot.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = shoot.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,7 +50,6 @@
 			isa = PBXGroup;
 			children = (
 				8A6B743A28B31B4E001A239A /* Firework */,
-				8A6B745A28B39843001A239A /* shoot.mp3 */,
 				8A6B743928B31B4E001A239A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -72,6 +71,7 @@
 				8A6B744328B31B4E001A239A /* GameViewController.swift */,
 				8A6B745428B37F6F001A239A /* fuse.sks */,
 				8A6B745628B37FE7001A239A /* explode.sks */,
+				8A6B745A28B39843001A239A /* shoot.mp3 */,
 				8A6B744528B31B4E001A239A /* Main.storyboard */,
 				8A6B744828B31B50001A239A /* Assets.xcassets */,
 				8A6B744A28B31B50001A239A /* LaunchScreen.storyboard */,
