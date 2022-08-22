@@ -20,7 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8A6B743828B31B4E001A239A /* Project20.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project20.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8A6B743828B31B4E001A239A /* Firework.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Firework.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A6B743B28B31B4E001A239A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8A6B743D28B31B4E001A239A /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		8A6B744128B31B4E001A239A /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -47,7 +47,7 @@
 		8A6B742F28B31B4E001A239A = {
 			isa = PBXGroup;
 			children = (
-				8A6B743A28B31B4E001A239A /* Project20 */,
+				8A6B743A28B31B4E001A239A /* Firework */,
 				8A6B743928B31B4E001A239A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -55,12 +55,12 @@
 		8A6B743928B31B4E001A239A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8A6B743828B31B4E001A239A /* Project20.app */,
+				8A6B743828B31B4E001A239A /* Firework.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		8A6B743A28B31B4E001A239A /* Project20 */ = {
+		8A6B743A28B31B4E001A239A /* Firework */ = {
 			isa = PBXGroup;
 			children = (
 				8A6B743B28B31B4E001A239A /* AppDelegate.swift */,
@@ -74,15 +74,15 @@
 				8A6B744A28B31B50001A239A /* LaunchScreen.storyboard */,
 				8A6B745828B385C1001A239A /* spark.png */,
 			);
-			path = Project20;
+			path = Firework;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8A6B743728B31B4E001A239A /* Project20 */ = {
+		8A6B743728B31B4E001A239A /* Firework */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8A6B744F28B31B50001A239A /* Build configuration list for PBXNativeTarget "Project20" */;
+			buildConfigurationList = 8A6B744F28B31B50001A239A /* Build configuration list for PBXNativeTarget "Firework" */;
 			buildPhases = (
 				8A6B743428B31B4E001A239A /* Sources */,
 				8A6B743528B31B4E001A239A /* Frameworks */,
@@ -92,9 +92,9 @@
 			);
 			dependencies = (
 			);
-			name = Project20;
+			name = Firework;
 			productName = Project20;
-			productReference = 8A6B743828B31B4E001A239A /* Project20.app */;
+			productReference = 8A6B743828B31B4E001A239A /* Firework.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -112,7 +112,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 8A6B743328B31B4E001A239A /* Build configuration list for PBXProject "Project20" */;
+			buildConfigurationList = 8A6B743328B31B4E001A239A /* Build configuration list for PBXProject "Firework" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -125,7 +125,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8A6B743728B31B4E001A239A /* Project20 */,
+				8A6B743728B31B4E001A239A /* Firework */,
 			);
 		};
 /* End PBXProject section */
@@ -315,7 +315,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.Project20;
+				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.Firework;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -344,7 +344,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.Project20;
+				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.Firework;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -355,7 +355,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		8A6B743328B31B4E001A239A /* Build configuration list for PBXProject "Project20" */ = {
+		8A6B743328B31B4E001A239A /* Build configuration list for PBXProject "Firework" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8A6B744D28B31B50001A239A /* Debug */,
@@ -364,7 +364,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8A6B744F28B31B50001A239A /* Build configuration list for PBXNativeTarget "Project20" */ = {
+		8A6B744F28B31B50001A239A /* Build configuration list for PBXNativeTarget "Firework" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8A6B745028B31B50001A239A /* Debug */,
