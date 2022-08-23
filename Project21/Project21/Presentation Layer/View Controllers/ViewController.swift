@@ -53,15 +53,17 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate {
     // MARK: - Notification Center Delegate
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         let userInfo = response.notification.request.content.userInfo
-        
+        print("aaaa")
         if let data = userInfo["data"] as? String {
             switch response.actionIdentifier {
             case UNNotificationDefaultActionIdentifier:
                 // do something
-                print("swipe ... \(data)")
+                print("default")
+                showAlert(title: "Swiped!", message: "You've just swipped the notification")
             case "show":
+                print("show")
                 // do something
-                print("tap show ... \(data)")
+                showAlert(title: "Show what?", message: "You've just tapped on Show button!")
             default:
                 break
             }
@@ -71,6 +73,14 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate {
     }
     
     // MARK: - Extra Funcs
+    private func showAlert(title: String, message: String) {
+        let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
+        present(ac, animated: true)
+    }
+    
     
     private func scheduleNotification(trigger: UNNotificationTrigger) {
         registerCategory()
