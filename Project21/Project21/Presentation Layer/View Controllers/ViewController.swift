@@ -115,6 +115,13 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate {
         content.badge = 10
         content.categoryIdentifier = "alarm"
         content.userInfo = ["data": "something"]
+        
+        
+        if let imageUrl = Bundle.main.url(forResource: "pancake", withExtension: "png") {
+            if let attachmentImage = try? UNNotificationAttachment(identifier: "avatar", url: imageUrl, options: nil) {
+                content.attachments = [attachmentImage]
+            }
+        }
 
         center.add(UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger))
 
