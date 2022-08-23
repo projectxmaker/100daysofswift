@@ -15,7 +15,10 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Register", style: .plain, target: self, action: #selector(handleRegisterButtonTapped))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Schedule", style: .plain, target: self, action: #selector(handleScheduleButtonTapped))
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(title: "Schedule w/ Cal", style: .plain, target: self, action: #selector(handleScheduleWithCalendarButtonTapped)),
+            UIBarButtonItem(title: "Schedule w/ Interval", style: .plain, target: self, action: #selector(handleScheduleWithTimeIntervalButtonTapped))
+        ]
     }
     
     @objc private func handleRegisterButtonTapped() {
@@ -29,7 +32,7 @@ class ViewController: UIViewController {
         }
     }
     
-    @objc private func handleScheduleButtonTapped() {
+    private func scheduleNotification(trigger: UNNotificationTrigger) {
         let center = UNUserNotificationCenter.current()
 
         let content = UNMutableNotificationContent()
@@ -41,13 +44,23 @@ class ViewController: UIViewController {
         content.categoryIdentifier = ""
         content.userInfo = ["data": "something"]
 
-        var triggerDate = DateComponents()
-        triggerDate.hour = 7
-        triggerDate.minute = 49
-        let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: true)
-
         center.add(UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger))
 
+    }
+    
+    @objc private func handleScheduleWithCalendarButtonTapped() {
+        var triggerDate = DateComponents()
+        triggerDate.hour = 8
+        triggerDate.minute = 10
+        let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: true)
+        
+        scheduleNotification(trigger: trigger)
+    }
+    
+    @objc private func handleScheduleWithTimeIntervalButtonTapped() {
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+        
+        scheduleNotification(trigger: trigger)
     }
 
 
