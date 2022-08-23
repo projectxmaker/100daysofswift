@@ -9,7 +9,12 @@ import UIKit
 import UserNotifications
 
 class ViewController: UIViewController, UNUserNotificationCenterDelegate {
+    let triggerNotificationForRemindMeInSeconds = 10
     let triggerNotificationAfterTimeInterval = 10
+    let triggerNotificationAtSpecificDate = [
+        "hour": 8,
+        "minute": 10
+    ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,33 +42,42 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate {
     
     @objc private func handleScheduleWithCalendarButtonTapped() {
         var triggerDate = DateComponents()
-        triggerDate.hour = 8
-        triggerDate.minute = 10
+        triggerDate.hour = triggerNotificationAtSpecificDate["hour"]
+        triggerDate.minute = triggerNotificationAtSpecificDate["minute"]
         let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: true)
         
         scheduleNotification(trigger: trigger)
     }
     
     @objc private func handleScheduleWithTimeIntervalButtonTapped() {
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(triggerNotificationAfterTimeInterval), repeats: false)
+        scheduleWithTimeInterval()
+    }
+    
+    // MARK: - Notification Center Delegate
+    private func scheduleWithTimeInterval(_ specifiedTimeInterval: Int? = nil) {
+        var timeInterval = triggerNotificationAfterTimeInterval
+        if let tmpTimeInterval = specifiedTimeInterval {
+            timeInterval = tmpTimeInterval
+        }
+            
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(timeInterval), repeats: false)
         
         scheduleNotification(trigger: trigger)
     }
     
-    // MARK: - Notification Center Delegate
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         let userInfo = response.notification.request.content.userInfo
-        print("aaaa")
-        if let data = userInfo["data"] as? String {
+
+        if let _ = userInfo["data"] as? String {
             switch response.actionIdentifier {
             case UNNotificationDefaultActionIdentifier:
                 // do something
-                print("default")
                 showAlert(title: "Swiped!", message: "You've just swipped the notification")
             case "show":
-                print("show")
                 // do something
                 showAlert(title: "Show what?", message: "You've just tapped on Show button!")
+            case "remindMeInNextSeconds":
+                scheduleWithTimeInterval(triggerNotificationForRemindMeInSeconds)
             default:
                 break
             }
@@ -105,7 +119,10 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate {
         center.delegate = self
         
         let show = UNNotificationAction(identifier: "show", title: "Show", options: .foreground, icon: UNNotificationActionIcon(systemImageName: "rectangle.portrait.and.arrow.right.fill"))
-        let category = UNNotificationCategory(identifier: "alarm", actions: [show], intentIdentifiers: [])
+        
+        let remindMeInNextSeconds = UNNotificationAction(identifier: "remindMeInNextSeconds", title: "Remind me in \(triggerNotificationForRemindMeInSeconds) seconds", options: .destructive, icon: UNNotificationActionIcon(systemImageName: "bell.fill"))
+        
+        let category = UNNotificationCategory(identifier: "alarm", actions: [show, remindMeInNextSeconds], intentIdentifiers: [])
         center.setNotificationCategories([category])
     }
 }
