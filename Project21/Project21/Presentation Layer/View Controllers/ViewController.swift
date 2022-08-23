@@ -54,17 +54,6 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate {
     }
     
     // MARK: - Notification Center Delegate
-    private func scheduleWithTimeInterval(_ specifiedTimeInterval: Int? = nil) {
-        var timeInterval = triggerNotificationAfterTimeInterval
-        if let tmpTimeInterval = specifiedTimeInterval {
-            timeInterval = tmpTimeInterval
-        }
-            
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(timeInterval), repeats: false)
-        
-        scheduleNotification(trigger: trigger)
-    }
-    
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         let userInfo = response.notification.request.content.userInfo
 
@@ -72,12 +61,19 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate {
             switch response.actionIdentifier {
             case UNNotificationDefaultActionIdentifier:
                 // do something
+                print("haaalo")
                 showAlert(title: "Swiped!", message: "You've just swipped the notification")
             case "show":
                 // do something
                 showAlert(title: "Show what?", message: "You've just tapped on Show button!")
             case "remindMeInNextSeconds":
+                print("remind me")
                 scheduleWithTimeInterval(triggerNotificationForRemindMeInSeconds)
+            case "inputSomething":
+                print("haaaa")
+                guard let inputResponse = (response as? UNTextInputNotificationResponse) else { return }
+                
+                print("ok, I got it \(inputResponse.userText)")
             default:
                 break
             }
@@ -95,6 +91,16 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate {
         present(ac, animated: true)
     }
     
+    private func scheduleWithTimeInterval(_ specifiedTimeInterval: Int? = nil) {
+        var timeInterval = triggerNotificationAfterTimeInterval
+        if let tmpTimeInterval = specifiedTimeInterval {
+            timeInterval = tmpTimeInterval
+        }
+            
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(timeInterval), repeats: false)
+        
+        scheduleNotification(trigger: trigger)
+    }
     
     private func scheduleNotification(trigger: UNNotificationTrigger) {
         registerCategory()
@@ -122,7 +128,9 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate {
         
         let remindMeInNextSeconds = UNNotificationAction(identifier: "remindMeInNextSeconds", title: "Remind me in \(triggerNotificationForRemindMeInSeconds) seconds", options: .destructive, icon: UNNotificationActionIcon(systemImageName: "bell.fill"))
         
-        let category = UNNotificationCategory(identifier: "alarm", actions: [show, remindMeInNextSeconds], intentIdentifiers: [])
+        let inputSomething = UNTextInputNotificationAction(identifier: "inputSomething", title: "Note", options: [.foreground], icon: UNNotificationActionIcon(systemImageName: "pencil.circle.fill"), textInputButtonTitle: "Save", textInputPlaceholder: "leave a note")
+        
+        let category = UNNotificationCategory(identifier: "alarm", actions: [show, remindMeInNextSeconds, inputSomething], intentIdentifiers: [])
         center.setNotificationCategories([category])
     }
 }
