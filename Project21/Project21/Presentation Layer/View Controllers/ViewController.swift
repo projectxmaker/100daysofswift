@@ -66,7 +66,8 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate {
                 break
             }
         }
-
+        
+        completionHandler()
     }
     
     // MARK: - Extra Funcs
