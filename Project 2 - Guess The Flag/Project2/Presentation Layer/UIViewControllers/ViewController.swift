@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UNUserNotificationCenterDelegate {
 
     // MARK: - IBOutlet
     @IBOutlet weak var button1: UIButton!
@@ -42,6 +42,7 @@ class ViewController: UIViewController {
         setupFlags()
         setupButtonToShowScore()
         loadPreviousHighScore()
+        requestNotificationAuthorization()
     }
     
     // MARK: - Extra Functions
@@ -159,6 +160,63 @@ class ViewController: UIViewController {
     @IBAction func buttonTapped(_ sender: UIButton) {
         currentQuestionNumber += 1
         flagTapped(sender)
+    }
+    
+    // MARK: - Local Notification
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+
+        switch response.actionIdentifier  {
+        case UNNotificationDefaultActionIdentifier:
+            let ac = UIAlertController(title: "text", message: nil, preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "cancel", style: .cancel))
+            present(ac, animated: true)
+            
+            prepareLocalNotification()
+        default:
+            break
+        }
+        
+        completionHandler()
+    }
+    
+
+    
+    private func requestNotificationAuthorization() {
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.badge, .sound, .alert]) { [weak self] granted, error in
+            if granted {
+                self?.prepareLocalNotification()
+            }
+        }
+    }
+    
+    private func prepareLocalNotification() {
+        let center = UNUserNotificationCenter.current()
+        center.removeAllPendingNotificationRequests()
+        center.removeAllDeliveredNotifications()
+        
+        center.delegate = self
+        
+        prepareAWeekOfNoticationsAheadOfTime()
+    }
+    
+    private func prepareAWeekOfNoticationsAheadOfTime() {
+        let center = UNUserNotificationCenter.current()
+        
+        for i in 1...7 {
+            let content = UNMutableNotificationContent()
+            content.sound = .default
+            content.title = "Forget to train your brain today?"
+            content.badge = 1
+            content.categoryIdentifier = "alarm"
+            content.body = "Let's train your brain daily with Flags."
+            
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(86400 * i), repeats: false)
+            let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+            
+            center.add(request)
+        }
+
     }
 }
 
