@@ -17,7 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8A6B746528B44E9B001A239A /* Project21.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project21.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8A6B746528B44E9B001A239A /* LocalNotification.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LocalNotification.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A6B746828B44E9B001A239A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8A6B746A28B44E9B001A239A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		8A6B746C28B44E9B001A239A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -42,7 +42,7 @@
 		8A6B745C28B44E9B001A239A = {
 			isa = PBXGroup;
 			children = (
-				8A6B746728B44E9B001A239A /* Project21 */,
+				8A6B746728B44E9B001A239A /* LocalNotification */,
 				8A6B746628B44E9B001A239A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -50,12 +50,12 @@
 		8A6B746628B44E9B001A239A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8A6B746528B44E9B001A239A /* Project21.app */,
+				8A6B746528B44E9B001A239A /* LocalNotification.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		8A6B746728B44E9B001A239A /* Project21 */ = {
+		8A6B746728B44E9B001A239A /* LocalNotification */ = {
 			isa = PBXGroup;
 			children = (
 				8A6B747C28B44EAE001A239A /* Presentation Layer */,
@@ -63,7 +63,7 @@
 				8A6B747628B44EA5001A239A /* Info.plist */,
 				8A6B748328B53A75001A239A /* pancake.png */,
 			);
-			path = Project21;
+			path = LocalNotification;
 			sourceTree = "<group>";
 		};
 		8A6B747C28B44EAE001A239A /* Presentation Layer */ = {
@@ -97,9 +97,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8A6B746428B44E9B001A239A /* Project21 */ = {
+		8A6B746428B44E9B001A239A /* LocalNotification */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8A6B747928B44EA5001A239A /* Build configuration list for PBXNativeTarget "Project21" */;
+			buildConfigurationList = 8A6B747928B44EA5001A239A /* Build configuration list for PBXNativeTarget "LocalNotification" */;
 			buildPhases = (
 				8A6B746128B44E9B001A239A /* Sources */,
 				8A6B746228B44E9B001A239A /* Frameworks */,
@@ -109,9 +109,9 @@
 			);
 			dependencies = (
 			);
-			name = Project21;
+			name = LocalNotification;
 			productName = Project21;
-			productReference = 8A6B746528B44E9B001A239A /* Project21.app */;
+			productReference = 8A6B746528B44E9B001A239A /* LocalNotification.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -129,7 +129,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 8A6B746028B44E9B001A239A /* Build configuration list for PBXProject "Project21" */;
+			buildConfigurationList = 8A6B746028B44E9B001A239A /* Build configuration list for PBXProject "LocalNotification" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -142,7 +142,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8A6B746428B44E9B001A239A /* Project21 */,
+				8A6B746428B44E9B001A239A /* LocalNotification */,
 			);
 		};
 /* End PBXProject section */
@@ -317,7 +317,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TT8TA55RWH;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Project21/Info.plist;
+				INFOPLIST_FILE = LocalNotification/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -328,7 +328,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.Project21;
+				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.LocalNotification;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -345,7 +345,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TT8TA55RWH;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Project21/Info.plist;
+				INFOPLIST_FILE = LocalNotification/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -356,7 +356,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.Project21;
+				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.LocalNotification;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -367,7 +367,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		8A6B746028B44E9B001A239A /* Build configuration list for PBXProject "Project21" */ = {
+		8A6B746028B44E9B001A239A /* Build configuration list for PBXProject "LocalNotification" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8A6B747728B44EA5001A239A /* Debug */,
@@ -376,7 +376,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8A6B747928B44EA5001A239A /* Build configuration list for PBXNativeTarget "Project21" */ = {
+		8A6B747928B44EA5001A239A /* Build configuration list for PBXNativeTarget "LocalNotification" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8A6B747A28B44EA5001A239A /* Debug */,
