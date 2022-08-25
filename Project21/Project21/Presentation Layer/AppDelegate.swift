@@ -8,12 +8,16 @@
 import UIKit
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        // let this to be delegator of User Notification Center
+        UNUserNotificationCenter.current().delegate = self
+        
         return true
     }
 
@@ -31,6 +35,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
 
+    // MARK: - User Notification Center Delegate
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+
+        guard var userInfo = response.notification.request.content.userInfo as? [String: String] else { return }
+        
+        userInfo["actionIdentifier"] = response.actionIdentifier
+        
+        if let textInputNotificationResponse = response as? UNTextInputNotificationResponse {
+            userInfo["inputtedText"] = textInputNotificationResponse.userText
+        }
+        
+        ViewController.shared.saveUserNotificationDidReceiveResponse(userInfo)
+        
+        ViewController.shared.isExecutedUserNotificationDidReceive = false
+
+        if response.actionIdentifier == "remindMeInNextSeconds" {
+            ViewController.shared.executeUserNotificationDidReceive()
+        }
+
+        completionHandler()
+    }
 
 }
 

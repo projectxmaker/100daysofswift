@@ -8,7 +8,11 @@
 import UIKit
 import UserNotifications
 
-class ViewController: UIViewController, UNUserNotificationCenterDelegate {
+class ViewController: UIViewController {
+    static var shared = ViewController()
+    
+    var isExecutedUserNotificationDidReceive = false
+    
     let triggerNotificationForRemindMeInSeconds = 10
     let triggerNotificationAfterTimeInterval = 10
     let triggerNotificationAtSpecificDate = [
@@ -19,12 +23,14 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
+
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Register", style: .plain, target: self, action: #selector(handleRegisterButtonTapped))
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(title: "Schedule w/ Cal", style: .plain, target: self, action: #selector(handleScheduleWithCalendarButtonTapped)),
             UIBarButtonItem(title: "Schedule w/ Interval", style: .plain, target: self, action: #selector(handleScheduleWithTimeIntervalButtonTapped))
         ]
+        
+        executeUserNotificationDidReceive()
     }
     
     // MARK: - Button Handlers
@@ -51,35 +57,6 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate {
     
     @objc private func handleScheduleWithTimeIntervalButtonTapped() {
         scheduleWithTimeInterval()
-    }
-    
-    // MARK: - Notification Center Delegate
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        let userInfo = response.notification.request.content.userInfo
-
-        if let _ = userInfo["data"] as? String {
-            switch response.actionIdentifier {
-            case UNNotificationDefaultActionIdentifier:
-                // do something
-                print("haaalo")
-                showAlert(title: "Swiped!", message: "You've just swipped the notification")
-            case "show":
-                // do something
-                showAlert(title: "Show what?", message: "You've just tapped on Show button!")
-            case "remindMeInNextSeconds":
-                print("remind me")
-                scheduleWithTimeInterval(triggerNotificationForRemindMeInSeconds)
-            case "inputSomething":
-                print("haaaa")
-                guard let inputResponse = (response as? UNTextInputNotificationResponse) else { return }
-                
-                print("ok, I got it \(inputResponse.userText)")
-            default:
-                break
-            }
-        }
-        
-        completionHandler()
     }
     
     // MARK: - Extra Funcs
@@ -129,7 +106,6 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate {
 
     private func registerCategory() {
         let center = UNUserNotificationCenter.current()
-        center.delegate = self
         
         let show = UNNotificationAction(identifier: "show", title: "Show", options: .foreground, icon: UNNotificationActionIcon(systemImageName: "rectangle.portrait.and.arrow.right.fill"))
         
@@ -138,7 +114,46 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate {
         let inputSomething = UNTextInputNotificationAction(identifier: "inputSomething", title: "Note", options: [.foreground], icon: UNNotificationActionIcon(systemImageName: "pencil.circle.fill"), textInputButtonTitle: "Save", textInputPlaceholder: "leave a note")
         
         let category = UNNotificationCategory(identifier: "alarm", actions: [show, remindMeInNextSeconds, inputSomething], intentIdentifiers: [])
+        
         center.setNotificationCategories([category])
+    }
+    
+    public func executeUserNotificationDidReceive() {
+        if let userInfo = getUserNotificationDidReceiveResponse() {
+            if let _ = userInfo["data"] {
+                switch userInfo["actionIdentifier"] {
+                case UNNotificationDefaultActionIdentifier:
+                    showAlert(title: "Swiped!", message: "You've just swipped the notification")
+                case "show":
+                    showAlert(title: "Show what?", message: "You've just tapped on Show button!")
+                case "remindMeInNextSeconds":
+                    scheduleWithTimeInterval(triggerNotificationForRemindMeInSeconds)
+                case "inputSomething":
+                    guard let inputtedText = userInfo["inputtedText"] else {
+                        return
+                    }
+                    showAlert(title: "What did user input?", message: "User inputted: \(inputtedText)")
+                default:
+                    break
+                }
+            }
+        }
+        
+        isExecutedUserNotificationDidReceive = true
+    }
+    
+    public func saveUserNotificationDidReceiveResponse(_ response: [String: String]) {
+        UserDefaults.standard.set(response, forKey: "UserNotificationDidReceiveResponse")
+    }
+    
+    public func getUserNotificationDidReceiveResponse() -> [String: String]? {
+        guard let tmpResponse = UserDefaults.standard.object(forKey: "UserNotificationDidReceiveResponse") as? [String: String] else {
+            return nil
+        }
+
+        UserDefaults.standard.removeObject(forKey: "UserNotificationDidReceiveResponse")
+        
+        return tmpResponse
     }
 }
 
