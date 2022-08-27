@@ -152,6 +152,12 @@ class NoteDetailViewController: UIViewController, UITextViewDelegate {
     }
     
     private func getNoteByIndex(_ index: Int) -> Note? {
+        let notes = loadNoteList()
+        
+        if index >= 0 && index < notes.count {
+            return notes[index]
+        }
+        
         return nil
     }
     
