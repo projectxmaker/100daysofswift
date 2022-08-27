@@ -167,7 +167,7 @@ class NoteDetailViewController: UIViewController, UITextViewDelegate {
         let titleValue = firstLine
         
         let tmpNoteIndex = noteIndex ?? 0
-        let note = Note(title: titleValue, text: textValue, index: tmpNoteIndex)
+        var note = Note(title: titleValue, text: textValue, index: tmpNoteIndex)
         
         if noteIndex == nil {
             addNoteToNoteList(note)
@@ -177,6 +177,7 @@ class NoteDetailViewController: UIViewController, UITextViewDelegate {
             let userInfo: [String: Note] = ["note": note]
             postNotification(name: "com.projectxmaker.notes.newNote", userInfo: userInfo)
         } else {
+            note.updatedAt = Date.now
             updateNoteToNoteList(note)
             
             let userInfo: [String: Note] = ["note": note]
