@@ -129,6 +129,7 @@ class NoteDetailViewController: UIViewController, UITextViewDelegate {
         hideDoneButton()
         
         // save the current note
+        saveNote()
     }
     
     @objc private func handleDeleteNoteButtonTapped() {
@@ -152,5 +153,64 @@ class NoteDetailViewController: UIViewController, UITextViewDelegate {
     
     private func getNoteByIndex(_ index: Int) -> Note? {
         return nil
+    }
+    
+    private func saveNote() {
+        let textValue = textView.text ?? ""
+        let firstLine = textValue.components(separatedBy: "\n")[0]
+        let titleValue = firstLine
+        
+        let tmpNoteIndex = noteIndex ?? 0
+        let note = Note(title: titleValue, text: textValue, index: tmpNoteIndex)
+        
+        if noteIndex == nil {
+            addNoteToNoteList(note)
+            
+            noteIndex = note.index
+            
+            let userInfo: [String: Note] = ["note": note]
+            postNotification(name: "com.projectxmaker.notes.newNote", userInfo: userInfo)
+        } else {
+            updateNoteToNoteList(note)
+            
+            let userInfo: [String: Note] = ["note": note]
+            postNotification(name: "com.projectxmaker.notes.updateNote", userInfo: userInfo)
+        }
+    }
+    
+    private func addNoteToNoteList(_ note: Note) {
+        var noteList = loadNoteList()
+        noteList.insert(note, at: 0)
+        saveNoteList(noteList)
+    }
+    
+    private func updateNoteToNoteList(_ note: Note) {
+        var noteList = loadNoteList()
+        noteList[note.index] = note
+        saveNoteList(noteList)
+    }
+    
+    private func loadNoteList() -> [Note] {
+        guard
+            let data = UserDefaults.standard.object(forKey: "NoteList") as? Data,
+            let decodedData = try? JSONDecoder().decode([Note].self, from: data)
+        else {
+            return [Note]()
+        }
+        
+        return decodedData
+    }
+    
+    private func saveNoteList(_ noteList: [Note]) {
+        guard let encodedData = try? JSONEncoder().encode(noteList) else {
+            return
+        }
+        
+        UserDefaults.standard.set(encodedData, forKey: "NoteList")
+    }
+    
+    private func postNotification(name: String, userInfo: [AnyHashable: Any]) {
+        let center = NotificationCenter.default
+        center.post(name: Notification.Name(name), object: nil, userInfo: userInfo)
     }
 }

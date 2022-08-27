@@ -10,6 +10,14 @@ import UIKit
 class NoteListViewController: UITableViewController {
     var notes = [Note]()
     
+    let dateFormatStyle = Date.FormatStyle()
+        .day(.twoDigits)
+        .month(.twoDigits)
+        .year(.defaultDigits)
+        .hour(.twoDigits(amPM: .wide))
+        .minute(.twoDigits)
+        .second(.twoDigits)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -19,9 +27,13 @@ class NoteListViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
+        title = "Note List"
+        
         setupToolbars()
         
-        title = "Note List"
+        registerNotificationObservers()
+        
+        reloadNoteList()
     }
 
     // MARK: - Table view data source
@@ -41,13 +53,7 @@ class NoteListViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "NoteCell", for: indexPath)
 
         let note = notes[indexPath.row]
-        let dateFormatStyle = Date.FormatStyle()
-            .day(.twoDigits)
-            .month(.twoDigits)
-            .year(.defaultDigits)
-            .hour(.twoDigits(amPM: .wide))
-            .minute(.twoDigits)
-            .second(.twoDigits)
+
         var contentConfig = cell.defaultContentConfiguration()
         contentConfig.text = note.title
         contentConfig.secondaryText = note.updatedAt.formatted(dateFormatStyle)
@@ -128,5 +134,62 @@ class NoteListViewController: UITableViewController {
         }
 
         navigationController?.pushViewController(noteDetailViewController, animated: true)
+    }
+    
+    private func registerNotificationObservers() {
+        let center = NotificationCenter.default
+        center.addObserver(self, selector: #selector(handleUpdateNoteNotification), name: Notification.Name("com.projectxmaker.notes.updateNote"), object: nil)
+        center.addObserver(self, selector: #selector(handleNewNoteNotification), name: Notification.Name("com.projectxmaker.notes.newNote"), object: nil)
+    }
+    
+    @objc private func handleUpdateNoteNotification(_ notification: Notification) {
+        guard
+            let note = getNoteIndexFromNotificationUserInfo(notification)
+        else { return }
+    
+        reloadNoteList()
+        updateCellWithNote(note)
+    }
+    
+    @objc private func handleNewNoteNotification(_ notification: Notification) {
+        guard let note = getNoteIndexFromNotificationUserInfo(notification) else { return }
+        
+        reloadNoteList()
+        tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+        
+        updateCellWithNote(note)
+    }
+    
+    private func getNoteIndexFromNotificationUserInfo(_ notification: Notification) -> Note? {
+        guard
+            let userInfo = notification.userInfo as? [String: Note],
+            let note = userInfo["note"]
+        else { return nil }
+        
+        return note
+    }
+
+    private func updateCellWithNote(_ note: Note) {
+        guard let cell = tableView.cellForRow(at: IndexPath(row: note.index, section: 0)) else { return }
+        
+        var contentConfig = cell.defaultContentConfiguration()
+        contentConfig.text = note.title
+        contentConfig.secondaryText = note.updatedAt.formatted(dateFormatStyle)
+        cell.contentConfiguration = contentConfig
+    }
+    
+    private func reloadNoteList() {
+        notes = loadNoteList()
+    }
+    
+    private func loadNoteList() -> [Note] {
+        guard
+            let data = UserDefaults.standard.object(forKey: "NoteList") as? Data,
+            let decodedData = try? JSONDecoder().decode([Note].self, from: data)
+        else {
+            return [Note]()
+        }
+        
+        return decodedData
     }
 }

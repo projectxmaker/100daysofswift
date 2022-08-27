@@ -10,6 +10,7 @@ import Foundation
 struct Note: Codable {
     var title: String
     var text: String
-    var createdAt: Date
-    var updatedAt: Date
+    var index: Int
+    var createdAt = Date.now
+    var updatedAt = Date.now
 }
