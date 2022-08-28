@@ -185,6 +185,11 @@ class NoteDetailViewController: UIViewController, UITextViewDelegate {
     
     @objc private func handleCreateNewNoteButtonTapped() {
         // display empty detail and ready to create new Note
+        
+        noteIndex = nil
+        textView.text = ""
+        textView.becomeFirstResponder()
+        loadNote()
     }
     
     private func loadNote() {
