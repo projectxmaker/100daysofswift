@@ -138,13 +138,19 @@ class NoteListViewController: UITableViewController {
     
     private func registerNotificationObservers() {
         let center = NotificationCenter.default
+        
         center.addObserver(self, selector: #selector(handleUpdateNoteNotification), name: Notification.Name("com.projectxmaker.notes.updateNote"), object: nil)
+        
         center.addObserver(self, selector: #selector(handleNewNoteNotification), name: Notification.Name("com.projectxmaker.notes.newNote"), object: nil)
+
+        center.addObserver(self, selector: #selector(handleDeleteNoteNotification), name: Notification.Name("com.projectxmaker.com.notes.deleteNote"), object: nil)
+        
+        
     }
     
     @objc private func handleUpdateNoteNotification(_ notification: Notification) {
         guard
-            let note = getNoteIndexFromNotificationUserInfo(notification)
+            let note = getNoteFromNotificationUserInfo(notification)
         else { return }
     
         reloadNoteList()
@@ -152,7 +158,7 @@ class NoteListViewController: UITableViewController {
     }
     
     @objc private func handleNewNoteNotification(_ notification: Notification) {
-        guard let note = getNoteIndexFromNotificationUserInfo(notification) else { return }
+        guard let note = getNoteFromNotificationUserInfo(notification) else { return }
         
         reloadNoteList()
         tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
@@ -160,7 +166,17 @@ class NoteListViewController: UITableViewController {
         updateCellWithNote(note)
     }
     
-    private func getNoteIndexFromNotificationUserInfo(_ notification: Notification) -> Note? {
+    @objc private func handleDeleteNoteNotification(_ notification: Notification) {
+        guard let note = getNoteFromNotificationUserInfo(notification) else { return }
+
+        deleteNote(note.index)
+        
+        tableView.deleteRows(at: [IndexPath(row: note.index, section: 0)], with: .automatic)
+        
+        reloadNoteList()
+    }
+    
+    private func getNoteFromNotificationUserInfo(_ notification: Notification) -> Note? {
         guard
             let userInfo = notification.userInfo as? [String: Note],
             let note = userInfo["note"]
@@ -178,6 +194,7 @@ class NoteListViewController: UITableViewController {
         cell.contentConfiguration = contentConfig
     }
     
+    // MARK: - Notes
     private func reloadNoteList() {
         notes = loadNoteList()
     }
@@ -191,5 +208,18 @@ class NoteListViewController: UITableViewController {
         }
         
         return decodedData
+    }
+    
+    private func deleteNote(_ noteIndex: Int) {
+        notes.remove(at: noteIndex)
+        saveNoteList(notes)
+    }
+    
+    private func saveNoteList(_ noteList: [Note]) {
+        guard let encodedData = try? JSONEncoder().encode(noteList) else {
+            return
+        }
+        
+        UserDefaults.standard.set(encodedData, forKey: "NoteList")
     }
 }

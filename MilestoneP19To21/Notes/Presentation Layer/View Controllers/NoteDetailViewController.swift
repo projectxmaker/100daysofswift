@@ -12,21 +12,25 @@ class NoteDetailViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var textView: UITextView!
     
     var noteIndex: Int?
+    var currentNote: Note?
     var doneButton: UIBarButtonItem!
     var shareButton: UIBarButtonItem!
+    var space: UIBarButtonItem!
+    var deleteButton: UIBarButtonItem!
+    var composeButton: UIBarButtonItem!
     
     private var isDoneButtonHidden = false
+    private var isDeleteButtonHidden = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-        loadNote()
-        
         setupNavigationItems()
-        
         setupToolbars()
         
+        // Do any additional setup after loading the view.
+        loadNote()
+
         addObserverForKeyboardNotification()
         
         textView.delegate = self
@@ -85,14 +89,28 @@ class NoteDetailViewController: UIViewController, UITextViewDelegate {
         if isHide {
             if !isDoneButtonHidden {
                 // hide doneButton
-                navigationItem.rightBarButtonItems = [shareButton]
+                navigationItem.setRightBarButtonItems([shareButton], animated: true)
                 isDoneButtonHidden = true
             }
         } else {
             if isDoneButtonHidden {
                 // show doneButton
-                navigationItem.rightBarButtonItems = [doneButton, shareButton]
+                navigationItem.setRightBarButtonItems([doneButton, shareButton], animated: true)
                 isDoneButtonHidden = false
+            }
+        }
+    }
+    
+    private func hideDeleteButton(_ isHide: Bool = true) {
+        guard let buttons = toolbarItems else { return }
+        
+        if isHide {
+            if buttons.contains(deleteButton) {
+                setToolbarItems([space, composeButton], animated: true)
+            }
+        } else {
+            if !buttons.contains(deleteButton) {
+                setToolbarItems([deleteButton, space, composeButton], animated: true)
             }
         }
     }
@@ -108,13 +126,18 @@ class NoteDetailViewController: UIViewController, UITextViewDelegate {
     }
     
     private func setupToolbars() {
-        let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        toolbarItems = [UIBarButtonItem]()
         
-        let deleteButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(handleDeleteNoteButtonTapped))
+        space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        space.tag = 1
         
-        let composeButton = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(handleCreateNewNoteButtonTapped))
+        deleteButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(handleDeleteNoteButtonTapped))
+        deleteButton.tag = 1
+        
+        composeButton = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(handleCreateNewNoteButtonTapped))
+        composeButton.tag = 3
 
-        setToolbarItems([deleteButton, space, composeButton], animated: true)
+        hideDeleteButton(false)
         navigationController?.isToolbarHidden = false
     }
     
@@ -133,8 +156,23 @@ class NoteDetailViewController: UIViewController, UITextViewDelegate {
     }
     
     @objc private func handleDeleteNoteButtonTapped() {
+        guard let tmpCurrentNote = currentNote else { return }
+
         // ask for confirmation
-        // redirect to Note List
+        let ac = UIAlertController(title: "Delete Note", message: "Do you want to delete Note: \(tmpCurrentNote.title)", preferredStyle: .alert)
+        
+        ac.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
+            
+            let userInfo: [String: Note] = ["note": tmpCurrentNote]
+            
+            self?.postNotification(name: "com.projectxmaker.com.notes.deleteNote", userInfo: userInfo)
+            
+            self?.navigationController?.popViewController(animated: true)
+        }))
+        
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
+        present(ac, animated: true)
     }
     
     
@@ -145,10 +183,19 @@ class NoteDetailViewController: UIViewController, UITextViewDelegate {
     private func loadNote() {
         guard
             let index = noteIndex,
-            let note = getNoteByIndex(index)
-        else { return }
+            var note = getNoteByIndex(index)
+        else {
+            hideDeleteButton(true)
+            return
+        }
+        
+        note.index = index
+        
+        currentNote = note
         
         textView.text = note.text
+        
+        hideDeleteButton(false)
     }
     
     private func getNoteByIndex(_ index: Int) -> Note? {
@@ -176,6 +223,8 @@ class NoteDetailViewController: UIViewController, UITextViewDelegate {
             
             let userInfo: [String: Note] = ["note": note]
             postNotification(name: "com.projectxmaker.notes.newNote", userInfo: userInfo)
+            
+            hideDeleteButton(false)
         } else {
             note.updatedAt = Date.now
             updateNoteToNoteList(note)
@@ -214,6 +263,12 @@ class NoteDetailViewController: UIViewController, UITextViewDelegate {
         }
         
         UserDefaults.standard.set(encodedData, forKey: "NoteList")
+    }
+    
+    private func deleteNote(_ noteIndex: Int) {
+        var noteList = loadNoteList()
+        noteList.remove(at: noteIndex)
+        saveNoteList(noteList)
     }
     
     private func postNotification(name: String, userInfo: [AnyHashable: Any]) {
