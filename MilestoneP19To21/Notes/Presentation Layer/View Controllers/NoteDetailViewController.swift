@@ -22,6 +22,8 @@ class NoteDetailViewController: UIViewController, UITextViewDelegate {
     private var isDoneButtonHidden = false
     private var isDeleteButtonHidden = false
     
+    private var currentSharedNoteUrl: URL?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -53,6 +55,62 @@ class NoteDetailViewController: UIViewController, UITextViewDelegate {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    // MARK: - Handlers
+    
+    @objc private func handleDoneButtonTapped() {
+        hideDoneButton()
+        
+        // save the current note
+        saveNote()
+    }
+    
+    @objc private func handleDeleteNoteButtonTapped() {
+        guard let tmpCurrentNote = currentNote else { return }
+
+        // ask for confirmation
+        let ac = UIAlertController(title: "Delete Note", message: "Do you want to delete Note: \(tmpCurrentNote.title)", preferredStyle: .alert)
+        
+        ac.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
+            
+            let userInfo: [String: Note] = ["note": tmpCurrentNote]
+            
+            self?.postNotification(name: "com.projectxmaker.com.notes.deleteNote", userInfo: userInfo)
+            
+            self?.navigationController?.popViewController(animated: true)
+        }))
+        
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
+        present(ac, animated: true)
+    }
+    
+    
+    @objc private func handleCreateNewNoteButtonTapped() {
+        // display empty detail and ready to create new Note
+        
+        noteIndex = nil
+        textView.text = ""
+        textView.becomeFirstResponder()
+        loadNote()
+    }
+    
+    
+    @objc private func handleShareButtonTapped() {
+        let textValue = textView.text ?? ""
+        let titleValue = getFirstLineOfText(textValue)
+        let textFileUrl = getDocumentDirectory().appendingPathComponent(titleValue)
+        currentSharedNoteUrl = textFileUrl
+        
+        try? textValue.write(to: textFileUrl, atomically: true, encoding: .utf8)
+
+        let sharedItems = [textFileUrl]
+        let ac = UIActivityViewController(activityItems: sharedItems, applicationActivities: nil)
+        
+        ac.completionWithItemsHandler = executeAtActivityViewControllerCompleted
+
+        present(ac, animated: true)
+    }
     
     // MARK: - Keyboards
     private func addObserverForKeyboardNotification() {
@@ -148,49 +206,22 @@ class NoteDetailViewController: UIViewController, UITextViewDelegate {
         navigationController?.isToolbarHidden = false
     }
     
-    @objc private func handleShareButtonTapped() {
-        let sharedItems = [textView.text ?? ""]
-        let ac = UIActivityViewController(activityItems: sharedItems, applicationActivities: nil)
-        
-        present(ac, animated: true)
-    }
-    
-    @objc private func handleDoneButtonTapped() {
-        hideDoneButton()
-        
-        // save the current note
-        saveNote()
-    }
-    
-    @objc private func handleDeleteNoteButtonTapped() {
-        guard let tmpCurrentNote = currentNote else { return }
-
-        // ask for confirmation
-        let ac = UIAlertController(title: "Delete Note", message: "Do you want to delete Note: \(tmpCurrentNote.title)", preferredStyle: .alert)
-        
-        ac.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
+    private func executeAtActivityViewControllerCompleted (activityType: UIActivity.ActivityType?, completed: Bool, returnedItems: [Any]?, activityError: Error?) -> Void {
+        if completed {
+            // delete file that previously used to share
+            guard let tmpNoteURL = currentSharedNoteUrl else { return }
             
-            let userInfo: [String: Note] = ["note": tmpCurrentNote]
+            let textFilePath = tmpNoteURL.path
+            let fm = FileManager.default
             
-            self?.postNotification(name: "com.projectxmaker.com.notes.deleteNote", userInfo: userInfo)
+            if fm.fileExists(atPath: textFilePath) {
+                try? fm.removeItem(atPath: textFilePath)
+            }
             
-            self?.navigationController?.popViewController(animated: true)
-        }))
-        
-        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        
-        present(ac, animated: true)
+            currentSharedNoteUrl = nil
+        }
     }
     
-    
-    @objc private func handleCreateNewNoteButtonTapped() {
-        // display empty detail and ready to create new Note
-        
-        noteIndex = nil
-        textView.text = ""
-        textView.becomeFirstResponder()
-        loadNote()
-    }
     
     private func loadNote() {
         guard
@@ -222,8 +253,7 @@ class NoteDetailViewController: UIViewController, UITextViewDelegate {
     
     private func saveNote() {
         let textValue = textView.text ?? ""
-        let firstLine = textValue.components(separatedBy: "\n")[0]
-        let titleValue = firstLine
+        let titleValue = getFirstLineOfText(textValue)
         
         let tmpNoteIndex = noteIndex ?? 0
         var note = Note(title: titleValue, text: textValue, index: tmpNoteIndex)
@@ -286,5 +316,15 @@ class NoteDetailViewController: UIViewController, UITextViewDelegate {
     private func postNotification(name: String, userInfo: [AnyHashable: Any]) {
         let center = NotificationCenter.default
         center.post(name: Notification.Name(name), object: nil, userInfo: userInfo)
+    }
+    
+    private func getDocumentDirectory() -> URL {
+        let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+
+        return urls[0]
+    }
+    
+    private func getFirstLineOfText(_ text: String) -> String {
+        return text.components(separatedBy: "\n")[0]
     }
 }
