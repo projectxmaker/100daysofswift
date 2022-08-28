@@ -36,6 +36,13 @@ class NoteDetailViewController: UIViewController, UITextViewDelegate {
         textView.delegate = self
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if currentNote == nil {
+            textView.becomeFirstResponder()
+        }
+    }
 
     /*
     // MARK: - Navigation
