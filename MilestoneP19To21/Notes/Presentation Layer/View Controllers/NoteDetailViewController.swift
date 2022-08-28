@@ -24,6 +24,8 @@ class NoteDetailViewController: UIViewController, UITextViewDelegate {
     
     private var currentSharedNoteUrl: URL?
     
+    let maximumCharsOfNoteTitle = 20
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -98,7 +100,7 @@ class NoteDetailViewController: UIViewController, UITextViewDelegate {
     
     @objc private func handleShareButtonTapped() {
         let textValue = textView.text ?? ""
-        let titleValue = getFirstLineOfText(textValue)
+        let titleValue = getTitleOfNote(textValue)
         let textFileUrl = getDocumentDirectory().appendingPathComponent(titleValue)
         currentSharedNoteUrl = textFileUrl
         
@@ -253,7 +255,7 @@ class NoteDetailViewController: UIViewController, UITextViewDelegate {
     
     private func saveNote() {
         let textValue = textView.text ?? ""
-        let titleValue = getFirstLineOfText(textValue)
+        let titleValue = getTitleOfNote(textValue)
         
         let tmpNoteIndex = noteIndex ?? 0
         var note = Note(title: titleValue, text: textValue, index: tmpNoteIndex)
@@ -324,7 +326,35 @@ class NoteDetailViewController: UIViewController, UITextViewDelegate {
         return urls[0]
     }
     
-    private func getFirstLineOfText(_ text: String) -> String {
-        return text.components(separatedBy: "\n")[0]
+    private func getTitleOfNote(_ text: String) -> String {
+        let firstLine = text.components(separatedBy: "\n")[0]
+        var title = firstLine
+        if firstLine.count > maximumCharsOfNoteTitle {
+            title = ""
+            let substrings = firstLine.components(separatedBy: " ")
+
+            var charsCounter = 0
+            for eachSubstring in substrings {
+                charsCounter += eachSubstring.count + 1
+                if charsCounter > maximumCharsOfNoteTitle {
+                    if title.count == 0 {
+                        let indexAtMaximumCharsOfNoteTitle = firstLine.index(firstLine.startIndex, offsetBy: maximumCharsOfNoteTitle)
+                        let substr = firstLine[...indexAtMaximumCharsOfNoteTitle]
+                        title = String(substr)
+                    }
+                    
+                    break
+                } else {
+                    if title.count > 0 {
+                        title += " "
+                    }
+                    
+                    title += eachSubstring
+                }
+            }
+        }
+        
+        return title
+        
     }
 }
