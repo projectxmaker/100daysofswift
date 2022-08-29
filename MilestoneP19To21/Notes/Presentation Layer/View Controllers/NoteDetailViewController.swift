@@ -168,7 +168,6 @@ class NoteDetailViewController: UIViewController, UITextViewDelegate {
             let regularStyle = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)]
             let attributedString = NSMutableAttributedString(string: attributedText, attributes: regularStyle)
             textView.attributedText = attributedString
-            //textView.selectedRange = currentSelectedRange
             
             // bold it
             let textNote = textView.text ?? ""
@@ -186,8 +185,6 @@ class NoteDetailViewController: UIViewController, UITextViewDelegate {
             textView.attributedText = attributedString
             textView.selectedRange = currentSelectedRange
         }
-
-
     }
     
     // MARK: - Extra Funcs
