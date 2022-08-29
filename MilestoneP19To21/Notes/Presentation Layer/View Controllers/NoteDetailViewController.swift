@@ -26,6 +26,8 @@ class NoteDetailViewController: UIViewController, UITextViewDelegate {
     
     let maximumCharsOfNoteTitle = 20
     
+    private var firstLine = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -58,7 +60,7 @@ class NoteDetailViewController: UIViewController, UITextViewDelegate {
     }
     */
     
-    // MARK: - Handlers
+    // MARK: - Button Handlers
     
     @objc private func handleDoneButtonTapped() {
         hideDoneButton()
@@ -128,11 +130,6 @@ class NoteDetailViewController: UIViewController, UITextViewDelegate {
         makeTextViewSelectionVisible(notification: notification)
     }
     
-    // MARK: - Text View
-    func textViewDidChange(_ textView: UITextView) {
-        hideDoneButton(false)
-    }
-    
     private func makeTextViewSelectionVisible(notification: Notification) {
         guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
 
@@ -149,6 +146,48 @@ class NoteDetailViewController: UIViewController, UITextViewDelegate {
 
         let selectedRange = textView.selectedRange
         textView.scrollRangeToVisible(selectedRange)
+    }
+    
+    // MARK: - Text View
+    func textViewDidChange(_ textView: UITextView) {
+        hideDoneButton(false)
+        
+        boldFirstLineOfNote()
+    }
+    
+    private func boldFirstLineOfNote() {
+        let textNote = textView.text ?? ""
+        let lineBreakIndex = textNote.firstIndex(of: "\n") ?? textNote.endIndex
+        let tmpFirstLine = String(textNote[..<lineBreakIndex])
+        
+        if firstLine != tmpFirstLine {
+            let currentSelectedRange = textView.selectedRange
+            let attributedString = NSMutableAttributedString(attributedString: textView.attributedText)
+            
+            if !firstLine.isEmpty {
+                let range = NSRange(location: 0, length: firstLine.count + 1)
+                
+                let attributeOfRegular = [
+                    NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)
+                ]
+                
+                attributedString.addAttributes(attributeOfRegular, range: range)
+            }
+            
+            firstLine = String(tmpFirstLine)
+            
+            let range = NSRange(location: 0, length: firstLine.count)
+            
+            let attributeOfBold = [
+                NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 30)
+            ]
+
+            attributedString.addAttributes(attributeOfBold, range: range)
+            
+            
+            textView.attributedText = attributedString
+            textView.selectedRange = currentSelectedRange
+        }
     }
     
     // MARK: - Extra Funcs
@@ -241,6 +280,8 @@ class NoteDetailViewController: UIViewController, UITextViewDelegate {
         textView.text = note.text
         
         hideDeleteButton(false)
+        
+        boldFirstLineOfNote()
     }
     
     private func getNoteByIndex(_ index: Int) -> Note? {
