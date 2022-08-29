@@ -54,11 +54,7 @@ class NoteListViewController: UITableViewController {
 
         let note = notes[indexPath.row]
 
-        var contentConfig = cell.defaultContentConfiguration()
-        contentConfig.text = note.title
-        contentConfig.textProperties.font = UIFont.boldSystemFont(ofSize: 20)
-        contentConfig.secondaryText = note.updatedAt.formatted(dateFormatStyle)
-        cell.contentConfiguration = contentConfig
+        setContentConfigurationForCell(cell, note: note)
 
         return cell
     }
@@ -113,6 +109,14 @@ class NoteListViewController: UITableViewController {
     */
     
     // MARK: - Extra Funcs
+    private func setContentConfigurationForCell(_ cell: UITableViewCell, note: Note) {
+        var contentConfig = cell.defaultContentConfiguration()
+        contentConfig.text = note.title
+        contentConfig.textProperties.font = UIFont.boldSystemFont(ofSize: 20)
+        contentConfig.secondaryText = note.updatedAt.formatted(dateFormatStyle)
+        cell.contentConfiguration = contentConfig
+    }
+    
     private func setupToolbars() {
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         
@@ -189,10 +193,7 @@ class NoteListViewController: UITableViewController {
     private func updateCellWithNote(_ note: Note) {
         guard let cell = tableView.cellForRow(at: IndexPath(row: note.index, section: 0)) else { return }
         
-        var contentConfig = cell.defaultContentConfiguration()
-        contentConfig.text = note.title
-        contentConfig.secondaryText = note.updatedAt.formatted(dateFormatStyle)
-        cell.contentConfiguration = contentConfig
+        setContentConfigurationForCell(cell, note: note)
     }
     
     // MARK: - Notes
