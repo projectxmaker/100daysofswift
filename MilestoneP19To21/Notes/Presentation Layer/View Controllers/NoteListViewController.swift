@@ -56,6 +56,7 @@ class NoteListViewController: UITableViewController {
 
         var contentConfig = cell.defaultContentConfiguration()
         contentConfig.text = note.title
+        contentConfig.textProperties.font = UIFont.boldSystemFont(ofSize: 20)
         contentConfig.secondaryText = note.updatedAt.formatted(dateFormatStyle)
         cell.contentConfiguration = contentConfig
 

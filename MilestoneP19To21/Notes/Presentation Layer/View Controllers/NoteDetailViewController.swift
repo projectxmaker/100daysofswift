@@ -79,7 +79,7 @@ class NoteDetailViewController: UIViewController, UITextViewDelegate {
         ac.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
             
             let userInfo: [String: Note] = ["note": tmpCurrentNote]
-            
+
             self?.postNotification(name: "com.projectxmaker.com.notes.deleteNote", userInfo: userInfo)
             
             self?.navigationController?.popViewController(animated: true)
@@ -305,6 +305,8 @@ class NoteDetailViewController: UIViewController, UITextViewDelegate {
             addNoteToNoteList(note)
             
             noteIndex = note.index
+            
+            currentNote = note
             
             let userInfo: [String: Note] = ["note": note]
             postNotification(name: "com.projectxmaker.notes.newNote", userInfo: userInfo)
