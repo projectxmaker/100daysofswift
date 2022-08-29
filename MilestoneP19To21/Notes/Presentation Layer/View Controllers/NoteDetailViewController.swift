@@ -26,7 +26,8 @@ class NoteDetailViewController: UIViewController, UITextViewDelegate {
     
     let maximumCharsOfNoteTitle = 20
     
-    private var firstLine = ""
+    private var firstLineRange = NSRange()
+    private var attributedText = NSAttributedString()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -156,38 +157,37 @@ class NoteDetailViewController: UIViewController, UITextViewDelegate {
     }
     
     private func boldFirstLineOfNote() {
-        let textNote = textView.text ?? ""
-        let lineBreakIndex = textNote.firstIndex(of: "\n") ?? textNote.endIndex
-        let tmpFirstLine = String(textNote[..<lineBreakIndex])
-        
-        if firstLine != tmpFirstLine {
+        let newAttributedText = textView.attributedText ?? NSAttributedString()
+
+        if attributedText != newAttributedText {
+            attributedText = newAttributedText
+
+            // reset style of attributed text
             let currentSelectedRange = textView.selectedRange
-            let attributedString = NSMutableAttributedString(attributedString: textView.attributedText)
+            let attributedText = attributedText.string
+            let regularStyle = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)]
+            let attributedString = NSMutableAttributedString(string: attributedText, attributes: regularStyle)
+            textView.attributedText = attributedString
+            //textView.selectedRange = currentSelectedRange
             
-            if !firstLine.isEmpty {
-                let range = NSRange(location: 0, length: firstLine.count + 1)
-                
-                let attributeOfRegular = [
-                    NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)
-                ]
-                
-                attributedString.addAttributes(attributeOfRegular, range: range)
-            }
-            
-            firstLine = String(tmpFirstLine)
+            // bold it
+            let textNote = textView.text ?? ""
+            let lineBreakIndex = textNote.firstIndex(of: "\n") ?? textNote.endIndex
+            let firstLine = String(textNote[..<lineBreakIndex])
             
             let range = NSRange(location: 0, length: firstLine.count)
-            
+
             let attributeOfBold = [
                 NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 30)
             ]
 
             attributedString.addAttributes(attributeOfBold, range: range)
-            
-            
+
             textView.attributedText = attributedString
             textView.selectedRange = currentSelectedRange
         }
+
+
     }
     
     // MARK: - Extra Funcs
