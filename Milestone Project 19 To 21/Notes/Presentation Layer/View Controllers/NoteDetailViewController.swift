@@ -104,7 +104,7 @@ class NoteDetailViewController: UIViewController, UITextViewDelegate {
     @objc private func handleShareButtonTapped() {
         let textValue = textView.text ?? ""
         let titleValue = getTitleOfNote(textValue)
-        let textFileUrl = getDocumentDirectory().appendingPathComponent(titleValue)
+        let textFileUrl = getDocumentDirectory().appendingPathComponent(titleValue + ".txt")
         currentSharedNoteUrl = textFileUrl
         
         try? textValue.write(to: textFileUrl, atomically: true, encoding: .utf8)
@@ -113,7 +113,8 @@ class NoteDetailViewController: UIViewController, UITextViewDelegate {
         let ac = UIActivityViewController(activityItems: sharedItems, applicationActivities: nil)
         
         ac.completionWithItemsHandler = executeAtActivityViewControllerCompleted
-
+        ac.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        
         present(ac, animated: true)
     }
     
