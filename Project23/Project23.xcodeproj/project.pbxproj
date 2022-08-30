@@ -14,6 +14,18 @@
 		8A455FBB28BE24A1008EC02E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A455FB928BE24A1008EC02E /* Main.storyboard */; };
 		8A455FBD28BE24A3008EC02E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A455FBC28BE24A3008EC02E /* Assets.xcassets */; };
 		8A455FC028BE24A3008EC02E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A455FBE28BE24A3008EC02E /* LaunchScreen.storyboard */; };
+		8A455FD228BE25F2008EC02E /* swoosh3.caf in Resources */ = {isa = PBXBuildFile; fileRef = 8A455FC628BE25F0008EC02E /* swoosh3.caf */; };
+		8A455FD328BE25F2008EC02E /* swoosh2.caf in Resources */ = {isa = PBXBuildFile; fileRef = 8A455FC728BE25F1008EC02E /* swoosh2.caf */; };
+		8A455FD428BE25F2008EC02E /* whack.caf in Resources */ = {isa = PBXBuildFile; fileRef = 8A455FC828BE25F1008EC02E /* whack.caf */; };
+		8A455FD528BE25F2008EC02E /* launch.caf in Resources */ = {isa = PBXBuildFile; fileRef = 8A455FC928BE25F1008EC02E /* launch.caf */; };
+		8A455FD628BE25F2008EC02E /* sliceHitEnemy.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8A455FCA28BE25F1008EC02E /* sliceHitEnemy.sks */; };
+		8A455FD728BE25F2008EC02E /* sliceFuse.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8A455FCB28BE25F1008EC02E /* sliceFuse.sks */; };
+		8A455FD828BE25F2008EC02E /* sliceHitBomb.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8A455FCC28BE25F1008EC02E /* sliceHitBomb.sks */; };
+		8A455FD928BE25F2008EC02E /* swoosh1.caf in Resources */ = {isa = PBXBuildFile; fileRef = 8A455FCD28BE25F1008EC02E /* swoosh1.caf */; };
+		8A455FDA28BE25F2008EC02E /* wrong.caf in Resources */ = {isa = PBXBuildFile; fileRef = 8A455FCE28BE25F1008EC02E /* wrong.caf */; };
+		8A455FDB28BE25F2008EC02E /* explosion.caf in Resources */ = {isa = PBXBuildFile; fileRef = 8A455FCF28BE25F1008EC02E /* explosion.caf */; };
+		8A455FDC28BE25F2008EC02E /* sliceBombFuse.caf in Resources */ = {isa = PBXBuildFile; fileRef = 8A455FD028BE25F2008EC02E /* sliceBombFuse.caf */; };
+		8A455FDD28BE25F2008EC02E /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A455FD128BE25F2008EC02E /* spark.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +37,18 @@
 		8A455FBA28BE24A1008EC02E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8A455FBC28BE24A3008EC02E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8A455FBF28BE24A3008EC02E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		8A455FC628BE25F0008EC02E /* swoosh3.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = swoosh3.caf; sourceTree = "<group>"; };
+		8A455FC728BE25F1008EC02E /* swoosh2.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = swoosh2.caf; sourceTree = "<group>"; };
+		8A455FC828BE25F1008EC02E /* whack.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = whack.caf; sourceTree = "<group>"; };
+		8A455FC928BE25F1008EC02E /* launch.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = launch.caf; sourceTree = "<group>"; };
+		8A455FCA28BE25F1008EC02E /* sliceHitEnemy.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = sliceHitEnemy.sks; sourceTree = "<group>"; };
+		8A455FCB28BE25F1008EC02E /* sliceFuse.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = sliceFuse.sks; sourceTree = "<group>"; };
+		8A455FCC28BE25F1008EC02E /* sliceHitBomb.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = sliceHitBomb.sks; sourceTree = "<group>"; };
+		8A455FCD28BE25F1008EC02E /* swoosh1.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = swoosh1.caf; sourceTree = "<group>"; };
+		8A455FCE28BE25F1008EC02E /* wrong.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = wrong.caf; sourceTree = "<group>"; };
+		8A455FCF28BE25F1008EC02E /* explosion.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = explosion.caf; sourceTree = "<group>"; };
+		8A455FD028BE25F2008EC02E /* sliceBombFuse.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sliceBombFuse.caf; sourceTree = "<group>"; };
+		8A455FD128BE25F2008EC02E /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,8 +88,28 @@
 				8A455FB928BE24A1008EC02E /* Main.storyboard */,
 				8A455FBC28BE24A3008EC02E /* Assets.xcassets */,
 				8A455FBE28BE24A3008EC02E /* LaunchScreen.storyboard */,
+				8A455FDE28BE2604008EC02E /* Content */,
 			);
 			path = Project23;
+			sourceTree = "<group>";
+		};
+		8A455FDE28BE2604008EC02E /* Content */ = {
+			isa = PBXGroup;
+			children = (
+				8A455FCF28BE25F1008EC02E /* explosion.caf */,
+				8A455FC928BE25F1008EC02E /* launch.caf */,
+				8A455FD028BE25F2008EC02E /* sliceBombFuse.caf */,
+				8A455FCB28BE25F1008EC02E /* sliceFuse.sks */,
+				8A455FCC28BE25F1008EC02E /* sliceHitBomb.sks */,
+				8A455FCA28BE25F1008EC02E /* sliceHitEnemy.sks */,
+				8A455FD128BE25F2008EC02E /* spark.png */,
+				8A455FCD28BE25F1008EC02E /* swoosh1.caf */,
+				8A455FC728BE25F1008EC02E /* swoosh2.caf */,
+				8A455FC628BE25F0008EC02E /* swoosh3.caf */,
+				8A455FC828BE25F1008EC02E /* whack.caf */,
+				8A455FCE28BE25F1008EC02E /* wrong.caf */,
+			);
+			path = Content;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -126,10 +170,22 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A455FDC28BE25F2008EC02E /* sliceBombFuse.caf in Resources */,
+				8A455FD628BE25F2008EC02E /* sliceHitEnemy.sks in Resources */,
 				8A455FBB28BE24A1008EC02E /* Main.storyboard in Resources */,
 				8A455FB228BE24A1008EC02E /* GameScene.sks in Resources */,
+				8A455FD428BE25F2008EC02E /* whack.caf in Resources */,
+				8A455FD828BE25F2008EC02E /* sliceHitBomb.sks in Resources */,
+				8A455FD328BE25F2008EC02E /* swoosh2.caf in Resources */,
 				8A455FBD28BE24A3008EC02E /* Assets.xcassets in Resources */,
+				8A455FD528BE25F2008EC02E /* launch.caf in Resources */,
+				8A455FDB28BE25F2008EC02E /* explosion.caf in Resources */,
+				8A455FD728BE25F2008EC02E /* sliceFuse.sks in Resources */,
 				8A455FC028BE24A3008EC02E /* LaunchScreen.storyboard in Resources */,
+				8A455FD228BE25F2008EC02E /* swoosh3.caf in Resources */,
+				8A455FDD28BE25F2008EC02E /* spark.png in Resources */,
+				8A455FD928BE25F2008EC02E /* swoosh1.caf in Resources */,
+				8A455FDA28BE25F2008EC02E /* wrong.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
