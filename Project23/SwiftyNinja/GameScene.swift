@@ -7,6 +7,11 @@
 
 import SpriteKit
 import GameplayKit
+import AVFoundation
+
+enum ForceBomb {
+    case never, always, random
+}
 
 class GameScene: SKScene {
 
@@ -26,6 +31,10 @@ class GameScene: SKScene {
     var activeSlicePoints = [CGPoint]()
     
     var isSwooshSoundActive = false
+    
+    var bombSoundEffect: AVAudioPlayer?
+    
+    var activeEnemies = [SKSpriteNode]()
     
     override func didMove(to view: SKView) {
         let background = SKSpriteNode(imageNamed: "sliceBackground")
@@ -78,6 +87,23 @@ class GameScene: SKScene {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         activeSliceBG.run(SKAction.fadeOut(withDuration: 0.25))
         activeSliceFG.run(SKAction.fadeOut(withDuration: 0.25))
+    }
+    
+    override func update(_ currentTime: TimeInterval) {
+        var bombCount = 0
+
+        for node in activeEnemies {
+            if node.name == "bombContainer" {
+                bombCount += 1
+                break
+            }
+        }
+
+        if bombCount == 0 {
+            // no bombs – stop the fuse sound!
+            bombSoundEffect?.stop()
+            bombSoundEffect = nil
+        }
     }
     
     // MARK: - Extra Funcs
@@ -156,4 +182,96 @@ class GameScene: SKScene {
             self?.isSwooshSoundActive = false
         }
     }
+    
+    func createEnemy(forceBomb: ForceBomb = .random) {
+        let enemy: SKSpriteNode
+
+        var enemyType = Int.random(in: 0...6)
+
+        if forceBomb == .never {
+            enemyType = 1
+        } else if forceBomb == .always {
+            enemyType = 0
+        }
+
+        if enemyType == 0 {
+            // bomb code goes here
+            enemy = createBomb()
+        } else {
+            enemy = SKSpriteNode(imageNamed: "penguin")
+            run(SKAction.playSoundFileNamed("launch.caf", waitForCompletion: false))
+            enemy.name = "enemy"
+        }
+
+        // position code goes here
+        setPhysicBodyForEnemy(enemy)
+
+        addChild(enemy)
+        activeEnemies.append(enemy)
+    }
+    
+    func createBomb() -> SKSpriteNode {
+        // 1
+        let enemy = SKSpriteNode()
+        enemy.zPosition = 1
+        enemy.name = "bombContainer"
+
+        // 2
+        let bombImage = SKSpriteNode(imageNamed: "sliceBomb")
+        bombImage.name = "bomb"
+        enemy.addChild(bombImage)
+
+        // 3
+        if bombSoundEffect != nil {
+            bombSoundEffect?.stop()
+            bombSoundEffect = nil
+        }
+
+        // 4
+        if let path = Bundle.main.url(forResource: "sliceBombFuse", withExtension: "caf") {
+            if let sound = try?  AVAudioPlayer(contentsOf: path) {
+                bombSoundEffect = sound
+                sound.play()
+            }
+        }
+
+        // 5
+        if let emitter = SKEmitterNode(fileNamed: "sliceFuse") {
+            emitter.position = CGPoint(x: 76, y: 64)
+            enemy.addChild(emitter)
+        }
+        
+        return enemy
+    }
+    
+    func setPhysicBodyForEnemy(_ enemy: SKSpriteNode) {
+        // 1
+        let randomPosition = CGPoint(x: Int.random(in: 64...960), y: -128)
+        enemy.position = randomPosition
+
+        // 2
+        let randomAngularVelocity = CGFloat.random(in: -3...3 )
+        let randomXVelocity: Int
+
+        // 3
+        if randomPosition.x < 256 {
+            randomXVelocity = Int.random(in: 8...15)
+        } else if randomPosition.x < 512 {
+            randomXVelocity = Int.random(in: 3...5)
+        } else if randomPosition.x < 768 {
+            randomXVelocity = -Int.random(in: 3...5)
+        } else {
+            randomXVelocity = -Int.random(in: 8...15)
+        }
+
+        // 4
+        let randomYVelocity = Int.random(in: 24...32)
+
+        // 5
+        enemy.physicsBody = SKPhysicsBody(circleOfRadius: 64)
+        enemy.physicsBody?.velocity = CGVector(dx: randomXVelocity * 40, dy: randomYVelocity * 40)
+        enemy.physicsBody?.angularVelocity = randomAngularVelocity
+        enemy.physicsBody?.collisionBitMask = 0
+    }
 }
+
