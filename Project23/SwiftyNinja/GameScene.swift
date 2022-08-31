@@ -67,8 +67,8 @@ class GameScene: SKScene {
     let enemySpeedXAxisRandomByPositionDefaultValueFrom = 3
     let enemySpeedXAxisRandomByPositionDefaultValueTo = 15
     
-    let enemySpeedYAxisRandomFrom = 3
-    let enemySpeedYAxisRandomTo = 15
+    let enemySpeedYAxisRandomFrom = 24
+    let enemySpeedYAxisRandomTo = 32
     
     let physicBodyCircleRadius: CGFloat = 64
     
