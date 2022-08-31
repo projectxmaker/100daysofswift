@@ -77,6 +77,8 @@ class GameScene: SKScene {
     
     let enemyNotCollideEachOthers:UInt32 = 0
     
+    var gameOver: SKSpriteNode!
+    
     override func didMove(to view: SKView) {
         let background = SKSpriteNode(imageNamed: "sliceBackground")
         background.position = CGPoint(x: 512, y: 384)
@@ -84,24 +86,11 @@ class GameScene: SKScene {
         background.zPosition = -1
         addChild(background)
 
-        physicsWorld.gravity = CGVector(dx: 0, dy: -6)
-        physicsWorld.speed = 0.85
-
         createScore()
         createLives()
         createSlices()
         
-        sequence = [.oneNoBomb, .oneNoBomb, .twoWithOneBomb, .twoWithOneBomb, .three, .one, .chain]
-
-        for _ in 0 ... 1000 {
-            if let nextSequence = SequenceType.allCases.randomElement() {
-                sequence.append(nextSequence)
-            }
-        }
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
-            self?.tossEnemies()
-        }
+        startGame()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -124,6 +113,14 @@ class GameScene: SKScene {
         // 5
         activeSliceBG.alpha = 1
         activeSliceFG.alpha = 1
+        
+        let nodes = nodes(at: location)
+        for eachNode in nodes {
+            if eachNode.name == "restartButton" {
+                restartGame()
+                break
+            }
+        }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -149,6 +146,10 @@ class GameScene: SKScene {
     }
     
     override func update(_ currentTime: TimeInterval) {
+        if isGameEnded {
+            return
+        }
+        
         if activeEnemies.count > 0 {
             for (index, node) in activeEnemies.enumerated().reversed() {
                 if node.position.y < -140 {
@@ -194,6 +195,23 @@ class GameScene: SKScene {
     }
     
     // MARK: - Extra Funcs
+    func startGame() {
+        physicsWorld.gravity = CGVector(dx: 0, dy: -6)
+        physicsWorld.speed = 0.85
+
+        sequence = [.oneNoBomb, .oneNoBomb, .twoWithOneBomb, .twoWithOneBomb, .three, .one, .chain]
+
+        for _ in 0 ... 1000 {
+            if let nextSequence = SequenceType.allCases.randomElement() {
+                sequence.append(nextSequence)
+            }
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+            self?.tossEnemies()
+        }
+    }
+    
     func sliceToWin(location: CGPoint) {
         let nodesAtPoint = nodes(at: location)
 
@@ -441,10 +459,9 @@ class GameScene: SKScene {
             let from = tmpRandom["from"],
             let to = tmpRandom["to"]
         else {
-            print(">1>: \(enemySpeedXAxisRandomByPositionDefaultValueFrom) - \(enemySpeedXAxisRandomByPositionDefaultValueTo)")
             return Int.random(in: enemySpeedXAxisRandomByPositionDefaultValueFrom...enemySpeedXAxisRandomByPositionDefaultValueTo)
         }
-        print(">2>: \(from) - \(to)")
+
         return Int.random(in: from...to)
     }
     
@@ -570,7 +587,6 @@ class GameScene: SKScene {
 
         isGameEnded = true
         physicsWorld.speed = 0
-        isUserInteractionEnabled = false
 
         bombSoundEffect?.stop()
         bombSoundEffect = nil
@@ -580,6 +596,55 @@ class GameScene: SKScene {
             livesImages[1].texture = SKTexture(imageNamed: "sliceLifeGone")
             livesImages[2].texture = SKTexture(imageNamed: "sliceLifeGone")
         }
+        
+        showGameover()
+    }
+    
+    func showGameover() {
+        gameOver = SKSpriteNode(imageNamed: "gameOver")
+        gameOver.position = CGPoint(x: 512, y: 420)
+        gameOver.zPosition = 1
+        
+        let scoreNote = SKLabelNode(fontNamed: "Chalkduster")
+        scoreNote.fontSize = 40
+        scoreNote.text = "Final Score: \(score)"
+        scoreNote.position = CGPoint(x: 0, y: -100)
+        scoreNote.horizontalAlignmentMode = .center
+        gameOver.addChild(scoreNote)
+        
+        let restartLabel = SKLabelNode()
+        restartLabel.fontSize = 40
+        restartLabel.text = "Restart"
+        restartLabel.position = CGPoint(x: 0, y: -200)
+        restartLabel.horizontalAlignmentMode = .center
+        restartLabel.name = "restartButton"
+        gameOver.addChild(restartLabel)
+        
+        addChild(gameOver)
+    }
+    
+    private func restartGame() {
+        gameOver.removeAllChildren()
+        gameOver.removeFromParent()
+        
+        for node in activeEnemies {
+            node.removeFromParent()
+        }
+        activeEnemies.removeAll(keepingCapacity: true)
+        
+        popupTime = 0.9
+        chainDelay = 3.0
+        sequencePosition = 0
+
+        isGameEnded = false
+        score = 0
+        lives = 3
+        
+        livesImages[0].texture = SKTexture(imageNamed: "sliceLife")
+        livesImages[1].texture = SKTexture(imageNamed: "sliceLife")
+        livesImages[2].texture = SKTexture(imageNamed: "sliceLife")
+        
+        startGame()
     }
 }
 
