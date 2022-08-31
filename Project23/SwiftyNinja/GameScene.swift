@@ -48,6 +48,32 @@ class GameScene: SKScene {
     
     var isGameEnded = false
     
+    let enemyTypeRandomFrom = 0
+    let enemyTypeRandomTo = 6
+    let bombFusePositionX = 76
+    let bombFusePositionY = 64
+    let enemyPositionXRandomFrom = 64
+    let enemyPositionXRandomTo = 960
+    let enemyPositionY = -128
+    let enemySpinningSpeedRandomFrom: CGFloat = -3
+    let enemySpinningSpeedRandomTo: CGFloat = 3
+    let enemyPositionXLevels: [CGFloat] = [256, 512, 768]
+    let enemySpeedXAxisRandomByPositionLevel: [CGFloat: [String: Int]] = [
+        256: ["from": 8, "to": 15],
+        512: ["from": 3, "to": 5],
+        768: ["from": 3, "to": 5]
+    ]
+    
+    let enemySpeedXAxisRandomByPositionDefaultValueFrom = 3
+    let enemySpeedXAxisRandomByPositionDefaultValueTo = 15
+    
+    let enemySpeedYAxisRandomFrom = 3
+    let enemySpeedYAxisRandomTo = 15
+    
+    let physicBodyCircleRadius: CGFloat = 64
+    
+    let enemyNotCollideEachOthers:UInt32 = 0
+    
     override func didMove(to view: SKView) {
         let background = SKSpriteNode(imageNamed: "sliceBackground")
         background.position = CGPoint(x: 512, y: 384)
@@ -316,8 +342,8 @@ class GameScene: SKScene {
     func createEnemy(forceBomb: ForceBomb = .random) {
         let enemy: SKSpriteNode
 
-        var enemyType = Int.random(in: 0...6)
-
+        var enemyType = Int.random(in: enemyTypeRandomFrom...enemyTypeRandomTo)
+        
         if forceBomb == .never {
             enemyType = 1
         } else if forceBomb == .always {
@@ -367,41 +393,55 @@ class GameScene: SKScene {
 
         // 5
         if let emitter = SKEmitterNode(fileNamed: "sliceFuse") {
-            emitter.position = CGPoint(x: 76, y: 64)
+            emitter.position = CGPoint(x: bombFusePositionX, y: bombFusePositionY)
             enemy.addChild(emitter)
         }
         
         return enemy
     }
     
+    func generateRandomXVelocity(positionX: CGFloat) -> Int {
+        let enemyPositionXLevel = positionX
+        let randomXSpeedByPosition = enemySpeedXAxisRandomByPositionLevel[enemyPositionXLevel]
+        guard
+            let tmpRandom = randomXSpeedByPosition,
+            let from = tmpRandom["from"],
+            let to = tmpRandom["to"]
+        else {
+            return Int.random(in: enemySpeedXAxisRandomByPositionDefaultValueFrom...enemySpeedXAxisRandomByPositionDefaultValueTo)
+        }
+        
+        return Int.random(in: from...to)
+    }
+    
     func setPhysicBodyForEnemy(_ enemy: SKSpriteNode) {
         // 1
-        let randomPosition = CGPoint(x: Int.random(in: 64...960), y: -128)
+        let randomPosition = CGPoint(x: Int.random(in: enemyPositionXRandomFrom...enemyPositionXRandomTo), y: enemyPositionY)
         enemy.position = randomPosition
 
         // 2
-        let randomAngularVelocity = CGFloat.random(in: -3...3 )
+        let randomAngularVelocity = CGFloat.random(in: enemySpinningSpeedRandomFrom...enemySpinningSpeedRandomTo)
         let randomXVelocity: Int
 
         // 3
-        if randomPosition.x < 256 {
-            randomXVelocity = Int.random(in: 8...15)
-        } else if randomPosition.x < 512 {
-            randomXVelocity = Int.random(in: 3...5)
-        } else if randomPosition.x < 768 {
-            randomXVelocity = -Int.random(in: 3...5)
+        if randomPosition.x < enemyPositionXLevels[0] {
+            randomXVelocity = generateRandomXVelocity(positionX: enemyPositionXLevels[0])
+        } else if randomPosition.x < enemyPositionXLevels[1] {
+            randomXVelocity = generateRandomXVelocity(positionX: enemyPositionXLevels[1])
+        } else if randomPosition.x < enemyPositionXLevels[2] {
+            randomXVelocity = -generateRandomXVelocity(positionX: enemyPositionXLevels[2])
         } else {
-            randomXVelocity = -Int.random(in: 8...15)
+            randomXVelocity = -generateRandomXVelocity(positionX: enemyPositionXLevels[0])
         }
 
         // 4
-        let randomYVelocity = Int.random(in: 24...32)
+        let randomYVelocity = Int.random(in: enemySpeedYAxisRandomFrom...enemySpeedYAxisRandomTo)
 
         // 5
-        enemy.physicsBody = SKPhysicsBody(circleOfRadius: 64)
+        enemy.physicsBody = SKPhysicsBody(circleOfRadius: physicBodyCircleRadius)
         enemy.physicsBody?.velocity = CGVector(dx: randomXVelocity * 40, dy: randomYVelocity * 40)
         enemy.physicsBody?.angularVelocity = randomAngularVelocity
-        enemy.physicsBody?.collisionBitMask = 0
+        enemy.physicsBody?.collisionBitMask = enemyNotCollideEachOthers
     }
     
     func tossEnemies() {
