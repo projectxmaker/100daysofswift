@@ -69,6 +69,9 @@ class GameScene: SKScene {
     
     let enemySpeedYAxisRandomFrom = 24
     let enemySpeedYAxisRandomTo = 32
+
+    let enemySpaceshipSpeedYAxisFrom = 30
+    let enemySpaceshipSpeedYAxisTo = 38
     
     let physicBodyCircleRadius: CGFloat = 64
     
@@ -157,7 +160,7 @@ class GameScene: SKScene {
 
                         node.removeFromParent()
                         activeEnemies.remove(at: index)
-                    } else if node.name == "bombContainer" {
+                    } else if node.name == "bombContainer" || node.name == "spaceship" {
                         node.name = ""
                         node.removeFromParent()
                         activeEnemies.remove(at: index)
@@ -199,11 +202,13 @@ class GameScene: SKScene {
                 destroyPenguin(node)
             } else if node.name == "bomb" {
                 destroyBomb(node)
+            } else if node.name == "spaceship" {
+                destroySpaceship(node)
             }
         }
     }
     
-    func destroyPenguin(_ node: SKSpriteNode) {
+    func destroyEnemy(_ node: SKSpriteNode) {
         // 1
         if let emitter = SKEmitterNode(fileNamed: "sliceHitEnemy") {
             emitter.position = node.position
@@ -224,9 +229,8 @@ class GameScene: SKScene {
         // 5
         let seq = SKAction.sequence([group, .removeFromParent()])
         node.run(seq)
-
-        // 6
-        score += 1
+        
+        // 6: update score, depending on what kind of enemy
 
         // 7
         if let index = activeEnemies.firstIndex(of: node) {
@@ -235,6 +239,18 @@ class GameScene: SKScene {
 
         // 8
         run(SKAction.playSoundFileNamed("whack.caf", waitForCompletion: false))
+    }
+    
+    func destroySpaceship(_ node: SKSpriteNode) {
+        destroyEnemy(node)
+
+        score += 5
+    }
+    
+    func destroyPenguin(_ node: SKSpriteNode) {
+        destroyEnemy(node)
+
+        score += 1
     }
     
     func destroyBomb(_ node: SKSpriteNode) {
@@ -353,17 +369,34 @@ class GameScene: SKScene {
         if enemyType == 0 {
             // bomb code goes here
             enemy = createBomb()
+        } else if enemyType == 2 {
+            enemy = createSpaceship()
         } else {
-            enemy = SKSpriteNode(imageNamed: "penguin")
-            run(SKAction.playSoundFileNamed("launch.caf", waitForCompletion: false))
-            enemy.name = "enemy"
+            enemy = createPenguin()
         }
 
         // position code goes here
-        setPhysicBodyForEnemy(enemy)
+        setPhysicBodyForEnemy(enemy, type: enemyType)
 
         addChild(enemy)
         activeEnemies.append(enemy)
+    }
+    
+    func createSpaceship() -> SKSpriteNode {
+        let enemy = SKSpriteNode(imageNamed: "spaceship")
+        run(SKAction.playSoundFileNamed("launch.caf", waitForCompletion: false))
+        
+        enemy.name = "spaceship"
+        
+        return enemy
+    }
+    
+    func createPenguin() -> SKSpriteNode {
+        let enemy = SKSpriteNode(imageNamed: "penguin")
+        run(SKAction.playSoundFileNamed("launch.caf", waitForCompletion: false))
+        enemy.name = "enemy"
+        
+        return enemy
     }
     
     func createBomb() -> SKSpriteNode {
@@ -408,13 +441,14 @@ class GameScene: SKScene {
             let from = tmpRandom["from"],
             let to = tmpRandom["to"]
         else {
+            print(">1>: \(enemySpeedXAxisRandomByPositionDefaultValueFrom) - \(enemySpeedXAxisRandomByPositionDefaultValueTo)")
             return Int.random(in: enemySpeedXAxisRandomByPositionDefaultValueFrom...enemySpeedXAxisRandomByPositionDefaultValueTo)
         }
-        
+        print(">2>: \(from) - \(to)")
         return Int.random(in: from...to)
     }
     
-    func setPhysicBodyForEnemy(_ enemy: SKSpriteNode) {
+    func setPhysicBodyForEnemy(_ enemy: SKSpriteNode, type: Int) {
         // 1
         let randomPosition = CGPoint(x: Int.random(in: enemyPositionXRandomFrom...enemyPositionXRandomTo), y: enemyPositionY)
         enemy.position = randomPosition
@@ -429,13 +463,17 @@ class GameScene: SKScene {
         } else if randomPosition.x < enemyPositionXLevels[1] {
             randomXVelocity = generateRandomXVelocity(positionX: enemyPositionXLevels[1])
         } else if randomPosition.x < enemyPositionXLevels[2] {
-            randomXVelocity = -generateRandomXVelocity(positionX: enemyPositionXLevels[2])
+            randomXVelocity = 0 - generateRandomXVelocity(positionX: enemyPositionXLevels[2])
         } else {
-            randomXVelocity = -generateRandomXVelocity(positionX: enemyPositionXLevels[0])
+            randomXVelocity = 0 - generateRandomXVelocity(positionX: enemyPositionXLevels[0])
         }
 
         // 4
-        let randomYVelocity = Int.random(in: enemySpeedYAxisRandomFrom...enemySpeedYAxisRandomTo)
+        var randomYVelocity = Int.random(in: enemySpeedYAxisRandomFrom...enemySpeedYAxisRandomTo)
+        if type == 2 {
+            // if enemy is a spaceship
+            randomYVelocity = Int.random(in: enemySpaceshipSpeedYAxisFrom...enemySpaceshipSpeedYAxisTo)
+        }
 
         // 5
         enemy.physicsBody = SKPhysicsBody(circleOfRadius: physicBodyCircleRadius)
