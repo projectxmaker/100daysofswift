@@ -104,6 +104,8 @@ class GameScene: SKScene {
         if !isSwooshSoundActive {
             playSwooshSound()
         }
+        
+        sliceToWin(location: location)
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -115,8 +117,19 @@ class GameScene: SKScene {
         if activeEnemies.count > 0 {
             for (index, node) in activeEnemies.enumerated().reversed() {
                 if node.position.y < -140 {
-                    node.removeFromParent()
-                    activeEnemies.remove(at: index)
+                    node.removeAllActions()
+
+                    if node.name == "enemy" {
+                        node.name = ""
+                        //subtractLife()
+
+                        node.removeFromParent()
+                        activeEnemies.remove(at: index)
+                    } else if node.name == "bombContainer" {
+                        node.name = ""
+                        node.removeFromParent()
+                        activeEnemies.remove(at: index)
+                    }
                 }
             }
         } else {
@@ -146,6 +159,78 @@ class GameScene: SKScene {
     }
     
     // MARK: - Extra Funcs
+    func sliceToWin(location: CGPoint) {
+        let nodesAtPoint = nodes(at: location)
+
+        for case let node as SKSpriteNode in nodesAtPoint {
+            if node.name == "enemy" {
+                destroyPenguin(node)
+            } else if node.name == "bomb" {
+                destroyBomb(node)
+            }
+        }
+    }
+    
+    func destroyPenguin(_ node: SKSpriteNode) {
+        // 1
+        if let emitter = SKEmitterNode(fileNamed: "sliceHitEnemy") {
+            emitter.position = node.position
+            addChild(emitter)
+        }
+
+        // 2
+        node.name = ""
+
+        // 3
+        node.physicsBody?.isDynamic = false
+
+        // 4
+        let scaleOut = SKAction.scale(to: 0.001, duration:0.2)
+        let fadeOut = SKAction.fadeOut(withDuration: 0.2)
+        let group = SKAction.group([scaleOut, fadeOut])
+
+        // 5
+        let seq = SKAction.sequence([group, .removeFromParent()])
+        node.run(seq)
+
+        // 6
+        score += 1
+
+        // 7
+        if let index = activeEnemies.firstIndex(of: node) {
+            activeEnemies.remove(at: index)
+        }
+
+        // 8
+        run(SKAction.playSoundFileNamed("whack.caf", waitForCompletion: false))
+    }
+    
+    func destroyBomb(_ node: SKSpriteNode) {
+        guard let bombContainer = node.parent as? SKSpriteNode else { return }
+
+        if let emitter = SKEmitterNode(fileNamed: "sliceHitBomb") {
+            emitter.position = bombContainer.position
+            addChild(emitter)
+        }
+
+        node.name = ""
+        bombContainer.physicsBody?.isDynamic = false
+
+        let scaleOut = SKAction.scale(to: 0.001, duration:0.2)
+        let fadeOut = SKAction.fadeOut(withDuration: 0.2)
+        let group = SKAction.group([scaleOut, fadeOut])
+
+        let seq = SKAction.sequence([group, .removeFromParent()])
+        bombContainer.run(seq)
+
+        if let index = activeEnemies.firstIndex(of: bombContainer) {
+            activeEnemies.remove(at: index)
+        }
+
+        run(SKAction.playSoundFileNamed("explosion.caf", waitForCompletion: false))
+        //endGame(triggeredByBomb: true)
+    }
+    
     func createScore() {
         gameScore = SKLabelNode(fontNamed: "Chalkduster")
         gameScore.horizontalAlignmentMode = .left
