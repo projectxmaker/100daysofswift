@@ -12,6 +12,12 @@ extension String {
         
         return finalString
     }
+    
+    func isNumeric() -> Bool {
+        guard let number = Double(self) else { return false }
+        
+        return true
+    }
 }
 
 class MyViewController : UIViewController {
@@ -21,6 +27,10 @@ class MyViewController : UIViewController {
 
         let carPet = "pet".withPrefix("car")
         print(carPet)
+        
+        print("x3x".isNumeric() ? "yes" : "no")
+        print("30".isNumeric() ? "yes" : "no")
+        print("30.4".isNumeric() ? "yes" : "no")
     }
 }
 // Present the view controller in the Live View window
