@@ -20,6 +20,12 @@ extension String {
             return true
         }
     }
+    
+    var lines: [String] {
+        get {
+            self.components(separatedBy: "\n")
+        }
+    }
 }
 
 class MyViewController : UIViewController {
@@ -33,6 +39,10 @@ class MyViewController : UIViewController {
         print("x3x".isNumeric ? "yes" : "no")
         print("30".isNumeric ? "yes" : "no")
         print("30.4".isNumeric ? "yes" : "no")
+        print("".isNumeric ? "yes" : "no")
+        
+        print("thisisatest".lines)
+        print("this\nis\na\ntest".lines)
     }
 }
 // Present the view controller in the Live View window
