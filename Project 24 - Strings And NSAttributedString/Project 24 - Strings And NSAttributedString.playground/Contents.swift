@@ -4,6 +4,7 @@ import UIKit
 import PlaygroundSupport
 
 extension String {
+    // challenge #1: method withPrefix | "pet".prefix("car") -> "carpet"
     func withPrefix(_ prefix: String) -> String {
         var finalString = self
         if !self.hasPrefix(prefix) {
@@ -13,14 +14,16 @@ extension String {
         return finalString
     }
     
+    // challenge #2: isNumber property to return true if the string holds any sort of number
     var isNumeric: Bool {
         get {
-            guard let number = Double(self) else { return false }
+            guard let _ = Double(self) else { return false }
             
             return true
         }
     }
     
+    // challenge #3: lines property to return an array of all lines in a string
     var lines: [String] {
         get {
             self.components(separatedBy: "\n")
