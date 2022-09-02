@@ -11,6 +11,14 @@ extension UIView {
     }
 }
 
+extension Int {
+    func times(_ closure: () -> Void) {
+        for _ in 0..<self {
+            closure()
+        }
+    }
+}
+
 class MyViewController : UIViewController {
     override func loadView() {
         let view = UIView()
@@ -25,6 +33,8 @@ class MyViewController : UIViewController {
         self.view = view
         
         label.bounceOut(duration: 3)
+        
+        5.times { print("Hello!") }
     }
 }
 // Present the view controller in the Live View window
