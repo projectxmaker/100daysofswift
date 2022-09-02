@@ -5,8 +5,8 @@ import PlaygroundSupport
 
 extension UIView {
     func bounceOut(duration: CGFloat) {
-        UIView.animate(withDuration: TimeInterval(duration)) {
-            self.transform = CGAffineTransform(scaleX: 0.0001, y: 0.0001)
+        UIView.animate(withDuration: TimeInterval(duration)) { [weak self] in
+            self?.transform = CGAffineTransform(scaleX: 0.0001, y: 0.0001)
         }
     }
 }
