@@ -11,6 +11,17 @@ extension UIView {
     }
 }
 
+extension Array where Element: Comparable {
+    
+    mutating func remove(item: Element) {
+        guard let index = self.firstIndex(of: item) else {
+            return
+        }
+
+        self.remove(at: index)
+    }
+}
+
 extension Int {
     func times(_ closure: () -> Void) {
         for _ in 0..<self {
@@ -31,10 +42,12 @@ class MyViewController : UIViewController {
         
         view.addSubview(label)
         self.view = view
-        
+
         label.bounceOut(duration: 3)
+        5.times { print("Hellox!") }
         
-        5.times { print("Hello!") }
+        var arrayInt = [1, 2, 3, 3, 2, 1]
+        arrayInt.remove(item: 2)
     }
 }
 // Present the view controller in the Live View window
