@@ -6,13 +6,19 @@
 //
 
 import UIKit
+import MultipeerConnectivity
 
 private let reuseIdentifier = "ImageCell"
 
-class ViewController: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
+class ViewController: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, MCBrowserViewControllerDelegate, MCSessionDelegate {
+    
     var images = [UIImage]()
     let imageViewTag = 1000
+
+    private let mcServiceType = "com.projectxmaker.selfieShare"
+    private var mcPeerID = MCPeerID(displayName: UIDevice.current.name)
+    private var mcSession: MCSession?
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +33,12 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         
         title = "Selfie Share"
         
+        mcSession = MCSession(peer: mcPeerID, securityIdentity: nil, encryptionPreference: .required)
+        mcSession?.delegate = self
+        
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .camera, target: self, action: #selector(handleImageSelectionButtonTapped))
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleShowConnectionPromtButtonTapped))
     }
 
     /*
@@ -94,7 +105,37 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
     
     }
     */
+    
+    // MARK: - MCSession Delegate
+    func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
+        // <#code#>
+    }
+    
+    func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
+        // <#code#>
+    }
+    
+    func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {
+        // <#code#>
+    }
+    
+    func session(_ session: MCSession, didStartReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, with progress: Progress) {
+        // <#code#>
+    }
+    
+    func session(_ session: MCSession, didFinishReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, at localURL: URL?, withError error: Error?) {
+        // <#code#>
+    }
 
+    // MARK: - MCBrowserViewController Delegate
+    func browserViewControllerDidFinish(_ browserViewController: MCBrowserViewController) {
+        // <#code#>
+    }
+    
+    func browserViewControllerWasCancelled(_ browserViewController: MCBrowserViewController) {
+        // <#code#>
+    }
+    
     // MARK: - Extra Funcs
     @objc private func handleImageSelectionButtonTapped() {
         let imagePicker = UIImagePickerController()
@@ -115,5 +156,34 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         images.insert(editingImage, at: 0)
         collectionView.insertItems(at: [IndexPath(item: 0, section: 0)])
         //collectionView.reloadData()
+    }
+    
+    @objc private func handleShowConnectionPromtButtonTapped() {
+        let ac = UIAlertController(title: "Connect ...", message: nil, preferredStyle: .alert)
+        
+        ac.addAction(UIAlertAction(title: "Host a session", style: .default, handler: hostASession))
+        
+        ac.addAction(UIAlertAction(title: "Join a session", style: .default, handler: joinASession))
+        
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
+        present(ac, animated: true, completion: nil)
+    }
+    
+    @objc private func hostASession(_ action: UIAlertAction) {
+        guard let mcSession = mcSession else { return }
+        
+        let mcAdvertiserAssistant = MCAdvertiserAssistant(serviceType: mcServiceType, discoveryInfo: nil, session: mcSession)
+        mcAdvertiserAssistant.start()
+    }
+    
+    @objc private func joinASession(_ action: UIAlertAction) {
+        guard let mcSession = mcSession else { return }
+        
+        let mcBrowser = MCBrowserViewController(serviceType: mcServiceType, session: mcSession)
+        
+        mcBrowser.delegate = self
+        
+        present(mcBrowser, animated: true, completion: nil)
     }
 }
