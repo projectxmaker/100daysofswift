@@ -16,7 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8A9ADC1F28C2F5560050A71D /* Project25.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project25.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8A9ADC1F28C2F5560050A71D /* SelffieShare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SelffieShare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A9ADC2228C2F5560050A71D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8A9ADC2428C2F5560050A71D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		8A9ADC2628C2F5560050A71D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -40,7 +40,7 @@
 		8A9ADC1628C2F5560050A71D = {
 			isa = PBXGroup;
 			children = (
-				8A9ADC2128C2F5560050A71D /* Project25 */,
+				8A9ADC2128C2F5560050A71D /* SelffieShare */,
 				8A9ADC2028C2F5560050A71D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -48,19 +48,19 @@
 		8A9ADC2028C2F5560050A71D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8A9ADC1F28C2F5560050A71D /* Project25.app */,
+				8A9ADC1F28C2F5560050A71D /* SelffieShare.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		8A9ADC2128C2F5560050A71D /* Project25 */ = {
+		8A9ADC2128C2F5560050A71D /* SelffieShare */ = {
 			isa = PBXGroup;
 			children = (
 				8A9ADC3628C2F5640050A71D /* Presentation Layer */,
 				8A9ADC2B28C2F5570050A71D /* Assets.xcassets */,
 				8A9ADC3028C2F5570050A71D /* Info.plist */,
 			);
-			path = Project25;
+			path = SelffieShare;
 			sourceTree = "<group>";
 		};
 		8A9ADC3628C2F5640050A71D /* Presentation Layer */ = {
@@ -94,9 +94,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8A9ADC1E28C2F5560050A71D /* Project25 */ = {
+		8A9ADC1E28C2F5560050A71D /* SelffieShare */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8A9ADC3328C2F5570050A71D /* Build configuration list for PBXNativeTarget "Project25" */;
+			buildConfigurationList = 8A9ADC3328C2F5570050A71D /* Build configuration list for PBXNativeTarget "SelffieShare" */;
 			buildPhases = (
 				8A9ADC1B28C2F5560050A71D /* Sources */,
 				8A9ADC1C28C2F5560050A71D /* Frameworks */,
@@ -106,9 +106,9 @@
 			);
 			dependencies = (
 			);
-			name = Project25;
+			name = SelffieShare;
 			productName = Project25;
-			productReference = 8A9ADC1F28C2F5560050A71D /* Project25.app */;
+			productReference = 8A9ADC1F28C2F5560050A71D /* SelffieShare.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -126,7 +126,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 8A9ADC1A28C2F5560050A71D /* Build configuration list for PBXProject "Project25" */;
+			buildConfigurationList = 8A9ADC1A28C2F5560050A71D /* Build configuration list for PBXProject "SelffieShare" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -139,7 +139,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8A9ADC1E28C2F5560050A71D /* Project25 */,
+				8A9ADC1E28C2F5560050A71D /* SelffieShare */,
 			);
 		};
 /* End PBXProject section */
@@ -313,7 +313,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TT8TA55RWH;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Project25/Info.plist;
+				INFOPLIST_FILE = SelffieShare/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -324,7 +324,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.Project25;
+				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.SelffieShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -341,7 +341,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TT8TA55RWH;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Project25/Info.plist;
+				INFOPLIST_FILE = SelffieShare/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -352,7 +352,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.Project25;
+				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.SelffieShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -363,7 +363,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		8A9ADC1A28C2F5560050A71D /* Build configuration list for PBXProject "Project25" */ = {
+		8A9ADC1A28C2F5560050A71D /* Build configuration list for PBXProject "SelffieShare" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8A9ADC3128C2F5570050A71D /* Debug */,
@@ -372,7 +372,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8A9ADC3328C2F5570050A71D /* Build configuration list for PBXNativeTarget "Project25" */ = {
+		8A9ADC3328C2F5570050A71D /* Build configuration list for PBXNativeTarget "SelffieShare" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8A9ADC3428C2F5570050A71D /* Debug */,
