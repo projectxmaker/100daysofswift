@@ -15,7 +15,7 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
     var images = [UIImage]()
     let imageViewTag = 1000
 
-    private let mcServiceType = "com.projectxmaker.selfieShare"
+    private let mcServiceType = "selfieshare"
     private var mcPeerID = MCPeerID(displayName: UIDevice.current.name)
     private var mcSession: MCSession?
 
@@ -108,11 +108,25 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
     
     // MARK: - MCSession Delegate
     func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
-        // <#code#>
+        switch state {
+        case .notConnected:
+            print("Not connected: \(peerID.displayName)")
+        case .connecting:
+            print("Connecting: \(peerID.displayName)")
+        case .connected:
+            print("Connected: \(peerID.displayName)")
+        @unknown default:
+            print("Unknown state: \(peerID.displayName)")
+        }
     }
     
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
-        // <#code#>
+        DispatchQueue.main.async { [weak self] in
+            if let image = UIImage(data: data) {
+                self?.images.insert(image, at: 0)
+                self?.collectionView.insertItems(at: [IndexPath(item: 0, section: 1)])
+            }
+        }
     }
     
     func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {
@@ -129,11 +143,11 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
 
     // MARK: - MCBrowserViewController Delegate
     func browserViewControllerDidFinish(_ browserViewController: MCBrowserViewController) {
-        // <#code#>
+        dismiss(animated: true)
     }
     
     func browserViewControllerWasCancelled(_ browserViewController: MCBrowserViewController) {
-        // <#code#>
+        dismiss(animated: true)
     }
     
     // MARK: - Extra Funcs
@@ -155,7 +169,29 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         
         images.insert(editingImage, at: 0)
         collectionView.insertItems(at: [IndexPath(item: 0, section: 0)])
-        //collectionView.reloadData()
+        
+        sendImageToPeers(editingImage)
+    }
+    
+    private func sendImageToPeers(_ image: UIImage) {
+        guard
+            let pngImage = image.pngData(),
+            let mcSession = mcSession
+        else {
+            return
+        }
+        
+        let connectedPeers = mcSession.connectedPeers
+        if connectedPeers.count > 0 {
+            do {
+                try mcSession.send(pngImage, toPeers: connectedPeers, with: .reliable)
+            } catch {
+                let ac = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+                ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+
+                present(ac, animated: true)
+            }
+        }
     }
     
     @objc private func handleShowConnectionPromtButtonTapped() {
@@ -180,7 +216,10 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
     @objc private func joinASession(_ action: UIAlertAction) {
         guard let mcSession = mcSession else { return }
         
-        let mcBrowser = MCBrowserViewController(serviceType: mcServiceType, session: mcSession)
+        let nearbyServiceBrowser = MCNearbyServiceBrowser(peer: mcPeerID, serviceType: mcServiceType)
+        
+        //let mcBrowser = MCBrowserViewController(serviceType: mcServiceType, session: mcSession)
+        let mcBrowser = MCBrowserViewController(browser: nearbyServiceBrowser, session: mcSession)
         
         mcBrowser.delegate = self
         
