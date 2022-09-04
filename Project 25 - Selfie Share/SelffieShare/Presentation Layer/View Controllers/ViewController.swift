@@ -41,7 +41,10 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
             UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(handleSendMessageButtonTapped))
         ]
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleShowConnectionPromtButtonTapped))
+        navigationItem.leftBarButtonItems = [
+            UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleShowConnectionPromtButtonTapped)),
+            UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(handleShowConnectionPeersButtonTapped))
+        ]
     }
 
     // MARK: UICollectionViewDataSource
@@ -236,5 +239,28 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
                 present(ac, animated: true)
             }
         }
+    }
+    
+    @objc private func handleShowConnectionPeersButtonTapped() {
+        guard let mcSession = mcSession else {
+            return
+        }
+        
+        var peerNames = [String]()
+        
+        for eachPeer in mcSession.connectedPeers {
+            peerNames.append(eachPeer.displayName)
+        }
+        
+        var peerNameList = "No connected peer"
+        
+        if !peerNames.isEmpty {
+            peerNameList = peerNames.joined(separator: ", ")
+        }
+        
+        let ac = UIAlertController(title: "Connected Peers", message: peerNameList, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Ok", style: .cancel))
+        
+        present(ac, animated: true)
     }
 }
