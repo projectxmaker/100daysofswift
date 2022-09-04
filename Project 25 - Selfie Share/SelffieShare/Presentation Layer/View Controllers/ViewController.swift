@@ -69,7 +69,12 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
     func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
         switch state {
         case .notConnected:
-            print("Not connected: \(peerID.displayName)")
+            DispatchQueue.main.async { [weak self] in
+                let ac = UIAlertController(title: "Disconnected!", message: "Device \(peerID.displayName) is disconnected", preferredStyle: .alert)
+                ac.addAction(UIAlertAction(title: "OK", style: .cancel))
+                
+                self?.present(ac, animated: true)
+            }
         case .connecting:
             print("Connecting: \(peerID.displayName)")
         case .connected:
