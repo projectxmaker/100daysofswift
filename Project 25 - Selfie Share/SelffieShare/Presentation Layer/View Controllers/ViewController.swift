@@ -194,10 +194,7 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
     @objc private func joinASession(_ action: UIAlertAction) {
         guard let mcSession = mcSession else { return }
         
-        //let nearbyServiceBrowser = MCNearbyServiceBrowser(peer: mcPeerID, serviceType: mcServiceType)
-        
         let mcBrowser = MCBrowserViewController(serviceType: mcServiceType, session: mcSession)
-        //let mcBrowser = MCBrowserViewController(browser: nearbyServiceBrowser, session: mcSession)
         
         mcBrowser.delegate = self
         
