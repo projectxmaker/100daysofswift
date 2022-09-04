@@ -10,7 +10,7 @@ import MultipeerConnectivity
 
 private let reuseIdentifier = "ImageCell"
 
-class ViewController: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, MCBrowserViewControllerDelegate, MCSessionDelegate {
+class ViewController: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, MCBrowserViewControllerDelegate, MCSessionDelegate, MCNearbyServiceAdvertiserDelegate {
     
     var images = [UIImage]()
     let imageViewTag = 1000
@@ -18,7 +18,7 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
     private let mcServiceType = "selfieshare"
     private var mcPeerID = MCPeerID(displayName: UIDevice.current.name)
     private var mcSession: MCSession?
-
+    private var mcNearbyServiceAdvertiser: MCNearbyServiceAdvertiser?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,16 +40,6 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleShowConnectionPromtButtonTapped))
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
 
     // MARK: UICollectionViewDataSource
 
@@ -74,37 +64,6 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
     
         return cell
     }
-
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-    
-    }
-    */
     
     // MARK: - MCSession Delegate
     func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
@@ -124,7 +83,7 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         DispatchQueue.main.async { [weak self] in
             if let image = UIImage(data: data) {
                 self?.images.insert(image, at: 0)
-                self?.collectionView.insertItems(at: [IndexPath(item: 0, section: 1)])
+                self?.collectionView.insertItems(at: [IndexPath(item: 0, section: 0)])
             }
         }
     }
@@ -148,6 +107,14 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
     
     func browserViewControllerWasCancelled(_ browserViewController: MCBrowserViewController) {
         dismiss(animated: true)
+    }
+    
+    // MARK: - MCNearbyServiceAdvertiser Delegate
+
+    func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
+
+        guard let mcSession = mcSession else { return }
+        invitationHandler(true, mcSession)
     }
     
     // MARK: - Extra Funcs
@@ -207,19 +174,18 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
     }
     
     @objc private func hostASession(_ action: UIAlertAction) {
-        guard let mcSession = mcSession else { return }
-        
-        let mcAdvertiserAssistant = MCAdvertiserAssistant(serviceType: mcServiceType, discoveryInfo: nil, session: mcSession)
-        mcAdvertiserAssistant.start()
+        mcNearbyServiceAdvertiser = MCNearbyServiceAdvertiser(peer: mcPeerID, discoveryInfo: nil, serviceType: mcServiceType)
+        mcNearbyServiceAdvertiser?.delegate = self
+        mcNearbyServiceAdvertiser?.startAdvertisingPeer()
     }
     
     @objc private func joinASession(_ action: UIAlertAction) {
         guard let mcSession = mcSession else { return }
         
-        let nearbyServiceBrowser = MCNearbyServiceBrowser(peer: mcPeerID, serviceType: mcServiceType)
+        //let nearbyServiceBrowser = MCNearbyServiceBrowser(peer: mcPeerID, serviceType: mcServiceType)
         
-        //let mcBrowser = MCBrowserViewController(serviceType: mcServiceType, session: mcSession)
-        let mcBrowser = MCBrowserViewController(browser: nearbyServiceBrowser, session: mcSession)
+        let mcBrowser = MCBrowserViewController(serviceType: mcServiceType, session: mcSession)
+        //let mcBrowser = MCBrowserViewController(browser: nearbyServiceBrowser, session: mcSession)
         
         mcBrowser.delegate = self
         
