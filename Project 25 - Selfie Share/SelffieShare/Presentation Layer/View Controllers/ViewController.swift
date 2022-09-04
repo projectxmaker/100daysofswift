@@ -36,7 +36,10 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         mcSession = MCSession(peer: mcPeerID, securityIdentity: nil, encryptionPreference: .required)
         mcSession?.delegate = self
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .camera, target: self, action: #selector(handleImageSelectionButtonTapped))
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(barButtonSystemItem: .camera, target: self, action: #selector(handleImageSelectionButtonTapped)),
+            UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(handleSendMessageButtonTapped))
+        ]
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleShowConnectionPromtButtonTapped))
     }
@@ -89,6 +92,18 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
             if let image = UIImage(data: data) {
                 self?.images.insert(image, at: 0)
                 self?.collectionView.insertItems(at: [IndexPath(item: 0, section: 0)])
+            } else if let message = String(data: data, encoding: .utf8) {
+                let ac = UIAlertController(title: "Received", message: "Message: \(message)", preferredStyle: .alert)
+                ac.addTextField { textField in
+                    textField.placeholder = "Enter your response here"
+                }
+                ac.addAction(UIAlertAction(title: "Reply", style: .default, handler: { [weak ac, weak self] _ in
+                    guard let message = ac?.textFields?[0].text else { return }
+                    self?.sendMessageToOthers(message)
+                }))
+                ac.addAction(UIAlertAction(title: "Ignore", style: .cancel))
+                
+                self?.present(ac, animated: true)
             }
         }
     }
@@ -147,23 +162,12 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
     
     private func sendImageToPeers(_ image: UIImage) {
         guard
-            let pngImage = image.pngData(),
-            let mcSession = mcSession
+            let pngImage = image.pngData()
         else {
             return
         }
         
-        let connectedPeers = mcSession.connectedPeers
-        if connectedPeers.count > 0 {
-            do {
-                try mcSession.send(pngImage, toPeers: connectedPeers, with: .reliable)
-            } catch {
-                let ac = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
-                ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-
-                present(ac, animated: true)
-            }
-        }
+        sendDataToPeers(data: pngImage)
     }
     
     @objc private func handleShowConnectionPromtButtonTapped() {
@@ -195,5 +199,42 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         mcBrowser.delegate = self
         
         present(mcBrowser, animated: true, completion: nil)
+    }
+    
+    @objc private func handleSendMessageButtonTapped(_ action: UIAlertAction) {
+        let ac = UIAlertController(title: "Send a message", message: nil, preferredStyle: .alert)
+        ac.addTextField { textField in
+            textField.placeholder = "Enter your message here"
+        }
+        ac.addAction(UIAlertAction(title: "Send", style: .default, handler: { [weak self, weak ac] _ in
+            guard let message = ac?.textFields?[0].text else { return }
+            self?.sendMessageToOthers(message)
+        }))
+        
+        present(ac, animated: true)
+    }
+    
+    private func sendMessageToOthers(_ message: String) {
+        sendDataToPeers(data: Data(message.utf8))
+    }
+    
+    private func sendDataToPeers(data: Data) {
+        guard
+            let mcSession = mcSession
+        else {
+            return
+        }
+        
+        let connectedPeers = mcSession.connectedPeers
+        if connectedPeers.count > 0 {
+            do {
+                try mcSession.send(data, toPeers: connectedPeers, with: .reliable)
+            } catch {
+                let ac = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+                ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+
+                present(ac, animated: true)
+            }
+        }
     }
 }
