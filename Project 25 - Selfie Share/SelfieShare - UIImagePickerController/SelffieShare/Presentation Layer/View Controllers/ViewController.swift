@@ -141,16 +141,7 @@ class ViewController: UICollectionViewController, MCBrowserViewControllerDelegat
     }
     
     // MARK: - Extra Funcs
-    @objc private func handleImageSelectionButtonTapped() {
-        let imagePicker = UIImagePickerController()
-        imagePicker.allowsEditing = true
-        imagePicker.delegate = self
-        
-        imagePicker.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
-        
-        present(imagePicker, animated: true)
-        
-    }
+
     
     private func sendImageToPeers(_ image: UIImage) {
         guard
@@ -252,6 +243,8 @@ class ViewController: UICollectionViewController, MCBrowserViewControllerDelegat
 }
 
 extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    // MARK: - UIImagePickerController Delegate
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let editingImage = info[.editedImage] as? UIImage else { return }
         
@@ -261,5 +254,21 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
         collectionView.insertItems(at: [IndexPath(item: 0, section: 0)])
         
         sendImageToPeers(editingImage)
+    }
+    
+    
+    
+    
+    
+    
+    @objc private func handleImageSelectionButtonTapped() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.allowsEditing = true
+        imagePicker.delegate = self
+        
+        imagePicker.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        
+        present(imagePicker, animated: true)
+        
     }
 }

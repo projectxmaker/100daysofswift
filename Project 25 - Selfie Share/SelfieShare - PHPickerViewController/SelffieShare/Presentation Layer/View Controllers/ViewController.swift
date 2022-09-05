@@ -142,28 +142,7 @@ class ViewController: UICollectionViewController, UINavigationControllerDelegate
     }
     
     // MARK: - Extra Funcs
-    @objc private func handleInsertingImageIntoCollectionView(image: NSItemProviderReading?, error: Error? = nil) {
-        if let image = image as? UIImage {
-            images.insert(image, at: 0)
-            collectionView.insertItems(at: [IndexPath(item: 0, section: 0)])
-            sendImageToPeers(image)
-        }
-    }
-    
-    @objc private func handleImageSelectionButtonTapped() {
-        var config = PHPickerConfiguration(photoLibrary: .shared())
-        let newFilter = PHPickerFilter.images
-        
-        config.filter = newFilter
-        config.preferredAssetRepresentationMode = .current
-        config.selection = .ordered
-        config.selectionLimit = 0
 
-        let photoPicker = PHPickerViewController(configuration: config)
-        photoPicker.delegate = self
-
-        present(photoPicker, animated: true)
-    }
     
     private func sendImageToPeers(_ image: UIImage) {
         guard
@@ -281,6 +260,29 @@ extension ViewController: PHPickerViewControllerDelegate {
                     }
                 }
             }
+        }
+    }
+    
+    @objc private func handleImageSelectionButtonTapped() {
+        var config = PHPickerConfiguration(photoLibrary: .shared())
+        let newFilter = PHPickerFilter.images
+        
+        config.filter = newFilter
+        config.preferredAssetRepresentationMode = .current
+        config.selection = .ordered
+        config.selectionLimit = 0
+
+        let photoPicker = PHPickerViewController(configuration: config)
+        photoPicker.delegate = self
+
+        present(photoPicker, animated: true)
+    }
+    
+    @objc private func handleInsertingImageIntoCollectionView(image: NSItemProviderReading?, error: Error? = nil) {
+        if let image = image as? UIImage {
+            images.insert(image, at: 0)
+            collectionView.insertItems(at: [IndexPath(item: 0, section: 0)])
+            sendImageToPeers(image)
         }
     }
 }
