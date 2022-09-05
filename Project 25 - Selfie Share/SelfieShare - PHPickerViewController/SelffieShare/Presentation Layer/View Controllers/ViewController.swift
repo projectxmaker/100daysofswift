@@ -7,10 +7,11 @@
 
 import UIKit
 import MultipeerConnectivity
+import PhotosUI
 
 private let reuseIdentifier = "ImageCell"
 
-class ViewController: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, MCBrowserViewControllerDelegate, MCSessionDelegate, MCNearbyServiceAdvertiserDelegate {
+class ViewController: UICollectionViewController, UINavigationControllerDelegate, MCBrowserViewControllerDelegate, MCSessionDelegate, MCNearbyServiceAdvertiserDelegate {
     
     var images = [UIImage]()
     let imageViewTag = 1000
@@ -141,26 +142,27 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
     }
     
     // MARK: - Extra Funcs
-    @objc private func handleImageSelectionButtonTapped() {
-        let imagePicker = UIImagePickerController()
-        imagePicker.allowsEditing = true
-        imagePicker.delegate = self
-        
-        imagePicker.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
-        
-        present(imagePicker, animated: true)
-        
+    @objc private func handleInsertingImageIntoCollectionView(image: NSItemProviderReading?, error: Error? = nil) {
+        if let image = image as? UIImage {
+            images.insert(image, at: 0)
+            collectionView.insertItems(at: [IndexPath(item: 0, section: 0)])
+            sendImageToPeers(image)
+        }
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        guard let editingImage = info[.editedImage] as? UIImage else { return }
+    @objc private func handleImageSelectionButtonTapped() {
+        var config = PHPickerConfiguration(photoLibrary: .shared())
+        let newFilter = PHPickerFilter.images
         
-        dismiss(animated: true)
-        
-        images.insert(editingImage, at: 0)
-        collectionView.insertItems(at: [IndexPath(item: 0, section: 0)])
-        
-        sendImageToPeers(editingImage)
+        config.filter = newFilter
+        config.preferredAssetRepresentationMode = .current
+        config.selection = .ordered
+        config.selectionLimit = 0
+
+        let photoPicker = PHPickerViewController(configuration: config)
+        photoPicker.delegate = self
+
+        present(photoPicker, animated: true)
     }
     
     private func sendImageToPeers(_ image: UIImage) {
@@ -259,5 +261,26 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         ac.addAction(UIAlertAction(title: "Ok", style: .cancel))
         
         present(ac, animated: true)
+    }
+}
+
+extension ViewController: PHPickerViewControllerDelegate {
+    
+    // MARK: - PHPickerViewController Delegate
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        dismiss(animated: true)
+        
+        if results.count > 0 {
+            for eachResult in results {
+                let itemProvider = eachResult.itemProvider
+                if itemProvider.canLoadObject(ofClass: UIImage.self) {
+                    itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
+                        DispatchQueue.main.async {
+                            self?.handleInsertingImageIntoCollectionView(image: image, error: error)
+                        }
+                    }
+                }
+            }
+        }
     }
 }
