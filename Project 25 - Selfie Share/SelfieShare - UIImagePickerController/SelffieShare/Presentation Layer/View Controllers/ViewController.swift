@@ -10,7 +10,7 @@ import MultipeerConnectivity
 
 private let reuseIdentifier = "ImageCell"
 
-class ViewController: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, MCBrowserViewControllerDelegate, MCSessionDelegate, MCNearbyServiceAdvertiserDelegate {
+class ViewController: UICollectionViewController, MCBrowserViewControllerDelegate, MCSessionDelegate, MCNearbyServiceAdvertiserDelegate {
     
     var images = [UIImage]()
     let imageViewTag = 1000
@@ -152,17 +152,6 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        guard let editingImage = info[.editedImage] as? UIImage else { return }
-        
-        dismiss(animated: true)
-        
-        images.insert(editingImage, at: 0)
-        collectionView.insertItems(at: [IndexPath(item: 0, section: 0)])
-        
-        sendImageToPeers(editingImage)
-    }
-    
     private func sendImageToPeers(_ image: UIImage) {
         guard
             let pngImage = image.pngData()
@@ -259,5 +248,18 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         ac.addAction(UIAlertAction(title: "Ok", style: .cancel))
         
         present(ac, animated: true)
+    }
+}
+
+extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let editingImage = info[.editedImage] as? UIImage else { return }
+        
+        dismiss(animated: true)
+        
+        images.insert(editingImage, at: 0)
+        collectionView.insertItems(at: [IndexPath(item: 0, section: 0)])
+        
+        sendImageToPeers(editingImage)
     }
 }
