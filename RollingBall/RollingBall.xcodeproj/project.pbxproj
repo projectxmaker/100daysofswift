@@ -16,6 +16,7 @@
 		8A4C7FA828C645360014E5CD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A4C7FA628C645360014E5CD /* LaunchScreen.storyboard */; };
 		8A4C7FBB28C70EDD0014E5CD /* level1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8A4C7FBA28C70EDD0014E5CD /* level1.txt */; };
 		8A4C7FBE28C70F1B0014E5CD /* level2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8A4C7FBD28C70F1B0014E5CD /* level2.txt */; };
+		8A4C7FC028C774760014E5CD /* level3.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8A4C7FBF28C774760014E5CD /* level3.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		8A4C7FA728C645360014E5CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8A4C7FBA28C70EDD0014E5CD /* level1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = level1.txt; sourceTree = "<group>"; };
 		8A4C7FBD28C70F1B0014E5CD /* level2.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = level2.txt; sourceTree = "<group>"; };
+		8A4C7FBF28C774760014E5CD /* level3.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = level3.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +80,7 @@
 			children = (
 				8A4C7FBA28C70EDD0014E5CD /* level1.txt */,
 				8A4C7FBD28C70F1B0014E5CD /* level2.txt */,
+				8A4C7FBF28C774760014E5CD /* level3.txt */,
 			);
 			path = Level;
 			sourceTree = "<group>";
@@ -140,6 +143,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A4C7FC028C774760014E5CD /* level3.txt in Resources */,
 				8A4C7FBB28C70EDD0014E5CD /* level1.txt in Resources */,
 				8A4C7FA328C645350014E5CD /* Main.storyboard in Resources */,
 				8A4C7FBE28C70F1B0014E5CD /* level2.txt in Resources */,
