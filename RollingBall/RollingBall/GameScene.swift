@@ -40,14 +40,17 @@ class GameScene: SKScene {
     
     var collideToVortex = false
     var collideToTeleport = false
+    var collideToFlag = false
     
     var gameScore: SKLabelNode!
     
-    var gameOver: SKSpriteNode!
+    var gameOver: SKLabelNode!
     
     var teleports = [SKSpriteNode]()
     
     let defaultPlayerPosition = CGPoint(x: 96, y: 672)
+    
+    var nextLevelLabel: SKLabelNode!
     
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
@@ -59,14 +62,14 @@ class GameScene: SKScene {
         addChild(background)
         
         scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
-        scoreLabel.text = "Score: 0"
+        scoreLabel.text = "Score: \(score)"
         scoreLabel.horizontalAlignmentMode = .left
         scoreLabel.position = CGPoint(x: 16, y: 16)
         scoreLabel.zPosition = 2
         addChild(scoreLabel)
         
         levelLabel = SKLabelNode(fontNamed: "Chalkduster")
-        levelLabel.text = "Level: 0"
+        levelLabel.text = "Level: \(currentLevel)"
         levelLabel.horizontalAlignmentMode = .left
         levelLabel.position = CGPoint(x: 850, y: 16)
         levelLabel.zPosition = 2
@@ -87,6 +90,9 @@ class GameScene: SKScene {
         for eachNode in nodes {
             if eachNode.name == "restartButton" {
                 restartGame()
+                break
+            } else if eachNode.name == "startNextLevelButton" {
+                startNextLevel()
                 break
             }
         }
@@ -272,6 +278,8 @@ class GameScene: SKScene {
     }
     
     func createPlayer(_ position: CGPoint? = nil) {
+        resetGravityOfPhysicsWorldToZero()
+        
         var playerPosition = defaultPlayerPosition
         if let newPosition = position {
             playerPosition = newPosition
@@ -305,7 +313,6 @@ class GameScene: SKScene {
             return false
         }
         
-        currentLevel = tmpNextLevel
         return true
     }
     
@@ -316,15 +323,32 @@ class GameScene: SKScene {
         return ["name": fileName, "extension": fileExtension]
     }
     
-    func startGame() {
-        physicsWorld.gravity = .zero
+    func startGame(level: Int? = nil) {
         teleports.removeAll(keepingCapacity: true)
+        
+        collideToVortex = false
+        collideToFlag = false
+        collideToTeleport = false
+        
+        lastTouchPosition = nil
         
         clearPlayground()
         
         if hasNextLevel() {
-            buildNodes()
-            createPlayer()
+            if collideToFlag {
+                showReadyForNextLevel()
+                collideToFlag = false
+            } else {
+                if let specifiedLevel = level {
+                    currentLevel = specifiedLevel
+                } else {
+                    currentLevel += 1
+                }
+                
+                buildNodes()
+                createPlayer()
+            }
+            
         } else {
             // game is over
             showGameover()
@@ -339,8 +363,43 @@ class GameScene: SKScene {
         }
     }
     
+    func showReadyForNextLevel() {
+        nextLevelLabel = SKLabelNode(fontNamed: "Chalkduster")
+        nextLevelLabel.fontSize = 60
+        nextLevelLabel.text = "CONGRATULATION!"
+        nextLevelLabel.horizontalAlignmentMode = .center
+        nextLevelLabel.position = CGPoint(x: 512, y: 420)
+        nextLevelLabel.zPosition = 1
+        
+        let scoreNote = SKLabelNode(fontNamed: "Chalkduster")
+        scoreNote.fontSize = 40
+        scoreNote.text = "Score: \(score) at Level: \(currentLevel)"
+        scoreNote.position = CGPoint(x: 0, y: -100)
+        scoreNote.horizontalAlignmentMode = .center
+        nextLevelLabel.addChild(scoreNote)
+        
+        let restartLabel = SKLabelNode(fontNamed: "Chalkduster")
+        restartLabel.fontSize = 40
+        restartLabel.text = "Start Next Level"
+        restartLabel.position = CGPoint(x: 0, y: -200)
+        restartLabel.horizontalAlignmentMode = .center
+        restartLabel.name = "startNextLevelButton"
+        nextLevelLabel.addChild(restartLabel)
+        
+        addChild(nextLevelLabel)
+    }
+    
+    func startNextLevel() {
+        let nextLevel = currentLevel + 1
+        
+        startGame(level: nextLevel)
+    }
+    
     func showGameover() {
-        gameOver = SKSpriteNode(imageNamed: "gameOver")
+        gameOver = SKLabelNode(fontNamed: "Chalkduster")
+        gameOver.fontSize = 60
+        gameOver.text = "GAME OVER!"
+        gameOver.horizontalAlignmentMode = .center
         gameOver.position = CGPoint(x: 512, y: 420)
         gameOver.zPosition = 1
         
@@ -366,9 +425,6 @@ class GameScene: SKScene {
         // reset info
         score = 0
         currentLevel = 0
-
-        collideToVortex = false
-        lastTouchPosition = nil
         
         startGame()
     }
@@ -419,8 +475,12 @@ extension GameScene: SKPhysicsContactDelegate {
             node.removeFromParent()
             score += 1
         } else if node.name == "finish" {
+            collideToFlag = true
             startGame()
         }
     }
 
+    func resetGravityOfPhysicsWorldToZero() {
+        physicsWorld.gravity = .zero
+    }
 }
