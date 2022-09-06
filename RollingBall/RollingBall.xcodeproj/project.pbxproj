@@ -14,7 +14,8 @@
 		8A4C7FA328C645350014E5CD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A4C7FA128C645350014E5CD /* Main.storyboard */; };
 		8A4C7FA528C645360014E5CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A4C7FA428C645360014E5CD /* Assets.xcassets */; };
 		8A4C7FA828C645360014E5CD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A4C7FA628C645360014E5CD /* LaunchScreen.storyboard */; };
-		8A4C7FAF28C645BA0014E5CD /* level1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8A4C7FAE28C645BA0014E5CD /* level1.txt */; };
+		8A4C7FBB28C70EDD0014E5CD /* level1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8A4C7FBA28C70EDD0014E5CD /* level1.txt */; };
+		8A4C7FBE28C70F1B0014E5CD /* level2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8A4C7FBD28C70F1B0014E5CD /* level2.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,7 +27,8 @@
 		8A4C7FA228C645350014E5CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8A4C7FA428C645360014E5CD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8A4C7FA728C645360014E5CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		8A4C7FAE28C645BA0014E5CD /* level1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = level1.txt; path = "../../../../../Downloads/HackingWithSwift-main/Classic/project26-files/Content/level1.txt"; sourceTree = "<group>"; };
+		8A4C7FBA28C70EDD0014E5CD /* level1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = level1.txt; sourceTree = "<group>"; };
+		8A4C7FBD28C70F1B0014E5CD /* level2.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = level2.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,9 +68,18 @@
 				8A4C7FA128C645350014E5CD /* Main.storyboard */,
 				8A4C7FA428C645360014E5CD /* Assets.xcassets */,
 				8A4C7FA628C645360014E5CD /* LaunchScreen.storyboard */,
-				8A4C7FAE28C645BA0014E5CD /* level1.txt */,
+				8A4C7FBC28C70EFF0014E5CD /* Level */,
 			);
 			path = RollingBall;
+			sourceTree = "<group>";
+		};
+		8A4C7FBC28C70EFF0014E5CD /* Level */ = {
+			isa = PBXGroup;
+			children = (
+				8A4C7FBA28C70EDD0014E5CD /* level1.txt */,
+				8A4C7FBD28C70F1B0014E5CD /* level2.txt */,
+			);
+			path = Level;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -129,8 +140,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8A4C7FAF28C645BA0014E5CD /* level1.txt in Resources */,
+				8A4C7FBB28C70EDD0014E5CD /* level1.txt in Resources */,
 				8A4C7FA328C645350014E5CD /* Main.storyboard in Resources */,
+				8A4C7FBE28C70F1B0014E5CD /* level2.txt in Resources */,
 				8A4C7F9A28C645350014E5CD /* GameScene.sks in Resources */,
 				8A4C7FA528C645360014E5CD /* Assets.xcassets in Resources */,
 				8A4C7FA828C645360014E5CD /* LaunchScreen.storyboard in Resources */,

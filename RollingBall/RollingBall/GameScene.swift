@@ -30,7 +30,18 @@ class GameScene: SKScene {
         }
     }
     
-    var isGameOver = false
+    var levelLabel: SKLabelNode!
+    var currentLevel: Int = 0 {
+        didSet {
+            levelLabel.text = "Level: \(currentLevel)"
+        }
+    }
+    
+    var collideToVortex = false
+    
+    var gameScore: SKLabelNode!
+    
+    var gameOver: SKSpriteNode!
     
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
@@ -48,20 +59,31 @@ class GameScene: SKScene {
         scoreLabel.zPosition = 2
         addChild(scoreLabel)
         
+        levelLabel = SKLabelNode(fontNamed: "Chalkduster")
+        levelLabel.text = "Level: 0"
+        levelLabel.horizontalAlignmentMode = .left
+        levelLabel.position = CGPoint(x: 850, y: 16)
+        levelLabel.zPosition = 2
+        addChild(levelLabel)
+        
         motionManager = CMMotionManager()
         motionManager.startAccelerometerUpdates()
         
-        physicsWorld.gravity = .zero
-        
-        buildNodes()
-        
-        createPlayer()
+        startGame()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else { return }
         let location = touch.location(in: self)
         lastTouchPosition = location
+        
+        let nodes = nodes(at: location)
+        for eachNode in nodes {
+            if eachNode.name == "restartButton" {
+                restartGame()
+                break
+            }
+        }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -75,7 +97,7 @@ class GameScene: SKScene {
     }
     
     override func update(_ currentTime: TimeInterval) {
-        guard isGameOver == false else { return }
+        guard collideToVortex == false else { return }
         
         #if targetEnvironment(simulator)
             if let currentTouch = lastTouchPosition {
@@ -91,7 +113,7 @@ class GameScene: SKScene {
     
     // MARK: - Extra Funcs
     func buildNodes() {
-        let lines = loadLevel("level1.txt")
+        let lines = loadLevel()
         
         for (row, line) in lines.reversed().enumerated() {
             for (column, letter) in line.enumerated() {
@@ -118,14 +140,17 @@ class GameScene: SKScene {
         }
     }
     
-    func loadLevel(_ levelFile: String) -> [String] {
-        let fileNameParts = levelFile.components(separatedBy: ".")
+    func loadLevel() -> [String] {
+        let fileNameParts = getLeveFileByLevel(currentLevel)
+        let fileName = fileNameParts["name"] ?? ""
+        let fileExtension = fileNameParts["extension"] ?? ""
+        let fileFullName = "\(fileName).\(fileExtension)"
         
-        guard let levelURL = Bundle.main.url(forResource: fileNameParts[0], withExtension: fileNameParts[1]) else {
-            fatalError("Could not find \(levelFile) in the app bundle.")
+        guard let levelURL = Bundle.main.url(forResource: fileName, withExtension: fileExtension) else {
+            fatalError("Could not find \(fileFullName) in the app bundle.")
         }
         guard let levelString = try? String(contentsOf: levelURL) else {
-            fatalError("Could not load \(levelFile) from the app bundle.")
+            fatalError("Could not load \(fileFullName) from the app bundle.")
         }
 
         return levelString.components(separatedBy: "\n")
@@ -134,10 +159,12 @@ class GameScene: SKScene {
     func loadWall(position: CGPoint) {
         let node = SKSpriteNode(imageNamed: "block")
         node.position = position
+        node.zPosition = 1
 
         node.physicsBody = SKPhysicsBody(rectangleOf: node.size)
         node.physicsBody?.categoryBitMask = CollisionTypes.wall.rawValue
         node.physicsBody?.isDynamic = false
+        
         addChild(node)
     }
     
@@ -145,6 +172,8 @@ class GameScene: SKScene {
         let node = SKSpriteNode(imageNamed: "vortex")
         node.name = "vortex"
         node.position = position
+        node.zPosition = 1
+        
         node.run(SKAction.repeatForever(SKAction.rotate(byAngle: .pi, duration: 1)))
         node.physicsBody = SKPhysicsBody(circleOfRadius: node.size.width / 2)
         node.physicsBody?.isDynamic = false
@@ -157,6 +186,9 @@ class GameScene: SKScene {
     
     func loadStar(position: CGPoint) {
         let node = SKSpriteNode(imageNamed: "star")
+        node.position = position
+        node.zPosition = 1
+        
         node.name = "star"
         node.physicsBody = SKPhysicsBody(circleOfRadius: node.size.width / 2)
         node.physicsBody?.isDynamic = false
@@ -164,12 +196,15 @@ class GameScene: SKScene {
         node.physicsBody?.categoryBitMask = CollisionTypes.star.rawValue
         node.physicsBody?.contactTestBitMask = CollisionTypes.player.rawValue
         node.physicsBody?.collisionBitMask = 0
-        node.position = position
+
         addChild(node)
     }
     
     func loadFinish(position: CGPoint) {
         let node = SKSpriteNode(imageNamed: "finish")
+        node.position = position
+        node.zPosition = 1
+        
         node.name = "finish"
         node.physicsBody = SKPhysicsBody(circleOfRadius: node.size.width / 2)
         node.physicsBody?.isDynamic = false
@@ -177,7 +212,7 @@ class GameScene: SKScene {
         node.physicsBody?.categoryBitMask = CollisionTypes.finish.rawValue
         node.physicsBody?.contactTestBitMask = CollisionTypes.player.rawValue
         node.physicsBody?.collisionBitMask = 0
-        node.position = position
+
         addChild(node)
     }
     
@@ -193,6 +228,27 @@ class GameScene: SKScene {
         player.physicsBody?.contactTestBitMask = CollisionTypes.star.rawValue | CollisionTypes.vortex.rawValue | CollisionTypes.finish.rawValue
         player.physicsBody?.collisionBitMask = CollisionTypes.wall.rawValue
         addChild(player)
+    }
+    
+    func hasNextLevel() -> Bool {
+        let tmpNextLevel = currentLevel + 1
+        let levelFileInfo = getLeveFileByLevel(tmpNextLevel)
+        let fileName = levelFileInfo["name"] ?? ""
+        let fileExtension = levelFileInfo["extension"] ?? ""
+        
+        guard let _ = Bundle.main.url(forResource: fileName, withExtension: fileExtension) else {
+            return false
+        }
+        
+        currentLevel = tmpNextLevel
+        return true
+    }
+    
+    func getLeveFileByLevel(_ level: Int) -> [String: String] {
+        let fileName = "level\(level)"
+        let fileExtension = "txt"
+        
+        return ["name": fileName, "extension": fileExtension]
     }
 }
 
@@ -211,7 +267,7 @@ extension GameScene: SKPhysicsContactDelegate {
     func playerCollided(with node: SKNode) {
         if node.name == "vortex" {
             player.physicsBody?.isDynamic = false
-            isGameOver = true
+            collideToVortex = true
             score -= 1
 
             let move = SKAction.move(to: node.position, duration: 0.25)
@@ -221,13 +277,68 @@ extension GameScene: SKPhysicsContactDelegate {
 
             player.run(sequence) { [weak self] in
                 self?.createPlayer()
-                self?.isGameOver = false
+                self?.collideToVortex = false
             }
         } else if node.name == "star" {
             node.removeFromParent()
             score += 1
         } else if node.name == "finish" {
-            // next level?
+            startGame()
         }
+    }
+    
+    func startGame() {
+        physicsWorld.gravity = .zero
+        clearPlayground()
+        
+        if hasNextLevel() {
+            buildNodes()
+            createPlayer()
+        } else {
+            // game is over
+            showGameover()
+        }
+    }
+    
+    func clearPlayground() {
+        for eachNode in children {
+            if eachNode.zPosition == 1 {
+                eachNode.removeFromParent()
+            }
+        }
+    }
+    
+    func showGameover() {
+        gameOver = SKSpriteNode(imageNamed: "gameOver")
+        gameOver.position = CGPoint(x: 512, y: 420)
+        gameOver.zPosition = 1
+        
+        let scoreNote = SKLabelNode(fontNamed: "Chalkduster")
+        scoreNote.fontSize = 40
+        scoreNote.text = "Final Score: \(score) at Level: \(currentLevel)"
+        scoreNote.position = CGPoint(x: 0, y: -100)
+        scoreNote.horizontalAlignmentMode = .center
+        gameOver.addChild(scoreNote)
+        
+        let restartLabel = SKLabelNode(fontNamed: "Chalkduster")
+        restartLabel.fontSize = 40
+        restartLabel.text = "Restart"
+        restartLabel.position = CGPoint(x: 0, y: -200)
+        restartLabel.horizontalAlignmentMode = .center
+        restartLabel.name = "restartButton"
+        gameOver.addChild(restartLabel)
+        
+        addChild(gameOver)
+    }
+    
+    func restartGame() {
+        // reset info
+        score = 0
+        currentLevel = 0
+
+        collideToVortex = false
+        lastTouchPosition = nil
+        
+        startGame()
     }
 }
