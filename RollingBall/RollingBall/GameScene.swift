@@ -53,7 +53,7 @@ class GameScene: SKScene {
         
         physicsWorld.gravity = .zero
         
-        loadLevel()
+        buildNodes()
         
         createPlayer()
     }
@@ -90,16 +90,9 @@ class GameScene: SKScene {
     }
     
     // MARK: - Extra Funcs
-    func loadLevel() {
-        guard let levelURL = Bundle.main.url(forResource: "level1", withExtension: "txt") else {
-            fatalError("Could not find level1.txt in the app bundle.")
-        }
-        guard let levelString = try? String(contentsOf: levelURL) else {
-            fatalError("Could not load level1.txt from the app bundle.")
-        }
-
-        let lines = levelString.components(separatedBy: "\n")
-
+    func buildNodes() {
+        let lines = loadLevel("level1.txt")
+        
         for (row, line) in lines.reversed().enumerated() {
             for (column, letter) in line.enumerated() {
                 let position = CGPoint(x: (64 * column) + 32, y: (64 * row) + 32)
@@ -123,6 +116,19 @@ class GameScene: SKScene {
                 }
             }
         }
+    }
+    
+    func loadLevel(_ levelFile: String) -> [String] {
+        let fileNameParts = levelFile.components(separatedBy: ".")
+        
+        guard let levelURL = Bundle.main.url(forResource: fileNameParts[0], withExtension: fileNameParts[1]) else {
+            fatalError("Could not find \(levelFile) in the app bundle.")
+        }
+        guard let levelString = try? String(contentsOf: levelURL) else {
+            fatalError("Could not load \(levelFile) from the app bundle.")
+        }
+
+        return levelString.components(separatedBy: "\n")
     }
     
     func loadWall(position: CGPoint) {
