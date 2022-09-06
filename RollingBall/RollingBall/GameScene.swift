@@ -326,12 +326,6 @@ class GameScene: SKScene {
     func startGame(level: Int? = nil) {
         teleports.removeAll(keepingCapacity: true)
         
-        collideToVortex = false
-        collideToFlag = false
-        collideToTeleport = false
-        
-        lastTouchPosition = nil
-        
         clearPlayground()
         
         if hasNextLevel() {
@@ -344,6 +338,12 @@ class GameScene: SKScene {
                 } else {
                     currentLevel += 1
                 }
+
+                collideToVortex = false
+                collideToFlag = false
+                collideToTeleport = false
+                
+                lastTouchPosition = nil
                 
                 buildNodes()
                 createPlayer()
@@ -369,6 +369,7 @@ class GameScene: SKScene {
         nextLevelLabel.text = "CONGRATULATION!"
         nextLevelLabel.horizontalAlignmentMode = .center
         nextLevelLabel.position = CGPoint(x: 512, y: 420)
+        nextLevelLabel.fontColor = UIColor.yellow
         nextLevelLabel.zPosition = 1
         
         let scoreNote = SKLabelNode(fontNamed: "Chalkduster")
@@ -376,6 +377,7 @@ class GameScene: SKScene {
         scoreNote.text = "Score: \(score) at Level: \(currentLevel)"
         scoreNote.position = CGPoint(x: 0, y: -100)
         scoreNote.horizontalAlignmentMode = .center
+        scoreNote.fontColor = UIColor.yellow
         nextLevelLabel.addChild(scoreNote)
         
         let restartLabel = SKLabelNode(fontNamed: "Chalkduster")
@@ -384,6 +386,7 @@ class GameScene: SKScene {
         restartLabel.position = CGPoint(x: 0, y: -200)
         restartLabel.horizontalAlignmentMode = .center
         restartLabel.name = "startNextLevelButton"
+        restartLabel.fontColor = UIColor.yellow
         nextLevelLabel.addChild(restartLabel)
         
         addChild(nextLevelLabel)
@@ -401,6 +404,7 @@ class GameScene: SKScene {
         gameOver.text = "GAME OVER!"
         gameOver.horizontalAlignmentMode = .center
         gameOver.position = CGPoint(x: 512, y: 420)
+        gameOver.fontColor = UIColor.yellow
         gameOver.zPosition = 1
         
         let scoreNote = SKLabelNode(fontNamed: "Chalkduster")
@@ -408,6 +412,7 @@ class GameScene: SKScene {
         scoreNote.text = "Final Score: \(score) at Level: \(currentLevel)"
         scoreNote.position = CGPoint(x: 0, y: -100)
         scoreNote.horizontalAlignmentMode = .center
+        scoreNote.fontColor = UIColor.yellow
         gameOver.addChild(scoreNote)
         
         let restartLabel = SKLabelNode(fontNamed: "Chalkduster")
@@ -416,6 +421,7 @@ class GameScene: SKScene {
         restartLabel.position = CGPoint(x: 0, y: -200)
         restartLabel.horizontalAlignmentMode = .center
         restartLabel.name = "restartButton"
+        restartLabel.fontColor = UIColor.yellow
         gameOver.addChild(restartLabel)
         
         addChild(gameOver)
