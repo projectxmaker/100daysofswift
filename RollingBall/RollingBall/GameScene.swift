@@ -22,13 +22,31 @@ class GameScene: SKScene {
     var lastTouchPosition: CGPoint?
     var motionManager: CMMotionManager!
 
+    var scoreLabel: SKLabelNode!
+
+    var score = 0 {
+        didSet {
+            scoreLabel.text = "Score: \(score)"
+        }
+    }
+    
+    var isGameOver = false
     
     override func didMove(to view: SKView) {
+        physicsWorld.contactDelegate = self
+        
         let background = SKSpriteNode(imageNamed: "background.jpg")
         background.position = CGPoint(x: 512, y: 384)
         background.blendMode = .replace
         background.zPosition = -1
         addChild(background)
+        
+        scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
+        scoreLabel.text = "Score: 0"
+        scoreLabel.horizontalAlignmentMode = .left
+        scoreLabel.position = CGPoint(x: 16, y: 16)
+        scoreLabel.zPosition = 2
+        addChild(scoreLabel)
         
         motionManager = CMMotionManager()
         motionManager.startAccelerometerUpdates()
@@ -57,16 +75,18 @@ class GameScene: SKScene {
     }
     
     override func update(_ currentTime: TimeInterval) {
-    #if targetEnvironment(simulator)
-        if let currentTouch = lastTouchPosition {
-            let diff = CGPoint(x: currentTouch.x - player.position.x, y: currentTouch.y - player.position.y)
-            physicsWorld.gravity = CGVector(dx: diff.x / 100, dy: diff.y / 100)
-        }
-    #else
-        if let accelerometerData = motionManager.accelerometerData {
-            physicsWorld.gravity = CGVector(dx: accelerometerData.acceleration.y * -50, dy: accelerometerData.acceleration.x * 50)
-        }
-    #endif
+        guard isGameOver == false else { return }
+        
+        #if targetEnvironment(simulator)
+            if let currentTouch = lastTouchPosition {
+                let diff = CGPoint(x: currentTouch.x - player.position.x, y: currentTouch.y - player.position.y)
+                physicsWorld.gravity = CGVector(dx: diff.x / 100, dy: diff.y / 100)
+            }
+        #else
+            if let accelerometerData = motionManager.accelerometerData {
+                physicsWorld.gravity = CGVector(dx: accelerometerData.acceleration.y * -50, dy: accelerometerData.acceleration.x * 50)
+            }
+        #endif
     }
     
     // MARK: - Extra Funcs
@@ -167,5 +187,41 @@ class GameScene: SKScene {
         player.physicsBody?.contactTestBitMask = CollisionTypes.star.rawValue | CollisionTypes.vortex.rawValue | CollisionTypes.finish.rawValue
         player.physicsBody?.collisionBitMask = CollisionTypes.wall.rawValue
         addChild(player)
+    }
+}
+
+extension GameScene: SKPhysicsContactDelegate {
+    func didBegin(_ contact: SKPhysicsContact) {
+        guard let nodeA = contact.bodyA.node else { return }
+        guard let nodeB = contact.bodyB.node else { return }
+
+        if nodeA == player {
+            playerCollided(with: nodeB)
+        } else if nodeB == player {
+            playerCollided(with: nodeA)
+        }
+    }
+    
+    func playerCollided(with node: SKNode) {
+        if node.name == "vortex" {
+            player.physicsBody?.isDynamic = false
+            isGameOver = true
+            score -= 1
+
+            let move = SKAction.move(to: node.position, duration: 0.25)
+            let scale = SKAction.scale(to: 0.0001, duration: 0.25)
+            let remove = SKAction.removeFromParent()
+            let sequence = SKAction.sequence([move, scale, remove])
+
+            player.run(sequence) { [weak self] in
+                self?.createPlayer()
+                self?.isGameOver = false
+            }
+        } else if node.name == "star" {
+            node.removeFromParent()
+            score += 1
+        } else if node.name == "finish" {
+            // next level?
+        }
     }
 }
