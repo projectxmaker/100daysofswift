@@ -340,7 +340,6 @@ class GameScene: SKScene {
                 }
 
                 collideToVortex = false
-                collideToFlag = false
                 collideToTeleport = false
                 
                 lastTouchPosition = nil
@@ -431,6 +430,9 @@ class GameScene: SKScene {
         // reset info
         score = 0
         currentLevel = 0
+        
+        // to avoid the process for next level
+        collideToFlag = false
         
         startGame()
     }

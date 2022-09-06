@@ -20,7 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8A4C7F9428C645350014E5CD /* RollingBall.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RollingBall.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8A4C7F9428C645350014E5CD /* MarbleMaze.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MarbleMaze.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A4C7F9728C645350014E5CD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8A4C7F9928C645350014E5CD /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		8A4C7F9D28C645350014E5CD /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -47,7 +47,7 @@
 		8A4C7F8B28C645350014E5CD = {
 			isa = PBXGroup;
 			children = (
-				8A4C7F9628C645350014E5CD /* RollingBall */,
+				8A4C7F9628C645350014E5CD /* MarbleMaze */,
 				8A4C7F9528C645350014E5CD /* Products */,
 			);
 			sourceTree = "<group>";
@@ -55,12 +55,12 @@
 		8A4C7F9528C645350014E5CD /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8A4C7F9428C645350014E5CD /* RollingBall.app */,
+				8A4C7F9428C645350014E5CD /* MarbleMaze.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		8A4C7F9628C645350014E5CD /* RollingBall */ = {
+		8A4C7F9628C645350014E5CD /* MarbleMaze */ = {
 			isa = PBXGroup;
 			children = (
 				8A4C7F9728C645350014E5CD /* AppDelegate.swift */,
@@ -72,7 +72,7 @@
 				8A4C7FA628C645360014E5CD /* LaunchScreen.storyboard */,
 				8A4C7FBC28C70EFF0014E5CD /* Level */,
 			);
-			path = RollingBall;
+			path = MarbleMaze;
 			sourceTree = "<group>";
 		};
 		8A4C7FBC28C70EFF0014E5CD /* Level */ = {
@@ -88,9 +88,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8A4C7F9328C645350014E5CD /* RollingBall */ = {
+		8A4C7F9328C645350014E5CD /* MarbleMaze */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8A4C7FAB28C645360014E5CD /* Build configuration list for PBXNativeTarget "RollingBall" */;
+			buildConfigurationList = 8A4C7FAB28C645360014E5CD /* Build configuration list for PBXNativeTarget "MarbleMaze" */;
 			buildPhases = (
 				8A4C7F9028C645350014E5CD /* Sources */,
 				8A4C7F9128C645350014E5CD /* Frameworks */,
@@ -100,9 +100,9 @@
 			);
 			dependencies = (
 			);
-			name = RollingBall;
+			name = MarbleMaze;
 			productName = RollingBall;
-			productReference = 8A4C7F9428C645350014E5CD /* RollingBall.app */;
+			productReference = 8A4C7F9428C645350014E5CD /* MarbleMaze.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -120,7 +120,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 8A4C7F8F28C645350014E5CD /* Build configuration list for PBXProject "RollingBall" */;
+			buildConfigurationList = 8A4C7F8F28C645350014E5CD /* Build configuration list for PBXProject "MarbleMaze" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -133,7 +133,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8A4C7F9328C645350014E5CD /* RollingBall */,
+				8A4C7F9328C645350014E5CD /* MarbleMaze */,
 			);
 		};
 /* End PBXProject section */
@@ -323,7 +323,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.RollingBall;
+				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.MarbleMaze;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -352,7 +352,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.RollingBall;
+				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.MarbleMaze;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -363,7 +363,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		8A4C7F8F28C645350014E5CD /* Build configuration list for PBXProject "RollingBall" */ = {
+		8A4C7F8F28C645350014E5CD /* Build configuration list for PBXProject "MarbleMaze" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8A4C7FA928C645360014E5CD /* Debug */,
@@ -372,7 +372,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8A4C7FAB28C645360014E5CD /* Build configuration list for PBXNativeTarget "RollingBall" */ = {
+		8A4C7FAB28C645360014E5CD /* Build configuration list for PBXNativeTarget "MarbleMaze" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8A4C7FAC28C645360014E5CD /* Debug */,
