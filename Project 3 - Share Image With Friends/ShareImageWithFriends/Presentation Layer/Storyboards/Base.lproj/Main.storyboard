@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="fcW-sE-gJD">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="fcW-sE-gJD">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -55,7 +55,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1Dt-cD-RSE">
-                                <rect key="frame" x="-2" y="-4" width="379" height="822"/>
+                                <rect key="frame" x="-4" y="-4" width="383" height="822"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="euY-nu-CkG"/>
@@ -64,7 +64,7 @@
                             <constraint firstAttribute="bottomMargin" secondItem="1Dt-cD-RSE" secondAttribute="bottom" constant="-40" id="LRC-89-WBd"/>
                             <constraint firstItem="1Dt-cD-RSE" firstAttribute="top" secondItem="uSp-vt-n9F" secondAttribute="topMargin" constant="-48" id="ZXE-Tp-IWw"/>
                             <constraint firstItem="1Dt-cD-RSE" firstAttribute="centerX" secondItem="uSp-vt-n9F" secondAttribute="centerX" id="e71-5e-Xt2"/>
-                            <constraint firstItem="1Dt-cD-RSE" firstAttribute="leading" secondItem="uSp-vt-n9F" secondAttribute="leadingMargin" constant="-18" id="zVA-fS-6Gn"/>
+                            <constraint firstItem="1Dt-cD-RSE" firstAttribute="leading" secondItem="uSp-vt-n9F" secondAttribute="leadingMargin" constant="-20" id="zVA-fS-6Gn"/>
                         </constraints>
                     </view>
                     <connections>
