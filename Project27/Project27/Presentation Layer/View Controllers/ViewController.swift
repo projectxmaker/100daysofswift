@@ -45,7 +45,8 @@ class SanboxViewController: UIViewController {
         switch currentDrawType {
         case 0:
             drawRectangle()
-
+        case 1:
+            drawCircle()
         default:
             break
         }
@@ -67,5 +68,23 @@ class SanboxViewController: UIViewController {
         }
         
         imageView.image = image
+    }
+    
+    func drawCircle() {
+        let renderer = UIGraphicsImageRenderer(size: CGSize(width: 512, height: 512))
+
+        let img = renderer.image { ctx in
+            var rectangle = CGRect(x: 0, y: 0, width: 512, height: 512)
+            rectangle = rectangle.insetBy(dx: 5, dy: 5)
+
+            ctx.cgContext.setFillColor(UIColor.red.cgColor)
+            ctx.cgContext.setStrokeColor(UIColor.black.cgColor)
+            ctx.cgContext.setLineWidth(10)
+
+            ctx.cgContext.addEllipse(in: rectangle)
+            ctx.cgContext.drawPath(using: .fillStroke)
+        }
+
+        imageView.image = img
     }
 }
