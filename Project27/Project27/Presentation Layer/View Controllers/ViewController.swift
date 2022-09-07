@@ -21,7 +21,7 @@ class SanboxViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         //drawRectangle()
-        drawStarEmoji()
+        drawStringOfTWIN()
     }
     
 
@@ -39,7 +39,7 @@ class SanboxViewController: UIViewController {
     @IBAction func redrawTapped(_ sender: Any) {
         currentDrawType += 1
 
-        if currentDrawType > 5 {
+        if currentDrawType > 7 {
             currentDrawType = 0
         }
 
@@ -58,6 +58,8 @@ class SanboxViewController: UIViewController {
             drawImagesAndText()
         case 6:
             drawStarEmoji()
+        case 7:
+            drawStringOfTWIN()
         default:
             break
         }
@@ -201,8 +203,6 @@ class SanboxViewController: UIViewController {
         let renderer = UIGraphicsImageRenderer(size: CGSize(width: 512, height: 512))
         
         let image = renderer.image { ctx in
-            //let rectangle = CGRect(x: 0, y: 0, width: 512, height: 512)
-            
             ctx.cgContext.move(to: CGPoint(x: 0, y: 512))
             ctx.cgContext.addLine(to: CGPoint(x: 256, y: 0))
             ctx.cgContext.addLine(to: CGPoint(x: 512, y: 512))
@@ -211,6 +211,42 @@ class SanboxViewController: UIViewController {
             ctx.cgContext.addLine(to: CGPoint(x: 0, y: 512))
             
             ctx.cgContext.setStrokeColor(UIColor.red.cgColor)
+            ctx.cgContext.strokePath()
+        }
+        
+        imageView.image = image
+    }
+    
+    func drawStringOfTWIN() {
+        let renderer = UIGraphicsImageRenderer(size: CGSize(width: 512, height: 245))
+        
+        let image = renderer.image { ctx in
+            ctx.cgContext.setStrokeColor(UIColor.red.cgColor)
+            ctx.cgContext.setLineWidth(10)
+            
+            ctx.cgContext.addLines(between: [
+                CGPoint(x: 0, y: 0),
+                CGPoint(x: 124, y: 0),
+                CGPoint(x: 62, y: 0),
+                CGPoint(x: 62, y: 256)
+            ])
+            ctx.cgContext.strokePath()
+            
+            ctx.cgContext.move(to: CGPoint(x: 132, y: 0))
+            ctx.cgContext.addLine(to: CGPoint(x: 163, y: 225))
+            ctx.cgContext.addLine(to: CGPoint(x: 194, y: 0))
+            ctx.cgContext.addLine(to: CGPoint(x: 225, y: 225))
+            ctx.cgContext.addLine(to: CGPoint(x: 256, y: 0))
+            ctx.cgContext.strokePath()
+            
+            ctx.cgContext.move(to: CGPoint(x: 295, y: 0))
+            ctx.cgContext.addLine(to: CGPoint(x: 295, y: 256))
+            ctx.cgContext.strokePath()
+            
+            ctx.cgContext.move(to: CGPoint(x: 334, y: 256))
+            ctx.cgContext.addLine(to: CGPoint(x: 334, y: 0))
+            ctx.cgContext.addLine(to: CGPoint(x: 450, y: 238))
+            ctx.cgContext.addLine(to: CGPoint(x: 450, y: 0))
             ctx.cgContext.strokePath()
         }
         
