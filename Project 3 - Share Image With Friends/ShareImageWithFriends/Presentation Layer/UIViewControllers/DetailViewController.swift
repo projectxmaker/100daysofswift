@@ -42,7 +42,31 @@ class DetailViewController: UIViewController {
     
     private func showImage() {
         guard let loadedImage = selectedImage else { return }
-        imageView.image = UIImage(imageLiteralResourceName: loadedImage)
+        let image = UIImage(imageLiteralResourceName: loadedImage)
+        
+        imageView.image = renderImage(image)
+    }
+    
+    private func renderImage(_ image: UIImage) -> UIImage {
+        let renderer = UIGraphicsImageRenderer(size: image.size)
+        
+        let renderedImage = renderer.image { cxt in
+            image.draw(at: CGPoint(x: 0, y: 0))
+            
+            let string = "From Storm Viewer"
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.alignment = .center
+            
+            let attrs: [NSAttributedString.Key: Any] = [
+                .font: UIFont.systemFont(ofSize: 30),
+                .paragraphStyle: paragraphStyle
+            ]
+            
+            let attributedString = NSAttributedString(string: string, attributes: attrs)
+            attributedString.draw(with: CGRect(x: 0, y: 30, width: image.size.width, height: image.size.height), options: .usesLineFragmentOrigin, context: nil)
+        }
+        
+        return renderedImage
     }
     
     // MARK: - Navigation Bar

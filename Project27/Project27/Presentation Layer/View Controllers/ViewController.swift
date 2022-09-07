@@ -201,7 +201,7 @@ class SanboxViewController: UIViewController {
     
     func drawStarEmoji() {
         let renderer = UIGraphicsImageRenderer(size: CGSize(width: 512, height: 512))
-        
+
         let image = renderer.image { ctx in
             ctx.cgContext.move(to: CGPoint(x: 0, y: 512))
             ctx.cgContext.addLine(to: CGPoint(x: 256, y: 0))
