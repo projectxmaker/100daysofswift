@@ -53,7 +53,19 @@ class SanboxViewController: UIViewController {
     
     // MARK: - Extra Funcs
     func drawRectangle() {
-
+        let renderer = UIGraphicsImageRenderer(size: CGSize(width: 512, height: 512))
+        
+        let image = renderer.image { ctx in
+            let retangle = CGRect(x: 0, y: 0, width: 512, height: 512)
+            
+            ctx.cgContext.setFillColor(UIColor.red.cgColor)
+            ctx.cgContext.setStrokeColor(UIColor.black.cgColor)
+            ctx.cgContext.setLineWidth(10)
+            
+            ctx.cgContext.addRect(retangle)
+            ctx.cgContext.drawPath(using: .fillStroke)
+        }
+        
+        imageView.image = image
     }
-    
 }
