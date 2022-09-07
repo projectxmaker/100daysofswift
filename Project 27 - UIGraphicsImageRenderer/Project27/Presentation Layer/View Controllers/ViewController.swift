@@ -20,8 +20,7 @@ class SanboxViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        //drawRectangle()
-        drawStringOfTWIN()
+        drawRectangle()
     }
     
 
