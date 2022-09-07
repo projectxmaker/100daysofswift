@@ -20,7 +20,8 @@ class SanboxViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        drawImagesAndText()
+        //drawRectangle()
+        drawStarEmoji()
     }
     
 
@@ -55,6 +56,8 @@ class SanboxViewController: UIViewController {
             drawLines()
         case 5:
             drawImagesAndText()
+        case 6:
+            drawStarEmoji()
         default:
             break
         }
@@ -192,5 +195,25 @@ class SanboxViewController: UIViewController {
 
         // 6
         imageView.image = img
+    }
+    
+    func drawStarEmoji() {
+        let renderer = UIGraphicsImageRenderer(size: CGSize(width: 512, height: 512))
+        
+        let image = renderer.image { ctx in
+            //let rectangle = CGRect(x: 0, y: 0, width: 512, height: 512)
+            
+            ctx.cgContext.move(to: CGPoint(x: 0, y: 512))
+            ctx.cgContext.addLine(to: CGPoint(x: 256, y: 0))
+            ctx.cgContext.addLine(to: CGPoint(x: 512, y: 512))
+            ctx.cgContext.addLine(to: CGPoint(x: 0, y: 200))
+            ctx.cgContext.addLine(to: CGPoint(x: 512, y: 200))
+            ctx.cgContext.addLine(to: CGPoint(x: 0, y: 512))
+            
+            ctx.cgContext.setStrokeColor(UIColor.red.cgColor)
+            ctx.cgContext.strokePath()
+        }
+        
+        imageView.image = image
     }
 }
