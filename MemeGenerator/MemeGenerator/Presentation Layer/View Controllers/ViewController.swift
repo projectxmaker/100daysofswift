@@ -75,8 +75,8 @@ class ViewController: UIViewController {
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
             UIBarButtonItem(title: "Bottom", style: .plain, target: self, action: #selector(changeTextType)),
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
-            UIBarButtonItem(image: UIImage(systemName: "minus.circle"), style: .plain, target: self, action: #selector(descreaseFontSize)),
-            UIBarButtonItem(image: UIImage(systemName: "plus.circle"), style: .plain, target: self, action: #selector(increaseFontSize)),
+            UIBarButtonItem(image: UIImage(systemName: "textformat.size"), style: .plain, target: self, action: #selector(changeFontSize)),
+            UIBarButtonItem(image: UIImage(systemName: "paintpalette"), style: .plain, target: self, action: #selector(changeFontColor)),
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
             UIBarButtonItem(image: UIImage(systemName: "chevron.left.circle"), style: .plain, target: self, action: #selector(moveTextToLeft)),
             UIBarButtonItem(image: UIImage(systemName: "chevron.up.circle"), style: .plain, target: self, action: #selector(moveTextToTop)),
@@ -239,17 +239,43 @@ class ViewController: UIViewController {
         return url
     }
     
-    @objc func increaseFontSize() {
+    @objc func changeFontSize() {
+        var textPosition = "Bottom Text"
+        var textFontSize = bottomTextFontSize
         if isBeingModifyingTextType == .topText {
-            topTextFontSize += 1
+            textPosition = "Top Text"
+            textFontSize = topTextFontSize
+        }
+        
+        let ac = UIAlertController(title: "Font Size", message: "Change font size of \(textPosition)", preferredStyle: .alert)
+        ac.addTextField { textfield in
+            textfield.text = textFontSize.formatted()
+        }
+        ac.addAction(UIAlertAction(title: "Save", style: .default, handler: { [weak self, weak ac] _ in
+            guard
+                let newStringFontSize = ac?.textFields?[0].text as? NSString
+            else { return }
+            
+            let newFontSize = CGFloat(newStringFontSize.floatValue)
+            self?.saveFontSize(newFontSize)
+        }))
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
+        ac.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        present(ac, animated: true)
+    }
+    
+    func saveFontSize(_ newFontSize: CGFloat) {
+        if isBeingModifyingTextType == .topText {
+            topTextFontSize = newFontSize
         } else {
-            bottomTextFontSize += 1
+            bottomTextFontSize = newFontSize
         }
         
         setupTextsOnMeme()
     }
     
-    @objc func descreaseFontSize() {
+    @objc func changeFontColor() {
         if isBeingModifyingTextType == .topText {
             topTextFontSize -= 1
         } else {
