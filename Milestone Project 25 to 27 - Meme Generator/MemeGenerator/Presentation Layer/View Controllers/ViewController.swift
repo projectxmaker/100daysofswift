@@ -115,12 +115,14 @@ class ViewController: UIViewController {
     @objc func showInformToInputTexts() {
         let ac = UIAlertController(title: "Setup Texts On Meme ", message: nil, preferredStyle: .alert)
 
-        ac.addTextField { textfield in
+        ac.addTextField { [weak self] textfield in
             textfield.placeholder = "Input Top Text"
+            textfield.text = self?.topText
         }
         
-        ac.addTextField { textfield in
+        ac.addTextField { [weak self] textfield in
             textfield.placeholder = "Input Bottom Text"
+            textfield.text = self?.bottomText
         }
 
         ac.addAction(UIAlertAction(title: "Save", style: .default, handler: { [weak ac, weak self] _ in
