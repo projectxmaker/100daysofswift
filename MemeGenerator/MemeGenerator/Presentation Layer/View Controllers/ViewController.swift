@@ -45,11 +45,13 @@ class ViewController: UIViewController {
     var topTextFontSize: CGFloat = 30
     var topTextXPosition: CGFloat = 0
     var topTextYPosition: CGFloat = 0
+    var topTextColor = UIColor.gray
     
     var bottomText: String = ""
     var bottomTextFontSize: CGFloat = 30
     var bottomTextXPosition: CGFloat = 0
     var bottomTextYPosition: CGFloat = 0
+    var bottomTextColor = UIColor.gray
     
     var isBeingModifyingTextType = TextType.topText
     
@@ -152,8 +154,8 @@ class ViewController: UIViewController {
             let rendereredImage = renderer.image { ctx in
                 image.draw(in: CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height))
                 
-                let topAttributedString = createNSAttributedString(topText, fontSize: topTextFontSize)
-                let bottomAttributedString = createNSAttributedString(bottomText, fontSize: bottomTextFontSize)
+                let topAttributedString = createNSAttributedString(topText, fontSize: topTextFontSize, fontColor: topTextColor)
+                let bottomAttributedString = createNSAttributedString(bottomText, fontSize: bottomTextFontSize, fontColor: bottomTextColor)
                 
                 topAttributedString.draw(in: CGRect(x: topTextXPosition, y: topTextYPosition, width: image.size.width, height: image.size.height))
                 
@@ -165,7 +167,7 @@ class ViewController: UIViewController {
         }
     }
     
-    func createNSAttributedString(_ text: String, fontSize: CGFloat) -> NSAttributedString {
+    func createNSAttributedString(_ text: String, fontSize: CGFloat, fontColor: UIColor) -> NSAttributedString {
         guard let font = UIFont(name: "ChalkboardSE-Bold", size: fontSize) else {
             return NSAttributedString(string: text)
         }
@@ -177,7 +179,7 @@ class ViewController: UIViewController {
 
         let attributes: [NSAttributedString.Key : Any] = [
             .font: font,
-            .foregroundColor: UIColor.gray,
+            .foregroundColor: fontColor,
             .backgroundColor: backgroundColor,
             .paragraphStyle: paragraphStyle
         ]
@@ -276,13 +278,19 @@ class ViewController: UIViewController {
     }
     
     @objc func changeFontColor() {
+        
+        var textColor = bottomTextColor
         if isBeingModifyingTextType == .topText {
-            topTextFontSize -= 1
-        } else {
-            bottomTextFontSize -= 1
+            textColor = topTextColor
         }
-
-        setupTextsOnMeme()
+        
+        let cp = UIColorPickerViewController()
+        cp.selectedColor = textColor
+        cp.supportsAlpha = true
+        cp.delegate = self
+        cp.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        present(cp, animated: true)
+ 
     }
     
     @objc func moveTextToTop() {
@@ -392,5 +400,22 @@ extension ViewController: PHPickerViewControllerDelegate {
             
             showInformToInputTexts()
         }
+    }
+}
+
+// UIColorPickerController
+extension ViewController: UIColorPickerViewControllerDelegate {
+    func colorPickerViewController(_ viewController: UIColorPickerViewController, didSelect color: UIColor, continuously: Bool) {
+        saveNewColor(color)
+    }
+    
+    func saveNewColor(_ newColor: UIColor) {
+        if isBeingModifyingTextType == .topText {
+            topTextColor = newColor
+        } else {
+            bottomTextColor = newColor
+        }
+
+        setupTextsOnMeme()
     }
 }
