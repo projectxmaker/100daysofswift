@@ -131,18 +131,15 @@ class ViewController: UIViewController {
     }
     
     @objc func shareAPicture() {
-        guard
-            let image = imageView.image,
-            let imageData = image.jpegData(compressionQuality: 0.8)
-        else { return }
-        
-        let items: [Data] = [imageData]
-        
-        let ac = UIActivityViewController(activityItems: items, applicationActivities: nil)
-        
-        ac.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
-        
-        present(ac, animated: true)
+        if let url = generateSharedFile() {
+            let items: [URL] = [url]
+            
+            let ac = UIActivityViewController(activityItems: items, applicationActivities: nil)
+            
+            ac.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+            
+            present(ac, animated: true)
+        }
     }
     
     @objc func switchBetweenOriginalAndRenderedVersion() {
@@ -160,6 +157,31 @@ class ViewController: UIViewController {
             imageView.image = originalImage
             imageViewWithOriginalImage = true
         }
+    }
+    
+    func generateSharedFile() -> URL? {
+        guard
+            let image = imageView.image,
+            let imageData = image.pngData()
+        else { return nil }
+        
+        let url = FileManager.default.temporaryDirectory
+                .appendingPathComponent(originalImageName)
+                .appendingPathExtension("png")
+        
+        do {
+            try imageData.write(to: url)
+        } catch {
+            let ac = UIAlertController(title: "Error", message: "Cannot share this picture", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "Got it!", style: .cancel))
+            
+            ac.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+            present(ac, animated: true)
+            
+            return nil
+        }
+        
+        return url
     }
 }
 
@@ -179,7 +201,7 @@ extension ViewController: PHPickerViewControllerDelegate {
                         self?.originalImageName = fileName
                         
                         DispatchQueue.main.async {
-                            self?.handleInsertingImageIntoCollectionView(image: image, error: error)
+                            self?.showOnImageView(image: image, error: error)
                         }
                     }
                 }
@@ -203,7 +225,7 @@ extension ViewController: PHPickerViewControllerDelegate {
         present(photoPicker, animated: true)
     }
     
-    @objc private func handleInsertingImageIntoCollectionView(image: NSItemProviderReading?, error: Error? = nil) {
+    @objc private func showOnImageView(image: NSItemProviderReading?, error: Error? = nil) {
         if let image = image as? UIImage {
             originalImage = image
             imageView.image = image
