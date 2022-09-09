@@ -29,6 +29,11 @@ class ViewController: UIViewController {
     
     var originalImageName: String = ""
     
+    var topTextFontSize: CGFloat = 30
+    var topText: String = ""
+    var bottomTextFontSzie: CGFloat = 30
+    var bottomText: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -45,9 +50,15 @@ class ViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareAPicture))
 
         toolbarItems = [
-            UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(switchBetweenOriginalAndRenderedVersion)),
+            UIBarButtonItem(image: UIImage(systemName: "repeat.circle"), style: .plain, target: self, action: #selector(switchBetweenOriginalAndRenderedVersion)),
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
-            UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(showInformToInputTexts))
+            UIBarButtonItem(image: UIImage(systemName: "minus.circle"), style: .plain, target: self, action: #selector(decreaseTopTextFontSize)),
+            UIBarButtonItem(image: UIImage(systemName: "plus.circle"), style: .plain, target: self, action: #selector(increaseTopTextFontSize)),
+            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
+            UIBarButtonItem(image: UIImage(systemName: "minus.circle"), style: .plain, target: self, action: #selector(decreaseBottomTextFontSize)),
+            UIBarButtonItem(image: UIImage(systemName: "plus.circle"), style: .plain, target: self, action: #selector(increaseBottomTextFontSize)),
+            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
+            UIBarButtonItem(image: UIImage(systemName: "pencil.circle"), style: .plain, target: self, action: #selector(showInformToInputTexts))
         ]
     }
     
@@ -76,10 +87,17 @@ class ViewController: UIViewController {
         }
 
         ac.addAction(UIAlertAction(title: "Save", style: .default, handler: { [weak ac, weak self] _ in
-            let topText = ac?.textFields?[0].text
-            let bottomText = ac?.textFields?[1].text
+            guard
+                let topText = ac?.textFields?[0].text,
+                let bottomText = ac?.textFields?[1].text
+            else {
+                return
+            }
             
-            self?.setupTextsOnMeme(topText: topText, bottomText: bottomText)
+            self?.topText = topText
+            self?.bottomText = bottomText
+            
+            self?.setupTextsOnMeme()
         }))
         
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
@@ -88,11 +106,9 @@ class ViewController: UIViewController {
         present(ac, animated: true)
     }
     
-    func setupTextsOnMeme(topText: String?, bottomText: String?) {
+    func setupTextsOnMeme() {
         guard
-            let image = originalImage,
-            let topText = topText,
-            let bottomText = bottomText
+            let image = originalImage
         else { return }
         
         if !topText.isEmpty || !bottomText.isEmpty {
@@ -101,8 +117,8 @@ class ViewController: UIViewController {
             let rendereredImage = renderer.image { ctx in
                 image.draw(in: CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height))
                 
-                let topAttributedString = createNSAttributedString(topText)
-                let bottomAttributedString = createNSAttributedString(bottomText)
+                let topAttributedString = createNSAttributedString(topText, fontSize: topTextFontSize)
+                let bottomAttributedString = createNSAttributedString(bottomText, fontSize: bottomTextFontSzie)
                 
                 topAttributedString.draw(in: CGRect(x: 0, y: 30, width: image.size.width, height: 150))
                 
@@ -114,11 +130,13 @@ class ViewController: UIViewController {
         }
     }
     
-    func createNSAttributedString(_ text: String) -> NSAttributedString {
+    func createNSAttributedString(_ text: String, fontSize: CGFloat) -> NSAttributedString {
+        guard let font = UIFont(name: "ChalkboardSE-Bold", size: fontSize) else {
+            return NSAttributedString(string: text)
+        }
+
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
-        
-        let font = UIFont(name: "ChalkboardSE-Bold", size: 50) ?? UIFont.systemFont(ofSize: 20)
 
         let attributes: [NSAttributedString.Key : Any] = [
             .font: font,
@@ -182,6 +200,26 @@ class ViewController: UIViewController {
         }
         
         return url
+    }
+    
+    @objc func increaseTopTextFontSize() {
+        topTextFontSize += 1
+        setupTextsOnMeme()
+    }
+    
+    @objc func decreaseTopTextFontSize() {
+        topTextFontSize -= 1
+        setupTextsOnMeme()
+    }
+    
+    @objc func increaseBottomTextFontSize() {
+        bottomTextFontSzie += 1
+        setupTextsOnMeme()
+    }
+    
+    @objc func decreaseBottomTextFontSize() {
+        bottomTextFontSzie -= 1
+        setupTextsOnMeme()
     }
 }
 
