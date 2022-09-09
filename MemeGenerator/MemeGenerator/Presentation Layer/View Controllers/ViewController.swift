@@ -12,6 +12,18 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var imageView: UIImageView!
     
+    enum TextType {
+        case topText
+        case bottomText
+    }
+    
+    enum MoveType {
+        case top
+        case bottom
+        case left
+        case right
+    }
+    
     var originalImage: UIImage? {
         didSet {
             imageViewWithOriginalImage = true
@@ -34,6 +46,8 @@ class ViewController: UIViewController {
     var bottomTextFontSzie: CGFloat = 30
     var bottomText: String = ""
     
+    var isBeingModifyingTextType = TextType.topText
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -52,14 +66,28 @@ class ViewController: UIViewController {
         toolbarItems = [
             UIBarButtonItem(image: UIImage(systemName: "repeat.circle"), style: .plain, target: self, action: #selector(switchBetweenOriginalAndRenderedVersion)),
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
-            UIBarButtonItem(image: UIImage(systemName: "minus.circle"), style: .plain, target: self, action: #selector(decreaseTopTextFontSize)),
-            UIBarButtonItem(image: UIImage(systemName: "plus.circle"), style: .plain, target: self, action: #selector(increaseTopTextFontSize)),
+            UIBarButtonItem(title: "Bottom", style: .plain, target: self, action: #selector(changeTextType)),
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
-            UIBarButtonItem(image: UIImage(systemName: "minus.circle"), style: .plain, target: self, action: #selector(decreaseBottomTextFontSize)),
-            UIBarButtonItem(image: UIImage(systemName: "plus.circle"), style: .plain, target: self, action: #selector(increaseBottomTextFontSize)),
+            UIBarButtonItem(image: UIImage(systemName: "minus.circle"), style: .plain, target: self, action: #selector(descreaseFontSize)),
+            UIBarButtonItem(image: UIImage(systemName: "plus.circle"), style: .plain, target: self, action: #selector(increaseFontSize)),
+            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
+            UIBarButtonItem(image: UIImage(systemName: "chevron.left.circle"), style: .plain, target: self, action: #selector(moveTextToLeft)),
+            UIBarButtonItem(image: UIImage(systemName: "chevron.up.circle"), style: .plain, target: self, action: #selector(moveTextToTop)),
+            UIBarButtonItem(image: UIImage(systemName: "chevron.down.circle"), style: .plain, target: self, action: #selector(moveTextToBottom)),
+            UIBarButtonItem(image: UIImage(systemName: "chevron.right.circle"), style: .plain, target: self, action: #selector(moveTextToRight)),
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
             UIBarButtonItem(image: UIImage(systemName: "pencil.circle"), style: .plain, target: self, action: #selector(showInformToInputTexts))
         ]
+    }
+    
+    @objc func changeTextType(button: UIBarButtonItem) {
+        if isBeingModifyingTextType == .bottomText {
+            button.title = "Bottom"
+            isBeingModifyingTextType = .topText
+        } else {
+            button.title = "Top"
+            isBeingModifyingTextType = .bottomText
+        }
     }
     
     func hideToolbars(_ hide: Bool) {
@@ -202,23 +230,50 @@ class ViewController: UIViewController {
         return url
     }
     
-    @objc func increaseTopTextFontSize() {
-        topTextFontSize += 1
+    @objc func increaseFontSize() {
+        if isBeingModifyingTextType == .topText {
+            topTextFontSize += 1
+        } else {
+            bottomTextFontSzie += 1
+        }
+        
         setupTextsOnMeme()
     }
     
-    @objc func decreaseTopTextFontSize() {
-        topTextFontSize -= 1
+    @objc func descreaseFontSize() {
+        if isBeingModifyingTextType == .topText {
+            topTextFontSize -= 1
+        } else {
+            bottomTextFontSzie -= 1
+        }
+
         setupTextsOnMeme()
     }
     
-    @objc func increaseBottomTextFontSize() {
-        bottomTextFontSzie += 1
-        setupTextsOnMeme()
+    @objc func moveTextToTop() {
+        moveText(.top)
     }
     
-    @objc func decreaseBottomTextFontSize() {
-        bottomTextFontSzie -= 1
+    @objc func moveTextToBottom() {
+        moveText(.bottom)
+    }
+    
+    @objc func moveTextToLeft() {
+        moveText(.left)
+    }
+    
+    @objc func moveTextToRight() {
+        moveText(.right)
+    }
+    
+    func moveText(_ side: MoveType) {
+        #warning("code to move text here")
+        if isBeingModifyingTextType == .topText {
+            topTextFontSize -= 1
+        } else {
+            bottomTextFontSzie -= 1
+        }
+        
         setupTextsOnMeme()
     }
 }
