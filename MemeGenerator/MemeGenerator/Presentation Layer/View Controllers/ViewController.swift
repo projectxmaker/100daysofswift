@@ -155,9 +155,9 @@ class ViewController: UIViewController {
                 let topAttributedString = createNSAttributedString(topText, fontSize: topTextFontSize)
                 let bottomAttributedString = createNSAttributedString(bottomText, fontSize: bottomTextFontSize)
                 
-                topAttributedString.draw(in: CGRect(x: topTextXPosition, y: topTextYPosition, width: image.size.width, height: 150))
+                topAttributedString.draw(in: CGRect(x: topTextXPosition, y: topTextYPosition, width: image.size.width, height: image.size.height))
                 
-                bottomAttributedString.draw(in: CGRect(x: bottomTextXPosition, y: bottomTextYPosition, width: image.size.width, height: 100))
+                bottomAttributedString.draw(in: CGRect(x: bottomTextXPosition, y: bottomTextYPosition, width: image.size.width, height: image.size.width))
             }
 
             renderedImage = rendereredImage
@@ -172,11 +172,13 @@ class ViewController: UIViewController {
 
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
+        
+        let backgroundColor = UIColor(cgColor: CGColor(gray: 1, alpha: 0.5))
 
         let attributes: [NSAttributedString.Key : Any] = [
             .font: font,
-            .foregroundColor: UIColor.yellow,
-            .backgroundColor: UIColor.gray,
+            .foregroundColor: UIColor.gray,
+            .backgroundColor: backgroundColor,
             .paragraphStyle: paragraphStyle
         ]
         
@@ -306,10 +308,12 @@ class ViewController: UIViewController {
         guard let image = originalImage else { return }
         
         topTextXPosition = 0
-        topTextYPosition = 30
+        topTextYPosition = image.size.height * 10/100
         
         bottomTextXPosition = 0
-        bottomTextYPosition = image.size.height - 100
+        bottomTextYPosition = image.size.height * 70/100
+        
+        print("\(image.size.height) | \(imageView.frame.size.height)")
     }
 }
 
