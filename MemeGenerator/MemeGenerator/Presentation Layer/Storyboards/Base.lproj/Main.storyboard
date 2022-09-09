@@ -24,11 +24,9 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="faJ-qp-mJQ" firstAttribute="height" secondItem="6Tk-OE-BBY" secondAttribute="height" id="HCM-Xz-Zaj"/>
-                            <constraint firstItem="faJ-qp-mJQ" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" constant="2" id="R6G-Qz-28p"/>
                             <constraint firstItem="faJ-qp-mJQ" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="XMC-0q-6H7"/>
+                            <constraint firstItem="faJ-qp-mJQ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-22" id="k69-yy-u36"/>
                             <constraint firstItem="faJ-qp-mJQ" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="mBN-CE-WAq"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="leading" secondItem="faJ-qp-mJQ" secondAttribute="leading" constant="2" id="umv-Zf-3x2"/>
-                            <constraint firstItem="faJ-qp-mJQ" firstAttribute="width" secondItem="6Tk-OE-BBY" secondAttribute="width" multiplier="1.00966" id="vUz-tt-Mmm"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="88A-zG-Jhc"/>

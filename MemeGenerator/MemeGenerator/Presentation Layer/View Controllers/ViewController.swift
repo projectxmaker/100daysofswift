@@ -68,11 +68,11 @@ class ViewController: UIViewController {
         let ac = UIAlertController(title: "Setup Texts On Meme ", message: nil, preferredStyle: .alert)
 
         ac.addTextField { textfield in
-            textfield.placeholder = "Input text laid at the top of the picture"
+            textfield.placeholder = "Input Top Text"
         }
         
         ac.addTextField { textfield in
-            textfield.placeholder = "Input text laid at the bottom of the picture"
+            textfield.placeholder = "Input Bottom Text"
         }
 
         ac.addAction(UIAlertAction(title: "Save", style: .default, handler: { [weak ac, weak self] _ in
