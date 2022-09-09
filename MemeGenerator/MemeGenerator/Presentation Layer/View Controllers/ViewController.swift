@@ -41,12 +41,19 @@ class ViewController: UIViewController {
     
     var originalImageName: String = ""
     
-    var topTextFontSize: CGFloat = 30
     var topText: String = ""
-    var bottomTextFontSzie: CGFloat = 30
+    var topTextFontSize: CGFloat = 30
+    var topTextXPosition: CGFloat = 0
+    var topTextYPosition: CGFloat = 0
+    
     var bottomText: String = ""
+    var bottomTextFontSize: CGFloat = 30
+    var bottomTextXPosition: CGFloat = 0
+    var bottomTextYPosition: CGFloat = 0
     
     var isBeingModifyingTextType = TextType.topText
+    
+    let movementPace: CGFloat = 10
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -146,11 +153,11 @@ class ViewController: UIViewController {
                 image.draw(in: CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height))
                 
                 let topAttributedString = createNSAttributedString(topText, fontSize: topTextFontSize)
-                let bottomAttributedString = createNSAttributedString(bottomText, fontSize: bottomTextFontSzie)
+                let bottomAttributedString = createNSAttributedString(bottomText, fontSize: bottomTextFontSize)
                 
-                topAttributedString.draw(in: CGRect(x: 0, y: 30, width: image.size.width, height: 150))
+                topAttributedString.draw(in: CGRect(x: topTextXPosition, y: topTextYPosition, width: image.size.width, height: 150))
                 
-                bottomAttributedString.draw(in: CGRect(x: 0, y: image.size.height - 100, width: image.size.width, height: 100))
+                bottomAttributedString.draw(in: CGRect(x: bottomTextXPosition, y: bottomTextYPosition, width: image.size.width, height: 100))
             }
 
             renderedImage = rendereredImage
@@ -234,7 +241,7 @@ class ViewController: UIViewController {
         if isBeingModifyingTextType == .topText {
             topTextFontSize += 1
         } else {
-            bottomTextFontSzie += 1
+            bottomTextFontSize += 1
         }
         
         setupTextsOnMeme()
@@ -244,7 +251,7 @@ class ViewController: UIViewController {
         if isBeingModifyingTextType == .topText {
             topTextFontSize -= 1
         } else {
-            bottomTextFontSzie -= 1
+            bottomTextFontSize -= 1
         }
 
         setupTextsOnMeme()
@@ -267,14 +274,42 @@ class ViewController: UIViewController {
     }
     
     func moveText(_ side: MoveType) {
-        #warning("code to move text here")
         if isBeingModifyingTextType == .topText {
-            topTextFontSize -= 1
+            switch side {
+            case .top:
+                topTextYPosition -= movementPace
+            case .bottom:
+                topTextYPosition += movementPace
+            case .left:
+                topTextXPosition -= movementPace
+            case .right:
+                topTextXPosition += movementPace
+            }
+            
         } else {
-            bottomTextFontSzie -= 1
+            switch side {
+            case .top:
+                bottomTextYPosition -= movementPace
+            case .bottom:
+                bottomTextYPosition += movementPace
+            case .left:
+                bottomTextXPosition -= movementPace
+            case .right:
+                bottomTextXPosition += movementPace
+            }
         }
         
         setupTextsOnMeme()
+    }
+    
+    func initDefaultTextPositions() {
+        guard let image = originalImage else { return }
+        
+        topTextXPosition = 0
+        topTextYPosition = 30
+        
+        bottomTextXPosition = 0
+        bottomTextYPosition = image.size.height - 100
     }
 }
 
@@ -322,6 +357,8 @@ extension ViewController: PHPickerViewControllerDelegate {
         if let image = image as? UIImage {
             originalImage = image
             imageView.image = image
+            
+            initDefaultTextPositions()
             
             showInformToInputTexts()
         }
