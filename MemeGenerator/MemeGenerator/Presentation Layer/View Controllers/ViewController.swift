@@ -27,6 +27,8 @@ class ViewController: UIViewController {
     
     var imageViewWithOriginalImage = false
     
+    var originalImageName: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -60,16 +62,6 @@ class ViewController: UIViewController {
         
         ac.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
         present(ac, animated: true)
-    }
-    
-    @objc func chooseAPicture(action: UIAlertAction) {
-        
-        let imagePicker = UIImagePickerController()
-        imagePicker.allowsEditing = true
-        imagePicker.delegate = self
-        
-        imagePicker.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
-        present(imagePicker, animated: true)
     }
     
     @objc func showInformToInputTexts() {
@@ -171,17 +163,52 @@ class ViewController: UIViewController {
     }
 }
 
-// ImagePickerController Delegate
-extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+// PHPicker Delegate
+extension ViewController: PHPickerViewControllerDelegate {
+    
+    // MARK: - PHPickerViewController Delegate
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         dismiss(animated: true)
         
-        guard let image = info[.editedImage] as? UIImage else { return }
-
-        originalImage = image
-        imageView.image = image
+        if results.count > 0 {
+            for eachResult in results {
+                let itemProvider = eachResult.itemProvider
+                if itemProvider.canLoadObject(ofClass: UIImage.self) {
+                    itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
+                        guard let fileName = itemProvider.suggestedName else { return }
+                        self?.originalImageName = fileName
+                        
+                        DispatchQueue.main.async {
+                            self?.handleInsertingImageIntoCollectionView(image: image, error: error)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    @objc private func chooseAPicture(action: UIAlertAction) {
+        var config = PHPickerConfiguration(photoLibrary: .shared())
+        let newFilter = PHPickerFilter.images
         
-        showInformToInputTexts()
+        config.filter = newFilter
+        config.preferredAssetRepresentationMode = .current
+        config.selection = .ordered
+        config.selectionLimit = 1
+
+        let photoPicker = PHPickerViewController(configuration: config)
+        photoPicker.delegate = self
+        
+        photoPicker.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        present(photoPicker, animated: true)
+    }
+    
+    @objc private func handleInsertingImageIntoCollectionView(image: NSItemProviderReading?, error: Error? = nil) {
+        if let image = image as? UIImage {
+            originalImage = image
+            imageView.image = image
+            
+            showInformToInputTexts()
+        }
     }
 }
-
