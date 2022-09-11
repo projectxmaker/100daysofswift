@@ -16,9 +16,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pda-Pn-2Bs">
-                                <rect key="frame" x="154" y="433" width="107" height="44"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pda-Pn-2Bs">
+                                <rect key="frame" x="152" y="433" width="108" height="44"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Authenticate"/>
                                 <connections>
@@ -36,10 +35,14 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="Pda-Pn-2Bs" firstAttribute="centerX" secondItem="mLv-d0-XaR" secondAttribute="centerX" constant="-1" id="2O3-Qa-A73"/>
                             <constraint firstItem="mLv-d0-XaR" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="6B6-vd-Bim"/>
                             <constraint firstItem="mLv-d0-XaR" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="MpW-E7-PWh"/>
+                            <constraint firstItem="Pda-Pn-2Bs" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="345" id="Ohr-iU-DaX"/>
                             <constraint firstItem="mLv-d0-XaR" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="UOZ-0z-qak"/>
+                            <constraint firstItem="Pda-Pn-2Bs" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="152" id="WHA-Lg-yFy"/>
                             <constraint firstItem="mLv-d0-XaR" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Xiz-zj-Lqk"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Pda-Pn-2Bs" secondAttribute="bottom" constant="385" id="pIh-1m-VJk"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="jGg-QC-eq5"/>
