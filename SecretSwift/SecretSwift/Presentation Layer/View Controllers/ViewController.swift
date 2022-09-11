@@ -11,6 +11,17 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBOutlet weak var secret: UITextView!
+    var doneButton: UIBarButtonItem!
+    
+    var hideDoneButton = true {
+        willSet {
+            if newValue == true {
+                navigationItem.rightBarButtonItem = nil
+            } else {
+                navigationItem.rightBarButtonItem = doneButton
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +36,8 @@ class ViewController: UIViewController {
 
         
         title = "Nothing to see here"
-
+        
+        doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(saveSecretMessage))
     }
 
     // MARK: - Keyboard Change
@@ -55,6 +67,8 @@ class ViewController: UIViewController {
         if let text = KeychainWrapper.standard.string(forKey: "SecretMessage") {
             secret.text = text
         }
+        
+        hideDoneButton = false
     }
     
     @objc func saveSecretMessage() {
@@ -64,6 +78,8 @@ class ViewController: UIViewController {
         secret.resignFirstResponder()
         secret.isHidden = true
         title = "Nothing to see here"
+        
+        hideDoneButton = true
     }
     
     func authenticateWithBiometric() {
