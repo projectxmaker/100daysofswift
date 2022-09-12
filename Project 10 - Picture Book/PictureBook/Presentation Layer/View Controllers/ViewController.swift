@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import LocalAuthentication
 
 class ViewController: UICollectionViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
 
@@ -14,7 +15,9 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        registerNotifications()
         setupAddPersonButton()
+        showAlertToAskForIdentification()
     }
     
     // MARK: - Collection View
@@ -133,6 +136,55 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         print(urls)
         return urls[0]
+    }
+    
+    // MARK: - Local Authentication
+    func registerNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(lockContent(_:)), name: UIApplication.willResignActiveNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(showAlertToAskForIdentification), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
+    @objc func lockContent(_ notification: NSNotification) {
+        collectionView.isHidden = true
+    }
+    
+    @objc func showAlertToAskForIdentification() {
+        let ac = UIAlertController(title: "Identify Yourself", message: "In order to see the content, please identify yourself.", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Authenticate", style: .default, handler: { [weak self] _ in
+            self?.authenticateWithBiometric()
+        }))
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
+        ac.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        present(ac, animated: true)
+    }
+    
+    func authenticateWithBiometric() {
+        let context = LAContext()
+        var error: NSError?
+        
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+                context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "Identify yourself!", reply: { [weak self] isSuccess, error in
+                    DispatchQueue.main.async {
+                        if isSuccess {
+                            self?.unlockContent()
+                        } else {
+                            let ac = UIAlertController(title: "Authentication failed", message: "You could not be verified; please try again.", preferredStyle: .alert)
+                            ac.addAction(UIAlertAction(title: "Ok", style: .cancel))
+                            self?.present(ac, animated: true)
+                        }
+                    }
+                })
+        } else {
+            let ac = UIAlertController(title: "Authentication failed", message: "You could not be verified; please try again.", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "Ok", style: .cancel))
+            self.present(ac, animated: true)
+        }
+    }
+    
+    func unlockContent() {
+        collectionView.isHidden = false
     }
 }
 
