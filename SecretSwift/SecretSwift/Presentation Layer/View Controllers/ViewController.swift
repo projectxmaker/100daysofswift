@@ -123,28 +123,40 @@ class ViewController: UIViewController {
                         self?.unlockSecretMessage()
                     } else {
                         let ac = UIAlertController(title: "Authentication failed", message: "You could not be verified; please try again.", preferredStyle: .alert)
-                        ac.addTextField { textfield in
-                            textfield.placeholder = "Input password"
+                        if self?.enablePassword == true {
+                            ac.addTextField { textfield in
+                                textfield.placeholder = "Input password"
+                            }
+                            ac.addAction(UIAlertAction(title: "Submit", style: .default, handler: { [weak ac, weak self] _ in
+                                let password = ac?.textFields?[0].text ?? ""
+                                self?.evaluateInputtedPassword(password)
+                            }))
+                            ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+                        } else {
+                            ac.addAction(UIAlertAction(title: "Ok", style: .default))
                         }
-                        ac.addAction(UIAlertAction(title: "Submit", style: .default, handler: { [weak ac, weak self] _ in
-                            let password = ac?.textFields?[0].text ?? ""
-                            self?.evaluateInputtedPassword(password)
-                        }))
-                        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+                        
+                        ac.popoverPresentationController?.barButtonItem = self?.navigationItem.rightBarButtonItem
                         self?.present(ac, animated: true)
                     }
                 }
             }
         } else {
             let ac = UIAlertController(title: "Biometry unavailable", message: "Your device is not configured for biometric authentication.", preferredStyle: .alert)
-            ac.addTextField { textfield in
-                textfield.placeholder = "Input password"
+            if self.enablePassword == true {
+                ac.addTextField { textfield in
+                    textfield.placeholder = "Input password"
+                }
+                ac.addAction(UIAlertAction(title: "Submit", style: .default, handler: { [weak ac, weak self] _ in
+                    let password = ac?.textFields?[0].text ?? ""
+                    self?.evaluateInputtedPassword(password)
+                }))
+                ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            } else {
+                ac.addAction(UIAlertAction(title: "Ok", style: .default))
             }
-            ac.addAction(UIAlertAction(title: "Submit", style: .default, handler: { [weak ac, weak self] _ in
-                let password = ac?.textFields?[0].text ?? ""
-                self?.evaluateInputtedPassword(password)
-            }))
-            ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            
+            ac.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
             present(ac, animated: true)
         }
     }
@@ -199,6 +211,8 @@ class ViewController: UIViewController {
             }
         }))
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
+        ac.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
         present(ac, animated: true)
     }
     
@@ -219,17 +233,20 @@ class ViewController: UIViewController {
     }
     
     func showAlertOfInvalidPassword() {
-        let ac = UIAlertController(title: "Invalid Password", message: "Inputted password is incorrect.", preferredStyle: .alert)
-        ac.addTextField { textfield in
-            textfield.placeholder = "Re-input password"
-            textfield.isSecureTextEntry = true
+        if enablePassword == true {
+            let ac = UIAlertController(title: "Invalid Password", message: "Inputted password is incorrect.", preferredStyle: .alert)
+            ac.addTextField { textfield in
+                textfield.placeholder = "Re-input password"
+                textfield.isSecureTextEntry = true
+            }
+            ac.addAction(UIAlertAction(title: "Submit", style: .default, handler: { [weak ac, weak self] _ in
+                let password = ac?.textFields?[0].text ?? ""
+                self?.evaluateInputtedPassword(password)
+            }))
+            ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            ac.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+            present(ac, animated: true)
         }
-        ac.addAction(UIAlertAction(title: "Submit", style: .default, handler: { [weak ac, weak self] _ in
-            let password = ac?.textFields?[0].text ?? ""
-            self?.evaluateInputtedPassword(password)
-        }))
-        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        present(ac, animated: true)
     }
     
     func getPassword() -> String? {
