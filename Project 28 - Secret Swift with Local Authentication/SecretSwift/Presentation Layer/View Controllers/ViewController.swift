@@ -34,11 +34,13 @@ class ViewController: UIViewController {
     var enablePassword = false {
         willSet {
             setupVisibilityOfPasswordButtons(hidePasswordButton: hidePasswordButton, enablePassword: newValue)
+            KeychainWrapper.standard.set(newValue, forKey: keyIsPasswordEnabled)
         }
     }
     
     let keySecretPassword = "SecrectPassword"
     let keySecretMessage = "SecretMessage"
+    let keyIsPasswordEnabled = "IsPasswordEnabled"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -167,7 +169,7 @@ class ViewController: UIViewController {
         
         setPasswordButton = UIBarButtonItem(image: UIImage(systemName: "key"), style: .plain, target: self, action: #selector(setPasswordButtonTapped))
         
-        if let _ = getPassword() {
+        if isPasswordEnabled() == true {
             enablePassword = true
         }
     }
@@ -221,7 +223,7 @@ class ViewController: UIViewController {
     }
     
     func evaluateInputtedPassword(_ password: String) {
-        if let storedPassword = KeychainWrapper.standard.string(forKey: "SecrectPassword") {
+        if let storedPassword = getPassword() {
             if storedPassword == password {
                 unlockSecretMessage()
             } else {
@@ -259,6 +261,10 @@ class ViewController: UIViewController {
         } else {
             enablePassword = false
         }
+    }
+    
+    func isPasswordEnabled() -> Bool? {
+        KeychainWrapper.standard.bool(forKey: keyIsPasswordEnabled)
     }
 }
 
