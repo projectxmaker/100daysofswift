@@ -23,12 +23,15 @@ class GameScene: SKScene {
     var banana: SKSpriteNode!
 
     var currentPlayer = 1
+    var levelWinner: SKSpriteNode?
 
+    var gameOver: SKLabelNode!
+    
     override func didMove(to view: SKView) {
         backgroundColor = UIColor(hue: 0.669, saturation: 0.99, brightness: 0.67, alpha: 1)
 
         createBuildings()
-        createPlayers()
+        createPlayers()        
         
         physicsWorld.contactDelegate = self
     }
@@ -50,7 +53,16 @@ class GameScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-
+        guard let touch = touches.first else { return }
+        let location = touch.location(in: self)
+        
+        let nodes = nodes(at: location)
+        for eachNode in nodes {
+            if eachNode.name == "restartButton" {
+                restartGame()
+                break
+            }
+        }
     }
 
     override func update(_ currentTime: TimeInterval) {
@@ -118,8 +130,9 @@ class GameScene: SKScene {
     }
     
     func createPlayers() {
+        let player1Name = "player1"
         player1 = SKSpriteNode(imageNamed: "player")
-        player1.name = "player1"
+        player1.name = player1Name
         player1.physicsBody = SKPhysicsBody(circleOfRadius: player1.size.width / 2)
         player1.physicsBody?.categoryBitMask = CollisionTypes.player.rawValue
         player1.physicsBody?.collisionBitMask = CollisionTypes.banana.rawValue
@@ -129,9 +142,10 @@ class GameScene: SKScene {
         let player1Building = buildings[1]
         player1.position = CGPoint(x: player1Building.position.x, y: player1Building.position.y + ((player1Building.size.height + player1.size.height) / 2))
         addChild(player1)
-
+        
+        let player2Name = "player2"
         player2 = SKSpriteNode(imageNamed: "player")
-        player2.name = "player2"
+        player2.name = player2Name
         player2.physicsBody = SKPhysicsBody(circleOfRadius: player2.size.width / 2)
         player2.physicsBody?.categoryBitMask = CollisionTypes.player.rawValue
         player2.physicsBody?.collisionBitMask = CollisionTypes.banana.rawValue
@@ -150,6 +164,7 @@ class GameScene: SKScene {
 }
 
 extension GameScene: SKPhysicsContactDelegate {
+    
     func didBegin(_ contact: SKPhysicsContact) {
         let firstBody: SKPhysicsBody
         let secondBody: SKPhysicsBody
@@ -170,15 +185,23 @@ extension GameScene: SKPhysicsContactDelegate {
         }
 
         if firstNode.name == "banana" && secondNode.name == "player1" {
+            levelWinner = player2
             destroy(player: player1)
         }
 
         if firstNode.name == "banana" && secondNode.name == "player2" {
+            levelWinner = player1
             destroy(player: player2)
         }
     }
     
     func destroy(player: SKSpriteNode) {
+        guard
+            let player1Name = player1.name,
+            let player2Name = player2.name,
+            let levelWinner = levelWinner
+        else { return }
+        
         if let explosion = SKEmitterNode(fileNamed: "hitPlayer") {
             explosion.position = player.position
             addChild(explosion)
@@ -186,17 +209,21 @@ extension GameScene: SKPhysicsContactDelegate {
 
         player.removeFromParent()
         banana.removeFromParent()
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            let newGame = GameScene(size: self.size)
-            newGame.viewController = self.viewController
-            self.viewController.currentGame = newGame
-
-            self.changePlayer()
-            newGame.currentPlayer = self.currentPlayer
-
-            let transition = SKTransition.doorway(withDuration: 1.5)
-            self.view?.presentScene(newGame, transition: transition)
+        
+        updateScore(player: levelWinner)
+        
+        if viewController.isGameover() {
+            showGameover()
+        } else {
+            viewController.showScore(player1Name: player1Name, player2Name: player2Name)
+            
+            // move to next level
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                self.viewController.hideScore()
+                self.viewController.showPlayerNumber()
+                
+                self.startGame()
+            }
         }
     }
     
@@ -225,5 +252,87 @@ extension GameScene: SKPhysicsContactDelegate {
         banana = nil
 
         changePlayer()
+    }
+    
+    func updateScore(player: SKSpriteNode) {
+        guard
+            let playerName = player.name
+        else { return }
+        
+        viewController.updateScore(player: playerName)
+        
+        viewController.hidePlayerNumber()
+    }
+    
+    func removeAllNodes() {
+        for each in children {
+            each.removeAllChildren()
+            each.removeFromParent()
+        }
+    }
+    
+    func showGameover() {
+        removeAllNodes()
+        
+        gameOver = SKLabelNode(fontNamed: "Chalkduster")
+        gameOver.fontSize = 60
+        gameOver.text = "GAME OVER!"
+        gameOver.horizontalAlignmentMode = .center
+        gameOver.position = CGPoint(x: 512, y: 520)
+        gameOver.fontColor = UIColor.yellow
+        gameOver.zPosition = 1
+        
+        let winnderNote = SKLabelNode(fontNamed: "Chalkduster")
+        winnderNote.fontSize = 40
+        winnderNote.position = CGPoint(x: 0, y: -100)
+        winnderNote.horizontalAlignmentMode = .center
+        winnderNote.fontColor = UIColor.yellow
+        
+        winnderNote.text = viewController.getWinnerDescription()
+        gameOver.addChild(winnderNote)
+        
+        let scoreNote = SKLabelNode(fontNamed: "Chalkduster")
+        scoreNote.fontSize = 40
+        scoreNote.position = CGPoint(x: 0, y: -200)
+        scoreNote.horizontalAlignmentMode = .center
+        scoreNote.fontColor = UIColor.yellow
+        
+        scoreNote.text = viewController.getScoreDescription(player1Name: player1.name ?? "", player2Name: player2.name ?? "")
+        gameOver.addChild(scoreNote)
+        
+        let restartLabel = SKLabelNode(fontNamed: "Chalkduster")
+        restartLabel.fontSize = 40
+        restartLabel.text = "Restart"
+        restartLabel.position = CGPoint(x: 0, y: -300)
+        restartLabel.horizontalAlignmentMode = .center
+        restartLabel.name = "restartButton"
+        restartLabel.fontColor = UIColor.yellow
+        gameOver.addChild(restartLabel)
+        
+        addChild(gameOver)
+    }
+    
+    func restartGame() {
+        viewController.resetScore()
+        
+        startGame()
+    }
+    
+    func startGame() {
+        let newGame = GameScene(size: self.size)
+        newGame.viewController = self.viewController
+        self.viewController.currentGame = newGame
+        self.viewController.hideScore()
+
+        self.changePlayer()
+        newGame.currentPlayer = self.currentPlayer
+
+        let transition = SKTransition.doorway(withDuration: 1)
+        self.view?.presentScene(newGame, transition: transition)
+    }
+    
+    func initScore() {
+        viewController.updateScore(player: player1.name ?? "", initScore: 0)
+        viewController.updateScore(player: player2.name ?? "", initScore: 0)
     }
 }
