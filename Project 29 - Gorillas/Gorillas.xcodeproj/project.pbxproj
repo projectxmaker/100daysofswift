@@ -20,7 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8A8A337228D078DF00FBFAF1 /* Project29.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project29.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8A8A337228D078DF00FBFAF1 /* Gorillas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gorillas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A8A337528D078DF00FBFAF1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8A8A337728D078DF00FBFAF1 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		8A8A337B28D078DF00FBFAF1 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -47,7 +47,7 @@
 		8A8A336928D078DF00FBFAF1 = {
 			isa = PBXGroup;
 			children = (
-				8A8A337428D078DF00FBFAF1 /* Project29 */,
+				8A8A337428D078DF00FBFAF1 /* Gorillas */,
 				8A8A337328D078DF00FBFAF1 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -55,12 +55,12 @@
 		8A8A337328D078DF00FBFAF1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8A8A337228D078DF00FBFAF1 /* Project29.app */,
+				8A8A337228D078DF00FBFAF1 /* Gorillas.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		8A8A337428D078DF00FBFAF1 /* Project29 */ = {
+		8A8A337428D078DF00FBFAF1 /* Gorillas */ = {
 			isa = PBXGroup;
 			children = (
 				8A8A337528D078DF00FBFAF1 /* AppDelegate.swift */,
@@ -74,15 +74,15 @@
 				8A8A338F28D0DFBA00FBFAF1 /* hitBuilding.sks */,
 				8A8A338E28D0DFBA00FBFAF1 /* hitPlayer.sks */,
 			);
-			path = Project29;
+			path = Gorillas;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8A8A337128D078DF00FBFAF1 /* Project29 */ = {
+		8A8A337128D078DF00FBFAF1 /* Gorillas */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8A8A338928D078E100FBFAF1 /* Build configuration list for PBXNativeTarget "Project29" */;
+			buildConfigurationList = 8A8A338928D078E100FBFAF1 /* Build configuration list for PBXNativeTarget "Gorillas" */;
 			buildPhases = (
 				8A8A336E28D078DF00FBFAF1 /* Sources */,
 				8A8A336F28D078DF00FBFAF1 /* Frameworks */,
@@ -92,9 +92,9 @@
 			);
 			dependencies = (
 			);
-			name = Project29;
+			name = Gorillas;
 			productName = Project29;
-			productReference = 8A8A337228D078DF00FBFAF1 /* Project29.app */;
+			productReference = 8A8A337228D078DF00FBFAF1 /* Gorillas.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -112,7 +112,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 8A8A336D28D078DF00FBFAF1 /* Build configuration list for PBXProject "Project29" */;
+			buildConfigurationList = 8A8A336D28D078DF00FBFAF1 /* Build configuration list for PBXProject "Gorillas" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -125,7 +125,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8A8A337128D078DF00FBFAF1 /* Project29 */,
+				8A8A337128D078DF00FBFAF1 /* Gorillas */,
 			);
 		};
 /* End PBXProject section */
@@ -310,12 +310,13 @@
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.Project29;
+				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.Gorillas;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -342,12 +343,13 @@
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.Project29;
+				PRODUCT_BUNDLE_IDENTIFIER = com.projectxmaker.100dos.Gorillas;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -361,7 +363,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		8A8A336D28D078DF00FBFAF1 /* Build configuration list for PBXProject "Project29" */ = {
+		8A8A336D28D078DF00FBFAF1 /* Build configuration list for PBXProject "Gorillas" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8A8A338728D078E100FBFAF1 /* Debug */,
@@ -370,7 +372,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8A8A338928D078E100FBFAF1 /* Build configuration list for PBXNativeTarget "Project29" */ = {
+		8A8A338928D078E100FBFAF1 /* Build configuration list for PBXNativeTarget "Gorillas" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8A8A338A28D078E100FBFAF1 /* Debug */,
