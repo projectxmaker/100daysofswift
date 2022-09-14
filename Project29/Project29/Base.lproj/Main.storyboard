@@ -63,6 +63,12 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wind" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pKK-SJ-64Z">
+                                <rect key="frame" x="22" y="92" width="281.5" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="4qk-I5-YsI"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -71,15 +77,19 @@
                             <constraint firstItem="pTX-rJ-xvZ" firstAttribute="width" secondItem="4qk-I5-YsI" secondAttribute="height" multiplier="30:187" id="0wR-IY-raO"/>
                             <constraint firstItem="es9-l0-nzo" firstAttribute="leading" secondItem="HBp-Hv-C65" secondAttribute="trailing" constant="7" id="47w-r6-juV"/>
                             <constraint firstItem="u3N-X0-3ix" firstAttribute="top" secondItem="4qk-I5-YsI" secondAttribute="top" constant="80" id="7Tx-Zw-Ims"/>
+                            <constraint firstItem="pKK-SJ-64Z" firstAttribute="top" secondItem="Vm9-P1-IDo" secondAttribute="bottom" constant="18" id="8ta-1Y-0qG"/>
                             <constraint firstItem="4qk-I5-YsI" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="pTX-rJ-xvZ" secondAttribute="trailing" id="Aef-PG-L59"/>
                             <constraint firstItem="Vm9-P1-IDo" firstAttribute="leading" secondItem="4qk-I5-YsI" secondAttribute="leading" constant="22" id="BH3-aH-T2e"/>
                             <constraint firstItem="Vm9-P1-IDo" firstAttribute="top" secondItem="t9Z-uw-md7" secondAttribute="top" id="BJq-th-KWc"/>
+                            <constraint firstItem="pKK-SJ-64Z" firstAttribute="leading" secondItem="4qk-I5-YsI" secondAttribute="leading" constant="22" id="IwP-Ma-vBs"/>
                             <constraint firstItem="u3N-X0-3ix" firstAttribute="width" secondItem="4qk-I5-YsI" secondAttribute="height" multiplier="505:748" id="JfB-z0-k9l"/>
                             <constraint firstItem="u3N-X0-3ix" firstAttribute="centerX" secondItem="4qk-I5-YsI" secondAttribute="centerX" id="L96-wU-wju"/>
                             <constraint firstItem="HBp-Hv-C65" firstAttribute="top" secondItem="4qk-I5-YsI" secondAttribute="top" constant="20" id="Q4Y-WW-2Ch"/>
+                            <constraint firstItem="pKK-SJ-64Z" firstAttribute="width" secondItem="4qk-I5-YsI" secondAttribute="width" multiplier="0.248632" id="QN9-Je-dLg"/>
                             <constraint firstItem="pTX-rJ-xvZ" firstAttribute="leading" secondItem="HBp-Hv-C65" secondAttribute="trailing" constant="122" id="UeD-gs-CBo"/>
                             <constraint firstItem="eKv-cM-toq" firstAttribute="width" secondItem="4qk-I5-YsI" secondAttribute="height" multiplier="71:187" id="WMN-2q-fYk"/>
                             <constraint firstItem="eKv-cM-toq" firstAttribute="top" secondItem="4qk-I5-YsI" secondAttribute="top" constant="80" id="WaE-WL-ChT"/>
+                            <constraint firstItem="u3N-X0-3ix" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="pKK-SJ-64Z" secondAttribute="trailing" constant="8" symbolic="YES" id="ZJl-xK-2ha"/>
                             <constraint firstItem="HBp-Hv-C65" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="t9Z-uw-md7" secondAttribute="trailing" constant="8" symbolic="YES" id="asY-RE-gxk"/>
                             <constraint firstItem="Vm9-P1-IDo" firstAttribute="width" secondItem="4qk-I5-YsI" secondAttribute="height" multiplier="74:187" id="avl-Cx-clB"/>
                             <constraint firstItem="HBp-Hv-C65" firstAttribute="centerX" secondItem="4qk-I5-YsI" secondAttribute="centerX" constant="118" id="fxg-Hc-r8x"/>
@@ -101,6 +111,7 @@
                         <outlet property="playerScore" destination="u3N-X0-3ix" id="TYh-8N-PVv"/>
                         <outlet property="velocityLabel" destination="es9-l0-nzo" id="Pdk-kg-i79"/>
                         <outlet property="velocitySlider" destination="HBp-Hv-C65" id="nZg-au-m4e"/>
+                        <outlet property="windInfo" destination="pKK-SJ-64Z" id="pfc-LG-Slv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>

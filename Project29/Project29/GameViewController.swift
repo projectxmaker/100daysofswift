@@ -20,6 +20,7 @@ class GameViewController: UIViewController {
     @IBOutlet weak var launchButton: UIButton!
     @IBOutlet weak var playerNumber: UILabel!
     @IBOutlet weak var playerScore: UILabel!
+    @IBOutlet weak var windInfo: UILabel!
     
     var score = [String: Int]()
     
@@ -46,7 +47,7 @@ class GameViewController: UIViewController {
                 currentGame.viewController = self
                 
                 initScore()
-                hideScore()
+                initUIInfo()
             }
             
             view.ignoresSiblingOrder = true
@@ -69,6 +70,11 @@ class GameViewController: UIViewController {
     }
     
     // MARK: - Extra Functions
+    func initUIInfo() {
+        currentGame.randomizeWind()
+        hideScore()
+    }
+    
     func activatePlayer(number: Int) {
         if number == 1 {
             playerNumber.text = "<<< PLAYER ONE"
@@ -82,7 +88,9 @@ class GameViewController: UIViewController {
         velocitySlider.isHidden = false
         velocityLabel.isHidden = false
 
-        launchButton.isHidden = false        
+        launchButton.isHidden = false
+        
+        windInfo.isHidden = false
     }
     
     func updateScore(player: String, initScore: Int? = nil) {
@@ -117,10 +125,6 @@ class GameViewController: UIViewController {
         playerScore.isHidden = false
     }
     
-    func resetScore() {
-        score.removeAll(keepingCapacity: true)
-    }
-    
     func getScoreDescription(player1Name: String, player2Name: String) -> String {
         let player1Score = score[player1Name] ?? 0
         let player2Score = score[player2Name] ?? 0
@@ -134,6 +138,7 @@ class GameViewController: UIViewController {
     
     func initScore() {
         currentGame.initScore()
+        isReachedMaxScore = false
     }
     
     func hideScore() {
@@ -146,6 +151,20 @@ class GameViewController: UIViewController {
     
     func showPlayerNumber() {
         playerNumber.isHidden = false
+    }
+    
+    func updateWindInfo() {
+        let windSpeed = currentGame.physicsWorld.speed
+        let gravityDx = currentGame.physicsWorld.gravity.dx
+        var windDirection = "No"
+
+        if gravityDx > 0 {
+            windDirection = "Left To Right"
+        } else if gravityDx < 0 {
+            windDirection = "Right To Left"
+        }
+        
+        windInfo.text = "Wind: \(windDirection) | \(windSpeed.rounded())"
     }
     
     // MARK: - IBAction Functions
@@ -165,6 +184,8 @@ class GameViewController: UIViewController {
         velocityLabel.isHidden = true
 
         launchButton.isHidden = true
+        
+        windInfo.isHidden = true
 
         currentGame.launch(angle: Int(angleSlider.value), velocity: Int(velocitySlider.value))
     }

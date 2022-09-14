@@ -161,6 +161,15 @@ class GameScene: SKScene {
         return Double(degrees) * Double.pi / 180
     }
 
+    func randomizeWind() {
+        let gravityRandomDX = CGFloat.random(in: -4...4)
+        physicsWorld.gravity.dx = gravityRandomDX
+        
+        let randomSpeed = CGFloat.random(in: 1...2)
+        physicsWorld.speed = randomSpeed
+        
+        viewController.updateWindInfo()
+    }
 }
 
 extension GameScene: SKPhysicsContactDelegate {
@@ -313,7 +322,7 @@ extension GameScene: SKPhysicsContactDelegate {
     }
     
     func restartGame() {
-        viewController.resetScore()
+        viewController.initScore()
         
         startGame()
     }
@@ -322,7 +331,7 @@ extension GameScene: SKPhysicsContactDelegate {
         let newGame = GameScene(size: self.size)
         newGame.viewController = self.viewController
         self.viewController.currentGame = newGame
-        self.viewController.hideScore()
+        self.viewController.initUIInfo()
 
         self.changePlayer()
         newGame.currentPlayer = self.currentPlayer
