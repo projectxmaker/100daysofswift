@@ -9,9 +9,9 @@
 import UIKit
 
 class ImageViewController: UIViewController {
-	weak var owner: SelectionViewController!
-	var image: String!
-	var animTimer: Timer!
+	weak var owner: SelectionViewController?
+	var image: String?
+	var animTimer: Timer?
 
 	var imageView: UIImageView!
 
@@ -48,9 +48,16 @@ class ImageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        guard let image = image else { return }
+        
 		title = image.replacingOccurrences(of: "-Large.jpg", with: "")
-        let path = Bundle.main.path(forResource: image, ofType: nil)!
-        let original = UIImage(contentsOfFile: path)!
+        
+        guard
+            let path = Bundle.main.path(forResource: image, ofType: nil),
+            let original = UIImage(contentsOfFile: path)
+        else {
+            return
+        }
 
 		let renderer = UIGraphicsImageRenderer(size: original.size)
 
@@ -70,16 +77,21 @@ class ImageViewController: UIViewController {
 		imageView.alpha = 0
 
 		UIView.animate(withDuration: 3) { [unowned self] in
-			self.imageView.alpha = 1
+			imageView.alpha = 1
 		}
 	}
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        animTimer.invalidate()
+        
+        if let animTimer = animTimer {
+            animTimer.invalidate()
+        }
     }
     
 	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let image = image else { return }
+        
 		let defaults = UserDefaults.standard
 		var currentVal = defaults.integer(forKey: image)
 		currentVal += 1
@@ -87,6 +99,8 @@ class ImageViewController: UIViewController {
 		defaults.set(currentVal, forKey:image)
 
 		// tell the parent view controller that it should refresh its table counters when we go back
-		owner.dirty = true
+        if let owner = owner {
+            owner.dirty = true
+        }
 	}
 }
