@@ -74,6 +74,11 @@ class ImageViewController: UIViewController {
 		}
 	}
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        animTimer.invalidate()
+    }
+    
 	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 		let defaults = UserDefaults.standard
 		var currentVal = defaults.integer(forKey: image)
