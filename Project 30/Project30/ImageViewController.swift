@@ -10,7 +10,8 @@ import UIKit
 
 class ImageViewController: UIViewController {
 	weak var owner: SelectionViewController?
-	var image: String?
+	var imageTitle: String?
+    var image: UIImage?
 	var animTimer: Timer?
 
 	var imageView: UIImageView!
@@ -48,16 +49,12 @@ class ImageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        guard let image = image else { return }
-        
-		title = image.replacingOccurrences(of: "-Large.jpg", with: "")
-        
         guard
-            let path = Bundle.main.path(forResource: image, ofType: nil),
-            let original = UIImage(contentsOfFile: path)
-        else {
-            return
-        }
+            let original = image,
+            let imageTitle = imageTitle
+        else { return }
+        
+		title = imageTitle
 
 		let renderer = UIGraphicsImageRenderer(size: original.size)
 
@@ -90,13 +87,13 @@ class ImageViewController: UIViewController {
     }
     
 	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let image = image else { return }
+        guard let imageTitle = imageTitle else { return }
         
 		let defaults = UserDefaults.standard
-		var currentVal = defaults.integer(forKey: image)
+		var currentVal = defaults.integer(forKey: imageTitle)
 		currentVal += 1
 
-		defaults.set(currentVal, forKey:image)
+		defaults.set(currentVal, forKey: imageTitle)
 
 		// tell the parent view controller that it should refresh its table counters when we go back
         if let owner = owner {
