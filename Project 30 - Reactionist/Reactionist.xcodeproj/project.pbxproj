@@ -111,7 +111,7 @@
 		5138B3BA1D69197400FD2417 /* WTF-Thumb.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "WTF-Thumb.jpg"; sourceTree = "<group>"; };
 		5138B3BB1D69197400FD2417 /* WTF-Thumb@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "WTF-Thumb@2x.jpg"; sourceTree = "<group>"; };
 		5138B3BC1D69197400FD2417 /* WTF-Thumb@3x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "WTF-Thumb@3x.jpg"; sourceTree = "<group>"; };
-		51BE9E591A2667CD00578AA0 /* Project30.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project30.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		51BE9E591A2667CD00578AA0 /* Reactionist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reactionist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		51BE9E5D1A2667CD00578AA0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		51BE9E5E1A2667CD00578AA0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		51BE9E651A2667CD00578AA0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -134,7 +134,7 @@
 		51BE9E501A2667CD00578AA0 = {
 			isa = PBXGroup;
 			children = (
-				51BE9E5B1A2667CD00578AA0 /* Project30 */,
+				51BE9E5B1A2667CD00578AA0 /* Reactionist */,
 				51BE9E5A1A2667CD00578AA0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -142,12 +142,12 @@
 		51BE9E5A1A2667CD00578AA0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				51BE9E591A2667CD00578AA0 /* Project30.app */,
+				51BE9E591A2667CD00578AA0 /* Reactionist.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		51BE9E5B1A2667CD00578AA0 /* Project30 */ = {
+		51BE9E5B1A2667CD00578AA0 /* Reactionist */ = {
 			isa = PBXGroup;
 			children = (
 				51BE9E5E1A2667CD00578AA0 /* AppDelegate.swift */,
@@ -157,7 +157,7 @@
 				51BE9E671A2667CD00578AA0 /* LaunchScreen.xib */,
 				51BE9E5C1A2667CD00578AA0 /* Supporting Files */,
 			);
-			path = Project30;
+			path = Reactionist;
 			sourceTree = "<group>";
 		};
 		51BE9E5C1A2667CD00578AA0 /* Supporting Files */ = {
@@ -227,9 +227,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		51BE9E581A2667CD00578AA0 /* Project30 */ = {
+		51BE9E581A2667CD00578AA0 /* Reactionist */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 51BE9E781A2667CD00578AA0 /* Build configuration list for PBXNativeTarget "Project30" */;
+			buildConfigurationList = 51BE9E781A2667CD00578AA0 /* Build configuration list for PBXNativeTarget "Reactionist" */;
 			buildPhases = (
 				51BE9E551A2667CD00578AA0 /* Sources */,
 				51BE9E561A2667CD00578AA0 /* Frameworks */,
@@ -239,9 +239,9 @@
 			);
 			dependencies = (
 			);
-			name = Project30;
+			name = Reactionist;
 			productName = Project30;
-			productReference = 51BE9E591A2667CD00578AA0 /* Project30.app */;
+			productReference = 51BE9E591A2667CD00578AA0 /* Reactionist.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -257,16 +257,17 @@
 				TargetAttributes = {
 					51BE9E581A2667CD00578AA0 = {
 						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = B5C26XE59E;
+						DevelopmentTeam = TT8TA55RWH;
 						LastSwiftMigration = 0900;
 					};
 				};
 			};
-			buildConfigurationList = 51BE9E541A2667CD00578AA0 /* Build configuration list for PBXProject "Project30" */;
+			buildConfigurationList = 51BE9E541A2667CD00578AA0 /* Build configuration list for PBXProject "Reactionist" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -275,7 +276,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				51BE9E581A2667CD00578AA0 /* Project30 */,
+				51BE9E581A2667CD00578AA0 /* Reactionist */,
 			);
 		};
 /* End PBXProject section */
@@ -470,10 +471,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = B5C26XE59E;
-				INFOPLIST_FILE = Project30/Info.plist;
+				DEVELOPMENT_TEAM = TT8TA55RWH;
+				INFOPLIST_FILE = Reactionist/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.hackingwithswift.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.projectxmaker.--PRODUCT-NAME-rfc1034identifier-";
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = com.projectxmaker.Reactionist;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.2;
@@ -484,10 +486,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = B5C26XE59E;
-				INFOPLIST_FILE = Project30/Info.plist;
+				DEVELOPMENT_TEAM = TT8TA55RWH;
+				INFOPLIST_FILE = Reactionist/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.hackingwithswift.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.projectxmaker.--PRODUCT-NAME-rfc1034identifier-";
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = com.projectxmaker.Reactionist;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.2;
@@ -497,7 +500,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		51BE9E541A2667CD00578AA0 /* Build configuration list for PBXProject "Project30" */ = {
+		51BE9E541A2667CD00578AA0 /* Build configuration list for PBXProject "Reactionist" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				51BE9E761A2667CD00578AA0 /* Debug */,
@@ -506,7 +509,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		51BE9E781A2667CD00578AA0 /* Build configuration list for PBXNativeTarget "Project30" */ = {
+		51BE9E781A2667CD00578AA0 /* Build configuration list for PBXNativeTarget "Reactionist" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				51BE9E791A2667CD00578AA0 /* Debug */,
