@@ -16,6 +16,7 @@
 		8A59548F28D5DA7B00038BAB /* PlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A59548E28D5DA7B00038BAB /* PlayViewController.swift */; };
 		8A59549128D6FF2500038BAB /* PlayResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A59549028D6FF2500038BAB /* PlayResultViewController.swift */; };
 		8A59549328D70D2600038BAB /* CardListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A59549228D70D2600038BAB /* CardListTableViewController.swift */; };
+		8A59549528D7122600038BAB /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A59549428D7122600038BAB /* SettingsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		8A59548E28D5DA7B00038BAB /* PlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayViewController.swift; sourceTree = "<group>"; };
 		8A59549028D6FF2500038BAB /* PlayResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayResultViewController.swift; sourceTree = "<group>"; };
 		8A59549228D70D2600038BAB /* CardListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListTableViewController.swift; sourceTree = "<group>"; };
+		8A59549428D7122600038BAB /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +89,7 @@
 				8A59548E28D5DA7B00038BAB /* PlayViewController.swift */,
 				8A59549028D6FF2500038BAB /* PlayResultViewController.swift */,
 				8A59549228D70D2600038BAB /* CardListTableViewController.swift */,
+				8A59549428D7122600038BAB /* SettingsViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -173,6 +176,7 @@
 			files = (
 				8A59548F28D5DA7B00038BAB /* PlayViewController.swift in Sources */,
 				8A59547C28D59A4000038BAB /* MainViewController.swift in Sources */,
+				8A59549528D7122600038BAB /* SettingsViewController.swift in Sources */,
 				8A59549128D6FF2500038BAB /* PlayResultViewController.swift in Sources */,
 				8A59547828D59A4000038BAB /* AppDelegate.swift in Sources */,
 				8A59547A28D59A4000038BAB /* SceneDelegate.swift in Sources */,

@@ -70,6 +70,22 @@
             </objects>
             <point key="canvasLocation" x="929.6875" y="728.90625"/>
         </scene>
+        <!--Settings View Controller-->
+        <scene sceneID="7iu-tt-my2">
+            <objects>
+                <viewController storyboardIdentifier="SettingsView" id="Yh3-YM-hUX" customClass="SettingsViewController" customModule="MilestoneP28To30" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="tE8-Zo-3Ui" customClass="Settings">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="56p-qV-3ns"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="2ji-wl-tkt"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7Qd-0z-gRh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1800" y="729"/>
+        </scene>
         <!--Play View Controller-->
         <scene sceneID="gFf-Ov-Kp5">
             <objects>
@@ -113,7 +129,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="kNk-wZ-Bt5" kind="relationship" relationship="rootViewController" id="eal-NR-kJg"/>
+                        <segue destination="Yh3-YM-hUX" kind="relationship" relationship="rootViewController" id="CyJ-kh-DSC"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wio-H9-rcE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
