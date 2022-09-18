@@ -16,47 +16,8 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qVG-eH-Gib">
-                                <rect key="frame" x="301.5" y="965" width="165" height="35"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="35" id="SPx-oS-YyG"/>
-                                </constraints>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Card Management"/>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QyO-Ys-vJd">
-                                <rect key="frame" x="284" y="472" width="200" height="100"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="Yfd-Hf-eKv"/>
-                                    <constraint firstAttribute="width" secondItem="QyO-Ys-vJd" secondAttribute="height" multiplier="2:1" id="owi-Kb-reo"/>
-                                </constraints>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="PLAY" cornerStyle="medium">
-                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="40"/>
-                                </buttonConfiguration>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CARD GAME" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YPc-8H-qj4">
-                                <rect key="frame" x="290" y="28" width="188" height="36"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="YPc-8H-qj4" secondAttribute="height" multiplier="44:9" constant="12" id="HiW-qL-ykV"/>
-                                    <constraint firstAttribute="height" constant="36" id="Mz6-bI-KHb"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="QyO-Ys-vJd" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="9gL-C7-6zQ"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="qVG-eH-Gib" secondAttribute="bottom" constant="24" id="9sL-ya-9bN"/>
-                            <constraint firstItem="qVG-eH-Gib" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="W9R-WH-eNh"/>
-                            <constraint firstItem="QyO-Ys-vJd" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="WYb-bm-IdU"/>
-                            <constraint firstItem="YPc-8H-qj4" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="jzg-DY-MeC"/>
-                            <constraint firstItem="YPc-8H-qj4" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="8" id="woV-tc-DT6"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="c4h-0b-Mnw"/>
                 </viewController>
@@ -107,7 +68,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="SP3-j3-wNj" kind="relationship" relationship="rootViewController" id="iGQ-Iq-KpN"/>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="1cu-qT-ytw"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wio-H9-rcE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
