@@ -31,7 +31,6 @@ class PlayResultViewController: UIViewController {
 
         var tinted = UIButton.Configuration.tinted()
         tinted.buttonSize = .large
-        tinted.title = "PLAY NEXT"
         tinted.titleAlignment = .center
         
         let playNextButtonTitleAttributedKeys: [NSAttributedString.Key: Any] = [
