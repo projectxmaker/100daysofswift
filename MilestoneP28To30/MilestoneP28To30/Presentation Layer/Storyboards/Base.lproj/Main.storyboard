@@ -80,6 +80,22 @@
             </objects>
             <point key="canvasLocation" x="1800" y="4"/>
         </scene>
+        <!--Play Result View Controller-->
+        <scene sceneID="PQi-ST-ygc">
+            <objects>
+                <viewController storyboardIdentifier="PlayResultView" id="SP3-j3-wNj" customClass="PlayResultViewController" customModule="MilestoneP28To30" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="m5c-CN-KZs" customClass="Play">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="nTU-Aj-KWt"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="J17-vs-Ig3"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9o8-H8-by9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2527" y="4"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="AeL-4H-0FR">
             <objects>
@@ -91,7 +107,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="Fqz-Ia-DHv" kind="relationship" relationship="rootViewController" id="UxD-WW-42K"/>
+                        <segue destination="SP3-j3-wNj" kind="relationship" relationship="rootViewController" id="iGQ-Iq-KpN"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wio-H9-rcE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
