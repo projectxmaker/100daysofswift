@@ -9,11 +9,12 @@ import UIKit
 
 class CardListTableViewController: UITableViewController {
 
-    var cards = [Card]()
     var settingsBarButtonItem: UIBarButtonItem!
     var addNewCardBarButtonItem: UIBarButtonItem!
     
     var lockAppBarButtonItem: UIBarButtonItem!
+    
+    var cardsManager = CardsManager.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,13 +40,13 @@ class CardListTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return cards.count
+        return cardsManager.cards.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CardCell", for: indexPath)
 
-        let card = cards[indexPath.row]
+        let card = cardsManager.cards[indexPath.row]
         
         var contentConfig = cell.defaultContentConfiguration()
         contentConfig.text = card.first
@@ -167,29 +168,7 @@ class CardListTableViewController: UITableViewController {
     }
     
     @objc func loadCards() {
-        var cardFileUrl: URL
-        
-        // if user-defined cards file txt exists, load it, otherwise, use app-defined cards file
-        if hasUserDefinedCardFile() {
-            cardFileUrl = getUserDefinedCarfFileURL()
-        } else {
-            guard
-                let tmpURL = Bundle.main.url(forResource: "cards", withExtension: "txt")
-            else { return }
-            cardFileUrl = tmpURL
-        }
-        
-        guard
-            let data = try? Data(contentsOf: cardFileUrl),
-            let decodedData = try? JSONDecoder().decode([Card].self, from: data)
-        else { return }
-        
-        cards.removeAll(keepingCapacity: true)
-        
-        for card in decodedData {
-            let card = Card(first: card.first, second: card.second)
-            cards.append(card)
-        }
+        cardsManager.loadCards()
         
         DispatchQueue.main.async {
             self.tableView.reloadData()
@@ -197,17 +176,23 @@ class CardListTableViewController: UITableViewController {
     }
 
     func addNewCard(first: String, second: String) {
-        let card = Card(first: first, second: second)
-        cards.insert(card, at: 0)
+        cardsManager.addNewCard(first: first, second: second)
         tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
-        
-        // update user-defined cards file
-        updateUserDefinedCardsFile()
+    }
+    
+    func editCard(at: IndexPath, first: String, second: String) {
+        cardsManager.editCard(at: at, first: first, second: second)
+        tableView.reloadRows(at: [at], with: .automatic)
+    }
+    
+    func deleteCard(at: IndexPath) {
+        cardsManager.deleteCard(at: at)
+        tableView.deleteRows(at: [at], with: .automatic)
     }
     
     func showEditAlertForCard(at: IndexPath) {
         let cardIndex = at.row
-        let card = cards[cardIndex]
+        let card = cardsManager.cards[cardIndex]
         let info = "Edit a card pair"
         
         let ac = UIAlertController(title: "Card Pair", message: info, preferredStyle: .alert)
@@ -242,17 +227,9 @@ class CardListTableViewController: UITableViewController {
         present(ac, animated: true)
     }
     
-    func editCard(at: IndexPath, first: String, second: String) {
-        cards[at.row] = Card(first: first, second: second)
-        tableView.reloadRows(at: [at], with: .automatic)
-        
-        // update user-defined cards file
-        updateUserDefinedCardsFile()
-    }
-    
     func showAlertToConfirmDeletion(at: IndexPath) {
         let cardIndex = at.row
-        let card = cards[cardIndex]
+        let card = cardsManager.cards[cardIndex]
         let info = """
         Do you want to delete this card pair:
         \(card.first)
@@ -272,60 +249,6 @@ class CardListTableViewController: UITableViewController {
         }
         
         present(ac, animated: true)
-    }
-    
-    func deleteCard(at: IndexPath) {
-        cards.remove(at: at.row)
-        tableView.deleteRows(at: [at], with: .automatic)
-        
-        // update user-defined cards file
-        updateUserDefinedCardsFile()
-    }
-    
-    func getURLOfAppDocumentDirectory() -> URL {
-        let fm = FileManager.default
-        let urls = fm.urls(for: .documentDirectory, in: .userDomainMask)
-        return urls[0]
-    }
-
-    func getUserDefinedCarfFileURL() -> URL {
-        let userDefinedFileName = "user-defined-cards.txt"
-        let appDocumentDirectionUrl = getURLOfAppDocumentDirectory()
-        var userDefinedFileURL: URL
-        
-        if #available(iOS 16.0, *) {
-            userDefinedFileURL = appDocumentDirectionUrl.appending(component: userDefinedFileName)
-        } else {
-            userDefinedFileURL = appDocumentDirectionUrl.appendingPathComponent(userDefinedFileName)
-        }
-        
-        return userDefinedFileURL
-    }
-    
-    func getPathOfURL(_ url: URL) -> String {
-        var userDefinedFilePath: String
-        
-        if #available(iOS 16.0, *) {
-            userDefinedFilePath = url.path()
-        } else {
-            userDefinedFilePath = url.path
-        }
-        
-        return userDefinedFilePath
-    }
-    
-    func hasUserDefinedCardFile() -> Bool {
-        let userDefinedFileURL = getUserDefinedCarfFileURL()
-        return FileManager.default.fileExists(atPath: getPathOfURL(userDefinedFileURL))
-    }
-    
-    func updateUserDefinedCardsFile() {
-        DispatchQueue.global().async {
-            let fileURL = self.getUserDefinedCarfFileURL()
-            
-            let data = try? JSONEncoder().encode(self.cards)
-            try? data?.write(to: fileURL)
-        }
     }
     
     // MARK: - Notification
