@@ -200,7 +200,7 @@ class CardListTableViewController: UITableViewController {
         ac.addTextField { textfield in
             textfield.text = card.second
         }
-        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
         ac.addAction(UIAlertAction(title: "Save", style: .default, handler: { [weak self, weak ac] _ in
             guard
                 let firstCard = ac?.textFields?[0].text,
@@ -211,6 +211,10 @@ class CardListTableViewController: UITableViewController {
             
             self?.editCard(at: at, first: firstCard, second: secondCard)
         }))
+        ac.addAction(UIAlertAction(title: "Delete", style: .default, handler: { [weak self] _ in
+            self?.deleteCard(at: at)
+        }))
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         
         if #available(iOS 16.0, *) {
             ac.popoverPresentationController?.sourceItem = navigationItem.rightBarButtonItem
@@ -224,5 +228,10 @@ class CardListTableViewController: UITableViewController {
     func editCard(at: IndexPath, first: String, second: String) {
         cards[at.row] = Card(first: first, second: second)
         tableView.reloadRows(at: [at], with: .automatic)
+    }
+    
+    func deleteCard(at: IndexPath) {
+        cards.remove(at: at.row)
+        tableView.deleteRows(at: [at], with: .automatic)
     }
 }
