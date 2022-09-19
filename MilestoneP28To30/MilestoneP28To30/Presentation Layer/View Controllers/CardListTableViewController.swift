@@ -9,7 +9,7 @@ import UIKit
 
 class CardListTableViewController: UITableViewController {
 
-    var cards: [String] = []
+    var cards = [Card]()
     var settingsBarButtonItem: UIBarButtonItem!
     var addNewCardBarButtonItem: UIBarButtonItem!
     
@@ -22,6 +22,7 @@ class CardListTableViewController: UITableViewController {
 
         setupNavigationItems()
         
+        performSelector(inBackground: #selector(loadCards), with: nil)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -41,15 +42,20 @@ class CardListTableViewController: UITableViewController {
         return cards.count
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CardCell", for: indexPath)
 
-        // Configure the cell...
+        let card = cards[indexPath.row]
+        
+        var contentConfig = cell.defaultContentConfiguration()
+        contentConfig.text = card.first
+        contentConfig.textProperties.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        contentConfig.secondaryText = card.second
+        contentConfig.secondaryTextProperties.font = UIFont.systemFont(ofSize: 18)
+        cell.contentConfiguration = contentConfig
 
         return cell
     }
-    */
 
     /*
     // Override to support conditional editing of the table view.
@@ -122,6 +128,30 @@ class CardListTableViewController: UITableViewController {
     
     @objc func handleLockAppBarButtonItemTapped() {
         
+    }
+    
+    // MARK: - Extra Funcs
+    @objc func loadCards() {
+        guard
+            let cardFileUrl = Bundle.main.url(forResource: "cards", withExtension: "txt"),
+            let fileContent = try? String(contentsOfFile: cardFileUrl.path)
+        else { return }
+        
+        let lines = fileContent.components(separatedBy: "\n")
+        
+        for eachLine in lines {
+            if eachLine.isEmpty {
+               continue
+            }
+            
+            let cardInfo = eachLine.components(separatedBy: "|")
+            let card = Card(first: cardInfo[0], second: cardInfo[1])
+            cards.append(card)
+        }
+        
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
 
 }

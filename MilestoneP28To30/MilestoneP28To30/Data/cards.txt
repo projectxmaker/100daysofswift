@@ -1,0 +1,8 @@
+France|Paris
+Vietnam|Hanoi
+Australia|Canberra
+United Kingdom|London
+United States|Washington, D.C.
+Thailand|Bangkok
+Ukraine|Kiev
+Germany|Berlin
