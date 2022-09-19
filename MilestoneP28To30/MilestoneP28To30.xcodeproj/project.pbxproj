@@ -69,9 +69,9 @@
 			isa = PBXGroup;
 			children = (
 				8A59548B28D59A4A00038BAB /* Presentation Layer */,
+				8AE7591228D7FB9F00CDE05C /* Data */,
 				8A59548028D59A4200038BAB /* Assets.xcassets */,
 				8A59548528D59A4200038BAB /* Info.plist */,
-				8AE7591228D7FB9F00CDE05C /* Data */,
 			);
 			path = MilestoneP28To30;
 			sourceTree = "<group>";

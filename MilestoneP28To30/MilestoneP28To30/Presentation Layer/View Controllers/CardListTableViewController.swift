@@ -122,7 +122,10 @@ class CardListTableViewController: UITableViewController {
     }
     
     @objc func handleSettingsBarButtonItemTapped() {
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let settingsVC = mainStoryboard.instantiateViewController(withIdentifier: "SettingsView")
         
+        navigationController?.pushViewController(settingsVC, animated: true)
     }
     
     @objc func handleAddNewCardBarButtonItemTapped() {
