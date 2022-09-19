@@ -19,6 +19,7 @@
 		8A59549528D7122600038BAB /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A59549428D7122600038BAB /* SettingsViewController.swift */; };
 		8AE7591128D7FB9B00CDE05C /* cards.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8AE7591028D7FB9B00CDE05C /* cards.txt */; };
 		8AE7591428D7FE4600CDE05C /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE7591328D7FE4600CDE05C /* Card.swift */; };
+		8AE7591628D85A4700CDE05C /* CardsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE7591528D85A4700CDE05C /* CardsManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		8A59549428D7122600038BAB /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		8AE7591028D7FB9B00CDE05C /* cards.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = cards.txt; sourceTree = "<group>"; };
 		8AE7591328D7FE4600CDE05C /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		8AE7591528D85A4700CDE05C /* CardsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,7 @@
 			isa = PBXGroup;
 			children = (
 				8A59548B28D59A4A00038BAB /* Presentation Layer */,
+				8AE7591728D85A5100CDE05C /* Data Layer */,
 				8AE7591228D7FB9F00CDE05C /* Data */,
 				8A59548028D59A4200038BAB /* Assets.xcassets */,
 				8A59548528D59A4200038BAB /* Info.plist */,
@@ -115,6 +118,14 @@
 				8AE7591328D7FE4600CDE05C /* Card.swift */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		8AE7591728D85A5100CDE05C /* Data Layer */ = {
+			isa = PBXGroup;
+			children = (
+				8AE7591528D85A4700CDE05C /* CardsManager.swift */,
+			);
+			path = "Data Layer";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -192,6 +203,7 @@
 				8A59548F28D5DA7B00038BAB /* PlayViewController.swift in Sources */,
 				8A59547C28D59A4000038BAB /* MainViewController.swift in Sources */,
 				8A59549528D7122600038BAB /* SettingsViewController.swift in Sources */,
+				8AE7591628D85A4700CDE05C /* CardsManager.swift in Sources */,
 				8A59549128D6FF2500038BAB /* PlayResultViewController.swift in Sources */,
 				8A59547828D59A4000038BAB /* AppDelegate.swift in Sources */,
 				8A59547A28D59A4000038BAB /* SceneDelegate.swift in Sources */,

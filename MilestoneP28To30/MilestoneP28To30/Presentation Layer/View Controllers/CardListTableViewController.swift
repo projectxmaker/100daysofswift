@@ -21,8 +21,8 @@ class CardListTableViewController: UITableViewController {
         title = "Cards"
 
         setupNavigationItems()
-        
-        performSelector(inBackground: #selector(loadCards), with: nil)
+        setupNotifcationObservers()
+        loadCardsInBackground()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -162,6 +162,10 @@ class CardListTableViewController: UITableViewController {
     }
     
     // MARK: - Extra Funcs
+    func loadCardsInBackground() {
+        performSelector(inBackground: #selector(loadCards), with: nil)
+    }
+    
     @objc func loadCards() {
         var cardFileUrl: URL
         
@@ -179,6 +183,8 @@ class CardListTableViewController: UITableViewController {
             let data = try? Data(contentsOf: cardFileUrl),
             let decodedData = try? JSONDecoder().decode([Card].self, from: data)
         else { return }
+        
+        cards.removeAll(keepingCapacity: true)
         
         for card in decodedData {
             let card = Card(first: card.first, second: card.second)
@@ -320,5 +326,14 @@ class CardListTableViewController: UITableViewController {
             let data = try? JSONEncoder().encode(self.cards)
             try? data?.write(to: fileURL)
         }
+    }
+    
+    // MARK: - Notification
+    func setupNotifcationObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleResetCardListNotification(_:)), name: NSNotification.Name("com.projectxmaker.cardgame.ResetCardListNotification"), object: nil)
+    }
+
+    @objc func handleResetCardListNotification(_ notification: Notification) {
+        loadCardsInBackground()
     }
 }

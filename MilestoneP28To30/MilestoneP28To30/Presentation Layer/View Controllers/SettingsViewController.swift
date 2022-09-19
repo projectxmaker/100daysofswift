@@ -54,6 +54,19 @@ class SettingsViewController: UIViewController {
         setPasscodeButton.setAttributedTitle(setPasscodeButtonTitleAttributedString, for: .normal)
         view.addSubview(setPasscodeButton)
         
+        let resetCardsButtonTitleAttributedKeys: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 20),
+            .foregroundColor: UIColor.red
+        ]
+        let resetCardsButtonTitleAttributedString = NSAttributedString(string: "Reset Cards", attributes: resetCardsButtonTitleAttributedKeys)
+
+        let resetCardsButton = UIButton(configuration: tinted)
+        resetCardsButton.translatesAutoresizingMaskIntoConstraints = false
+        resetCardsButton.setAttributedTitle(resetCardsButtonTitleAttributedString, for: .normal)
+        view.addSubview(resetCardsButton)
+        
+        resetCardsButton.addTarget(self, action: #selector(handleResetCardsButtonTapped), for: .touchUpInside)
+        
 
         NSLayoutConstraint.activate([
             settingsTitleLabel.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.topAnchor, constant: 5),
@@ -71,6 +84,10 @@ class SettingsViewController: UIViewController {
             setPasscodeButton.topAnchor.constraint(equalTo: passcodeButton.bottomAnchor, constant: 20),
             setPasscodeButton.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.3),
             setPasscodeButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            
+            resetCardsButton.topAnchor.constraint(equalTo: setPasscodeButton.bottomAnchor, constant: 50),
+            resetCardsButton.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.3),
+            resetCardsButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
         ])
         
     }
@@ -92,4 +109,25 @@ class SettingsViewController: UIViewController {
     }
     */
 
+    // MARK: - Handled Methods Of Buttons
+    @objc func handleResetCardsButtonTapped() {
+        let info = "Card list will be reset to default.\nAll changes you made will be lost.\n Do you want to do that?"
+        let ac = UIAlertController(title: "Reset Cards", message: info, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        ac.addAction(UIAlertAction(title: "Yes", style: .default, handler: { [weak self] _ in
+            self?.resetCards()
+        }))
+        
+        if #available(iOS 16.0, *) {
+            ac.popoverPresentationController?.sourceItem = navigationItem.rightBarButtonItem
+        } else {
+            ac.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        }
+        
+        present(ac, animated: true)
+    }
+    
+    @objc func resetCards() {
+        CardsManager.shared.resetCards()
+    }
 }
