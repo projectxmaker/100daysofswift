@@ -111,8 +111,8 @@ class CardListTableViewController: UITableViewController {
         lockAppBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "lock"), style: .plain, target: self, action: #selector(handleLockAppBarButtonItemTapped))
         
         navigationItem.rightBarButtonItems = [
-            addNewCardBarButtonItem,
-            settingsBarButtonItem
+            settingsBarButtonItem,
+            addNewCardBarButtonItem
         ]
         
         navigationItem.leftBarButtonItem = lockAppBarButtonItem
@@ -123,7 +123,32 @@ class CardListTableViewController: UITableViewController {
     }
     
     @objc func handleAddNewCardBarButtonItemTapped() {
+        let ac = UIAlertController(title: "Add New Card", message: nil, preferredStyle: .alert)
+        ac.addTextField { textfield in
+            textfield.placeholder = "1st card"
+        }
+        ac.addTextField { textfield in
+            textfield.placeholder = "2nd card"
+        }
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        ac.addAction(UIAlertAction(title: "Add", style: .default, handler: { [weak self, weak ac] _ in
+            guard
+                let firstCard = ac?.textFields?[0].text,
+                !firstCard.isEmpty,
+                let secondCard = ac?.textFields?[1].text,
+                !secondCard.isEmpty
+            else { return }
+            
+            self?.addNewCard(first: firstCard, second: secondCard)
+        }))
         
+        if #available(iOS 16.0, *) {
+            ac.popoverPresentationController?.sourceItem = navigationItem.rightBarButtonItem
+        } else {
+            ac.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        }
+        
+        present(ac, animated: true)
     }
     
     @objc func handleLockAppBarButtonItemTapped() {
@@ -154,4 +179,9 @@ class CardListTableViewController: UITableViewController {
         }
     }
 
+    func addNewCard(first: String, second: String) {
+        let card = Card(first: first, second: second)
+        cards.insert(card, at: 0)
+        tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+    }
 }
