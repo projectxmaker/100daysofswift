@@ -191,9 +191,9 @@ class CardListTableViewController: UITableViewController {
     func showEditAlertForCard(at: IndexPath) {
         let cardIndex = at.row
         let card = cards[cardIndex]
-        let cardInfo = "Edit card: \(card.first) | \(card.second)"
+        let info = "Edit a card pair"
         
-        let ac = UIAlertController(title: "Edit A Card", message: cardInfo, preferredStyle: .alert)
+        let ac = UIAlertController(title: "Card Pair", message: info, preferredStyle: .alert)
         ac.addTextField { textfield in
             textfield.text = card.first
         }
@@ -212,7 +212,7 @@ class CardListTableViewController: UITableViewController {
             self?.editCard(at: at, first: firstCard, second: secondCard)
         }))
         ac.addAction(UIAlertAction(title: "Delete", style: .default, handler: { [weak self] _ in
-            self?.deleteCard(at: at)
+            self?.showAlertToConfirmDeletion(at: at)
         }))
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         
@@ -228,6 +228,30 @@ class CardListTableViewController: UITableViewController {
     func editCard(at: IndexPath, first: String, second: String) {
         cards[at.row] = Card(first: first, second: second)
         tableView.reloadRows(at: [at], with: .automatic)
+    }
+    
+    func showAlertToConfirmDeletion(at: IndexPath) {
+        let cardIndex = at.row
+        let card = cards[cardIndex]
+        let info = """
+        Do you want to delete this card pair:
+        \(card.first)
+        \(card.second)
+        """
+        
+        let ac = UIAlertController(title: "Delete Card Pair", message: info, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        ac.addAction(UIAlertAction(title: "Delete", style: .default, handler: { [weak self] _ in
+            self?.deleteCard(at: at)
+        }))
+        
+        if #available(iOS 16.0, *) {
+            ac.popoverPresentationController?.sourceItem = navigationItem.rightBarButtonItem
+        } else {
+            ac.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        }
+        
+        present(ac, animated: true)
     }
     
     func deleteCard(at: IndexPath) {
