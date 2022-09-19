@@ -57,6 +57,9 @@ class CardListTableViewController: UITableViewController {
         return cell
     }
 
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        showEditAlertForCard(at: indexPath)
+    }
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -183,5 +186,43 @@ class CardListTableViewController: UITableViewController {
         let card = Card(first: first, second: second)
         cards.insert(card, at: 0)
         tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+    }
+    
+    func showEditAlertForCard(at: IndexPath) {
+        let cardIndex = at.row
+        let card = cards[cardIndex]
+        let cardInfo = "Edit card: \(card.first) | \(card.second)"
+        
+        let ac = UIAlertController(title: "Edit A Card", message: cardInfo, preferredStyle: .alert)
+        ac.addTextField { textfield in
+            textfield.text = card.first
+        }
+        ac.addTextField { textfield in
+            textfield.text = card.second
+        }
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        ac.addAction(UIAlertAction(title: "Save", style: .default, handler: { [weak self, weak ac] _ in
+            guard
+                let firstCard = ac?.textFields?[0].text,
+                !firstCard.isEmpty,
+                let secondCard = ac?.textFields?[1].text,
+                !secondCard.isEmpty
+            else { return }
+            
+            self?.editCard(at: at, first: firstCard, second: secondCard)
+        }))
+        
+        if #available(iOS 16.0, *) {
+            ac.popoverPresentationController?.sourceItem = navigationItem.rightBarButtonItem
+        } else {
+            ac.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        }
+        
+        present(ac, animated: true)
+    }
+    
+    func editCard(at: IndexPath, first: String, second: String) {
+        cards[at.row] = Card(first: first, second: second)
+        tableView.reloadRows(at: [at], with: .automatic)
     }
 }
