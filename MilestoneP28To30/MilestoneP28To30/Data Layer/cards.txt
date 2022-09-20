@@ -1,0 +1,1 @@
+[{"first":"Vietnam","second":"Hanoi"},{"first":"Australia","second":"Canberra"},{"first":"United Kingdom","second":"London"},{"first":"United States","second":"Washington, D.C."},{"first":"Thailand","second":"Bangkok"},{"first":"Ukraine","second":"Kiev"},{"first":"Germany","second":"Berlin"},{"first":"Russia","second":"Moscow"}]

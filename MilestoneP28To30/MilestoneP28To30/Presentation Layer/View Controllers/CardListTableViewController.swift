@@ -14,7 +14,7 @@ class CardListTableViewController: UITableViewController {
     
     var lockAppBarButtonItem: UIBarButtonItem!
     
-    var cardsManager = CardsManager.shared
+    var cardsManager = CardPairManager.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,13 +40,13 @@ class CardListTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return cardsManager.cards.count
+        return cardsManager.getCardPairs().count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CardCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CardPairCell", for: indexPath)
 
-        let card = cardsManager.cards[indexPath.row]
+        let card = cardsManager.getCardPairs()[indexPath.row]
         
         var contentConfig = cell.defaultContentConfiguration()
         contentConfig.text = card.first
@@ -184,23 +184,23 @@ class CardListTableViewController: UITableViewController {
     }
 
     func addNewCard(first: String, second: String) {
-        cardsManager.addNewCard(first: first, second: second)
+        cardsManager.addNewCardPair(first: first, second: second)
         tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
     }
     
     func editCard(at: IndexPath, first: String, second: String) {
-        cardsManager.editCard(at: at, first: first, second: second)
+        cardsManager.editCardPair(at: at, first: first, second: second)
         tableView.reloadRows(at: [at], with: .automatic)
     }
     
     func deleteCard(at: IndexPath) {
-        cardsManager.deleteCard(at: at)
+        cardsManager.deleteCardPair(at: at)
         tableView.deleteRows(at: [at], with: .automatic)
     }
     
     func showEditAlertForCard(at: IndexPath) {
         let cardIndex = at.row
-        let card = cardsManager.cards[cardIndex]
+        let card = cardsManager.getCardPairs()[cardIndex]
         let info = "Edit a card pair"
         
         let ac = UIAlertController(title: "Card Pair", message: info, preferredStyle: .alert)
@@ -237,7 +237,7 @@ class CardListTableViewController: UITableViewController {
     
     func showAlertToConfirmDeletion(at: IndexPath) {
         let cardIndex = at.row
-        let card = cardsManager.cards[cardIndex]
+        let card = cardsManager.getCardPairs()[cardIndex]
         let info = """
         Do you want to delete this card pair:
         \(card.first)
@@ -261,10 +261,10 @@ class CardListTableViewController: UITableViewController {
     
     // MARK: - Notification
     func setupNotifcationObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(handleResetCardListNotification(_:)), name: NSNotification.Name("com.projectxmaker.cardgame.ResetCardListNotification"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleResetCardPairListNotification(_:)), name: NSNotification.Name("com.projectxmaker.cardgame.ResetCardPairListNotification"), object: nil)
     }
 
-    @objc func handleResetCardListNotification(_ notification: Notification) {
+    @objc func handleResetCardPairListNotification(_ notification: Notification) {
         loadCardsInBackground()
     }
 }

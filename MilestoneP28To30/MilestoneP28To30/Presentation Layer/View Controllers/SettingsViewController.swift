@@ -111,7 +111,7 @@ class SettingsViewController: UIViewController {
 
     // MARK: - Handled Methods Of Buttons
     @objc func handleResetCardsButtonTapped() {
-        let info = "Card list will be reset to default.\nAll changes you made will be lost.\n Do you want to do that?"
+        let info = "Card Pair list will be reset to default.\nAll changes you made will be lost.\n Do you want to do that?"
         let ac = UIAlertController(title: "Reset Cards", message: info, preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         ac.addAction(UIAlertAction(title: "Yes", style: .default, handler: { [weak self] _ in
@@ -128,6 +128,6 @@ class SettingsViewController: UIViewController {
     }
     
     @objc func resetCards() {
-        CardsManager.shared.resetCards()
+        CardPairManager.shared.resetCards()
     }
 }

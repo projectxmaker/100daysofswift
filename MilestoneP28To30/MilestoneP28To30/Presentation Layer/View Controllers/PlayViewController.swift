@@ -8,10 +8,12 @@
 import UIKit
 
 class PlayViewController: UIViewController {
-
-    var buttonCards = [UIButton]()
+    var cardGameEngine = CardGameEngine()
+    
+    var cardButtons = [UIButton]()
     var layoutConstraints = [NSLayoutConstraint]()
     var cancelButton: UIButton!
+    var buttonCardsView: UIView!
     
     override func loadView() {
         view = UIView()
@@ -53,7 +55,20 @@ class PlayViewController: UIViewController {
     }
     
     @objc func handleCardButtonTapped(_ button: UIButton) {
-        print(">>> \(button.tag)")
+        if cardGameEngine.handleCardTapped(cardIndex: button.tag) {
+            faceUpCardButtonByIndexes([button.tag])
+        }
+
+        cardGameEngine.evaluateFacedUpCards { [weak self] cardIndexes in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self?.resolveCardButtonsByIndexes(cardIndexes)
+            }
+        } executeIfFaceDown: { [weak self] cardIndexes in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self?.faceDownCardButtonsByIndexes(cardIndexes)
+            }
+        }
+
     }
     
     // MARK: - Layout
@@ -75,7 +90,7 @@ class PlayViewController: UIViewController {
     }
     
     func setupCardButtons() {
-        let buttonCardsView = UIView()
+        buttonCardsView = UIView()
         buttonCardsView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(buttonCardsView)
         
@@ -85,6 +100,9 @@ class PlayViewController: UIViewController {
         
         var tinted = UIButton.Configuration.tinted()
         tinted.buttonSize = .large
+        
+        var shuffedCards = cardGameEngine.getCards()
+        var shuffedCardCounter = 0
         
         for curRow in 0..<4 {
             for curCol in 0..<4 {
@@ -97,15 +115,16 @@ class PlayViewController: UIViewController {
                 
                 cardButton.frame = CGRect(x: xPosition, y: curRow * (buttonCardHeight + buttonCardSpacing) , width: buttonCardWidth, height: buttonCardHeight)
                 
-                cardButton.titleLabel?.textAlignment = .center
-                cardButton.titleLabel?.font = UIFont.systemFont(ofSize: 40)
-                cardButton.setTitle("AC", for: .normal)
-                cardButton.tag = curRow
+                shuffedCards.removeFirst()
+                cardButton.tag = shuffedCardCounter
+                
+                shuffedCardCounter += 1
                 
                 cardButton.addTarget(self, action: #selector(handleCardButtonTapped(_:)), for: .touchUpInside)
                 
-                buttonCards.append(cardButton)
+                cardButtons.append(cardButton)
                 buttonCardsView.addSubview(cardButton)
+                faceDownCardButtonsByIndexes([cardButton.tag])
             }
         }
         
@@ -140,4 +159,62 @@ class PlayViewController: UIViewController {
         ]
     }
     
+    func removeCardButtonFromView(_ button: UIButton) {
+        button.configuration?.baseBackgroundColor = UIColor.white
+        button.configuration?.baseForegroundColor = UIColor.white
+    }
+    
+    func faceUpCardButtonByIndexes(_ indexes: [Int]) {
+        for eachIndex in indexes {
+            let card = cardGameEngine.getCards()[eachIndex]
+            let button = cardButtons[eachIndex]
+            button.configuration?.baseForegroundColor = UIColor.yellow
+            button.backgroundColor = UIColor.red
+
+            let attributedTextKeys: [NSAttributedString.Key: Any] = [
+                .font: UIFont.systemFont(ofSize: 20, weight: .bold),
+            ]
+            
+            let attributedText = NSAttributedString(string: card.name, attributes: attributedTextKeys)
+            button.setAttributedTitle(attributedText, for: .normal)
+            
+            UIView.transition(with: button, duration: 0.3, options: .transitionFlipFromLeft, animations: nil, completion: nil)
+        }
+    }
+    
+    func faceDownCardButtonsByIndexes(_ indexes: [Int]) {
+        for eachIndex in indexes {
+            let button = cardButtons[eachIndex]
+            button.configuration?.baseForegroundColor = UIColor.white
+            button.backgroundColor = UIColor.gray
+            
+            let attributedTextKeys: [NSAttributedString.Key: Any] = [
+                .font: UIFont.systemFont(ofSize: 40, weight: .bold),
+            ]
+            let attributedText = NSAttributedString(string: "?", attributes: attributedTextKeys)
+            button.setAttributedTitle(attributedText, for: .normal)
+
+            UIView.transition(with: button, duration: 0.3, options: .transitionFlipFromRight, animations: nil, completion: nil)
+        }
+    }
+    
+    func resolveCardButtonsByIndexes(_ indexes: [Int]) {
+        for eachIndex in indexes {
+            let button = cardButtons[eachIndex]
+            UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0.5, options: [.curveEaseInOut], animations: {
+                button.transform = CGAffineTransform(scaleX: 0, y: 0)
+            })
+        }
+        
+        if cardGameEngine.isAllCardsResolved() {
+            endRound()
+        }
+    }
+    
+    func endRound() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let playResultViewController = storyboard.instantiateViewController(withIdentifier: "PlayResultView")
+        
+        navigationController?.pushViewController(playResultViewController, animated: true)
+    }
 }

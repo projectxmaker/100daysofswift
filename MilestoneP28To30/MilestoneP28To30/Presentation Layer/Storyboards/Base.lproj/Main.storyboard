@@ -34,7 +34,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="CardCell" textLabel="aPL-m2-1c4" detailTextLabel="jqq-Xc-mqZ" rowHeight="57" style="IBUITableViewCellStyleSubtitle" id="jGZ-pH-Q8R">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="CardPairCell" textLabel="aPL-m2-1c4" detailTextLabel="jqq-Xc-mqZ" rowHeight="57" style="IBUITableViewCellStyleSubtitle" id="jGZ-pH-Q8R">
                                 <rect key="frame" x="0.0" y="50" width="768" height="57"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="jGZ-pH-Q8R" id="2gk-1X-MPc">

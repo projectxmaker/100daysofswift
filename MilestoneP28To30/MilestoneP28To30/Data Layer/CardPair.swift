@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Card: Codable {
+struct CardPair: Codable {
     var first: String
     var second: String
 }
