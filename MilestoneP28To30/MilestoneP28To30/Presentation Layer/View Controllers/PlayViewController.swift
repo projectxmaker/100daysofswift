@@ -10,6 +10,7 @@ import UIKit
 class PlayViewController: UIViewController {
     var cardGameEngine = CardGameEngine()
     
+    var round: Int = 1
     var cardButtons = [UIButton]()
     var layoutConstraints = [NSLayoutConstraint]()
     var cancelButton: UIButton!
@@ -75,7 +76,7 @@ class PlayViewController: UIViewController {
     func setupRoundLabel() {
         let roundLabel = UILabel()
         roundLabel.translatesAutoresizingMaskIntoConstraints = false
-        roundLabel.text = "Round 1"
+        roundLabel.text = "Round \(round)"
         roundLabel.font = UIFont.preferredFont(forTextStyle: .largeTitle)
         roundLabel.textAlignment = .center
         roundLabel.setContentHuggingPriority(UILayoutPriority(1), for: .vertical)
@@ -213,7 +214,9 @@ class PlayViewController: UIViewController {
     
     func endRound() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let playResultViewController = storyboard.instantiateViewController(withIdentifier: "PlayResultView")
+        guard let playResultViewController = storyboard.instantiateViewController(withIdentifier: "PlayResultView") as? PlayResultViewController else { return }
+        
+        playResultViewController.round = round
         
         navigationController?.pushViewController(playResultViewController, animated: true)
     }
