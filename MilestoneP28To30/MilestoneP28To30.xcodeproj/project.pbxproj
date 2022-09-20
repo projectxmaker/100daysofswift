@@ -18,6 +18,7 @@
 		8A59549328D70D2600038BAB /* CardListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A59549228D70D2600038BAB /* CardListTableViewController.swift */; };
 		8A59549528D7122600038BAB /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A59549428D7122600038BAB /* SettingsViewController.swift */; };
 		8A9AF51628D96CE800728789 /* CardGameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9AF51528D96CE800728789 /* CardGameEngine.swift */; };
+		8A9AF51828DA245400728789 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9AF51728DA245400728789 /* Constants.swift */; };
 		8AE7591128D7FB9B00CDE05C /* cards.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8AE7591028D7FB9B00CDE05C /* cards.txt */; };
 		8AE7591428D7FE4600CDE05C /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE7591328D7FE4600CDE05C /* Card.swift */; };
 		8AE7591628D85A4700CDE05C /* CardPairManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE7591528D85A4700CDE05C /* CardPairManager.swift */; };
@@ -38,6 +39,7 @@
 		8A59549228D70D2600038BAB /* CardListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListTableViewController.swift; sourceTree = "<group>"; };
 		8A59549428D7122600038BAB /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		8A9AF51528D96CE800728789 /* CardGameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardGameEngine.swift; sourceTree = "<group>"; };
+		8A9AF51728DA245400728789 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		8AE7591028D7FB9B00CDE05C /* cards.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = cards.txt; sourceTree = "<group>"; };
 		8AE7591328D7FE4600CDE05C /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		8AE7591528D85A4700CDE05C /* CardPairManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPairManager.swift; sourceTree = "<group>"; };
@@ -79,6 +81,7 @@
 				8AE7591228D7FB9F00CDE05C /* Data Layer */,
 				8A59548028D59A4200038BAB /* Assets.xcassets */,
 				8A59548528D59A4200038BAB /* Info.plist */,
+				8A9AF51728DA245400728789 /* Constants.swift */,
 			);
 			path = MilestoneP28To30;
 			sourceTree = "<group>";
@@ -217,6 +220,7 @@
 				8A9AF51628D96CE800728789 /* CardGameEngine.swift in Sources */,
 				8AE7591428D7FE4600CDE05C /* Card.swift in Sources */,
 				8AE7591928D95DF900CDE05C /* CardPair.swift in Sources */,
+				8A9AF51828DA245400728789 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

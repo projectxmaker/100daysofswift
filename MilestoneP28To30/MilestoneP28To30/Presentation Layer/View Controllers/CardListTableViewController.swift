@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import LocalAuthentication
 
 class CardListTableViewController: UITableViewController {
 
@@ -16,6 +17,8 @@ class CardListTableViewController: UITableViewController {
     
     var cardsManager = CardPairManager.shared
     
+    var enabledBiometric = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -24,6 +27,8 @@ class CardListTableViewController: UITableViewController {
         setupNavigationItems()
         setupNotifcationObservers()
         loadCardsInBackground()
+        loadSecuritySettings()
+        runSecurity()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -126,6 +131,7 @@ class CardListTableViewController: UITableViewController {
 
     }
     
+    #warning("remove this")
     @objc func backToPreviousPage() {
         
     }
@@ -257,6 +263,50 @@ class CardListTableViewController: UITableViewController {
         }
         
         present(ac, animated: true)
+    }
+    
+    func loadSecuritySettings() {
+        enabledBiometric = UserDefaults.standard.bool(forKey: SettingsViewController.Keys.biometricSettingKey)
+    }
+    
+    func runSecurity() {
+        if enabledBiometric {
+            tableView.isHidden = true
+            
+            authenticateWithBiometric()
+        }
+    }
+    
+    func authenticateWithBiometric() {
+        let context = LAContext()
+        var error: NSError?
+
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+            let reason = "It's used to unlock Card Management feature!"
+
+            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) {
+                [weak self] success, authenticationError in
+
+                DispatchQueue.main.async {
+                    if success {
+                        self?.tableView.isHidden = false
+                    } else {
+                        let ac = UIAlertController(title: "Authentication failed", message: "You could not be verified; please try again.", preferredStyle: .alert)
+                        
+                        ac.addAction(UIAlertAction(title: "Ok", style: .default))
+
+                        ac.popoverPresentationController?.barButtonItem = self?.navigationItem.rightBarButtonItem
+                        self?.present(ac, animated: true)
+                    }
+                }
+            }
+        } else {
+            let ac = UIAlertController(title: "Biometry unavailable", message: "Your device is not configured for biometric authentication.", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "Ok", style: .default))
+            
+            ac.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+            present(ac, animated: true)
+        }
     }
     
     // MARK: - Notification
