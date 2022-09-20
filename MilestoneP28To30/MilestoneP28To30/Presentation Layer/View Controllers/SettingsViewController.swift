@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import LocalAuthentication
 
 class SettingsViewController: UIViewController {
     var settingsTitleLabel: UILabel!
@@ -17,6 +18,15 @@ class SettingsViewController: UIViewController {
     var layoutConstraints = [NSLayoutConstraint]()
     
     var tinted = UIButton.Configuration.tinted()
+    
+    var enabledBiometric: Bool = false {
+        didSet {
+            saveBiometricSetting()
+            setLabelOfBiometricButton()
+        }
+    }
+    
+    let biometricSettingKey = "com.projectxmaker.cardgame.settings.biometric"
     
     override func loadView() {
         view = UIView()
@@ -35,8 +45,9 @@ class SettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
+        loadSettings()
     }
     
 
@@ -67,15 +78,13 @@ class SettingsViewController: UIViewController {
     }
     
     func setupBiometricButton() {
-        let biometricButtonTitleAttributedKeys: [NSAttributedString.Key: Any] = [
-            .font: UIFont.systemFont(ofSize: 20),
-        ]
-        let biometricButtonTitleAttributedString = NSAttributedString(string: "Face ID/Touch ID: ON", attributes: biometricButtonTitleAttributedKeys)
-
         biometricButton = UIButton(configuration: tinted)
         biometricButton.translatesAutoresizingMaskIntoConstraints = false
-        biometricButton.setAttributedTitle(biometricButtonTitleAttributedString, for: .normal)
         view.addSubview(biometricButton)
+        
+        setLabelOfBiometricButton()
+        
+        biometricButton.addTarget(self, action: #selector(handleBiometricButtonTapped), for: .touchUpInside)
         
         layoutConstraints += [
             biometricButton.topAnchor.constraint(equalTo: settingsTitleLabel.bottomAnchor, constant: 100),
@@ -138,6 +147,10 @@ class SettingsViewController: UIViewController {
     }
 
     // MARK: - Handled Methods Of Buttons
+    @objc func handleBiometricButtonTapped() {
+        authenticateWithBiometric()
+    }
+    
     @objc func handleResetCardsButtonTapped() {
         let info = "Card Pair list will be reset to default.\nAll changes you made will be lost.\n Do you want to do that?"
         let ac = UIAlertController(title: "Reset Cards", message: info, preferredStyle: .alert)
@@ -157,5 +170,68 @@ class SettingsViewController: UIViewController {
     
     @objc func resetCards() {
         CardPairManager.shared.resetCards()
+    }
+    
+    func authenticateWithBiometric() {
+        let context = LAContext()
+        var error: NSError?
+
+        if !enabledBiometric {
+            if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+                enabledBiometric = true
+                let reason = "It's used to unlock Card Management feature!"
+
+                context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) {
+                    [weak self] success, authenticationError in
+
+                    DispatchQueue.main.async { [weak self] in
+                        if success {
+                            self?.enabledBiometric = true
+                        } else {
+                            let ac = UIAlertController(title: "Authentication failed", message: "You could not be verified; please try again.", preferredStyle: .alert)
+
+                            ac.addAction(UIAlertAction(title: "Ok", style: .default))
+                            
+                            ac.popoverPresentationController?.barButtonItem = self?.navigationItem.rightBarButtonItem
+                            self?.present(ac, animated: true)
+                        }
+                    }
+                }
+            } else {
+                let ac = UIAlertController(title: "Biometry unavailable", message: "Your device is not configured for biometric authentication.", preferredStyle: .alert)
+                ac.addAction(UIAlertAction(title: "Ok", style: .default))
+                
+                ac.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+                present(ac, animated: true)
+            }
+        } else {
+            enabledBiometric = false
+        }
+    }
+    
+    // MARK: - Extra Funcs
+    func loadSettings() {
+        enabledBiometric = UserDefaults.standard.bool(forKey: biometricSettingKey)
+    }
+    
+    func saveBiometricSetting() {
+        UserDefaults.standard.set(enabledBiometric, forKey: biometricSettingKey)
+    }
+    
+    func setLabelOfBiometricButton() {
+        guard let button = biometricButton else { return }
+        
+        let newTitle = "Face ID/Touch ID: \(enabledBiometric ? "ON" : "OFF")"
+        let attributedString = getAttributedTitleForBiometricButton(newTitle: newTitle)
+
+        button.setAttributedTitle(attributedString, for: .normal)
+    }
+    
+    func getAttributedTitleForBiometricButton(newTitle: String) -> NSAttributedString {
+        let biometricButtonTitleAttributedKeys: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 20),
+        ]
+        
+        return NSAttributedString(string: newTitle, attributes: biometricButtonTitleAttributedKeys)
     }
 }
