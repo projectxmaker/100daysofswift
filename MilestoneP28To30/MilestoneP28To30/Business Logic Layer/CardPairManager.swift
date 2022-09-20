@@ -9,8 +9,6 @@ import Foundation
 
 class CardPairManager {
     static let shared = CardPairManager()
-    
-    #warning("make this var to be private var")
     var cardPairs = [CardPair]()
     
     init() {
@@ -26,8 +24,6 @@ class CardPairManager {
                 try? FileManager.default.removeItem(at: userDefinedCardsFileURL)
                 
                 NotificationCenter.default.post(name: NSNotification.Name("com.projectxmaker.cardgame.ResetCardPairListNotification"), object: nil)
-                
-                #warning("need to reload cards, remove code that reload cards in Card List screen")
             }
         }
     }

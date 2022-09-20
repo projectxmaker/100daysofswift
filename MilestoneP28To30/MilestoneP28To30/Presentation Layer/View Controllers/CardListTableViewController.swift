@@ -131,11 +131,6 @@ class CardListTableViewController: UITableViewController {
 
     }
     
-    #warning("remove this")
-    @objc func backToPreviousPage() {
-        
-    }
-    
     @objc func handleSettingsBarButtonItemTapped() {
         let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let settingsVC = mainStoryboard.instantiateViewController(withIdentifier: "SettingsView")
