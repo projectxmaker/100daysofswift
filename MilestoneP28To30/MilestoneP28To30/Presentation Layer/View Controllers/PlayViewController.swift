@@ -65,6 +65,8 @@ class PlayViewController: UIViewController {
         cancelButton.setAttributedTitle(cancelButtonTitleAttributedTitle, for: .normal)
         view.addSubview(cancelButton)
         
+        cancelButton.addTarget(self, action: #selector(handleCancelButtonTapped), for: .touchUpInside)
+        
         NSLayoutConstraint.activate([
             roundLabel.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.topAnchor, constant: 5),
             roundLabel.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.5),
@@ -103,5 +105,10 @@ class PlayViewController: UIViewController {
     // MARK: - Navigation Controller
     func setupNavigationItems() {
         navigationItem.hidesBackButton = true
+    }
+    
+    // MARK: - Button Handlers
+    @objc func handleCancelButtonTapped() {
+        navigationController?.popToRootViewController(animated: true)
     }
 }
