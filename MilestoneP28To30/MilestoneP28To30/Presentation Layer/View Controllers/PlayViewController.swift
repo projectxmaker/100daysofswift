@@ -86,6 +86,7 @@ class PlayViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        setupNavigationItems()
     }
     
 
@@ -99,4 +100,8 @@ class PlayViewController: UIViewController {
     }
     */
 
+    // MARK: - Navigation Controller
+    func setupNavigationItems() {
+        navigationItem.hidesBackButton = true
+    }
 }

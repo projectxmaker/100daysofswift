@@ -34,6 +34,8 @@ class MainViewController: UIViewController {
         playButton.setAttributedTitle(playButtonTitleAttributedString, for: .normal)
         view.addSubview(playButton)
 
+        playButton.addTarget(self, action: #selector(handlePlayButtonTapped), for: .touchUpInside)
+        
         let cardManagementButtonTitleAttributedKeys: [NSAttributedString.Key: Any] = [
             .underlineStyle: NSUnderlineStyle.thick.rawValue,
             .font: UIFont.preferredFont(forTextStyle: .callout),
@@ -72,16 +74,15 @@ class MainViewController: UIViewController {
     @objc func handleCardManagementButtonTapped() {
         let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let cardListTableViewController = mainStoryboard.instantiateViewController(withIdentifier: "CardListView")
-//
-//        if #available(iOS 16.0, *) {
-//            cardListTableViewController.popoverPresentationController?.sourceItem = navigationItem.rightBarButtonItem
-//        } else {
-//            cardListTableViewController.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
-//        }
-//
-//        present(cardListTableViewController, animated: true)
         
         navigationController?.pushViewController(cardListTableViewController, animated: true)
+    }
+    
+    @objc func handlePlayButtonTapped() {
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let playViewTableViewController = mainStoryboard.instantiateViewController(withIdentifier: "PlayView")
+        
+        navigationController?.pushViewController(playViewTableViewController, animated: true)
     }
 }
 
