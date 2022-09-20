@@ -44,6 +44,8 @@ class MainViewController: UIViewController {
         cardManagementButton.translatesAutoresizingMaskIntoConstraints = false
         cardManagementButton.setAttributedTitle(cardManagementButtonTitleAttributedTitle, for: .normal)
         view.addSubview(cardManagementButton)
+        
+        cardManagementButton.addTarget(self, action: #selector(handleCardManagementButtonTapped), for: .touchUpInside)
 
         NSLayoutConstraint.activate([
             appTitleLabel.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.topAnchor, constant: 5),
@@ -66,6 +68,20 @@ class MainViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
-
+    // MARK: - Button Handlers
+    @objc func handleCardManagementButtonTapped() {
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let cardListTableViewController = mainStoryboard.instantiateViewController(withIdentifier: "CardListView")
+//
+//        if #available(iOS 16.0, *) {
+//            cardListTableViewController.popoverPresentationController?.sourceItem = navigationItem.rightBarButtonItem
+//        } else {
+//            cardListTableViewController.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+//        }
+//
+//        present(cardListTableViewController, animated: true)
+        
+        navigationController?.pushViewController(cardListTableViewController, animated: true)
+    }
 }
 

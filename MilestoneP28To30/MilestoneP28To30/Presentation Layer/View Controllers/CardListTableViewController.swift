@@ -119,7 +119,15 @@ class CardListTableViewController: UITableViewController {
             addNewCardBarButtonItem
         ]
         
+        
         navigationItem.leftBarButtonItem = lockAppBarButtonItem
+        navigationItem.hidesBackButton = false
+        navigationItem.leftItemsSupplementBackButton = true
+
+    }
+    
+    @objc func backToPreviousPage() {
+        
     }
     
     @objc func handleSettingsBarButtonItemTapped() {
