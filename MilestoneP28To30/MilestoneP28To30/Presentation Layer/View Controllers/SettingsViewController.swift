@@ -11,7 +11,7 @@ import LocalAuthentication
 class SettingsViewController: UIViewController {
     var settingsTitleLabel: UILabel!
     var biometricButton: UIButton!
-    var passcodeButton: UIButton!
+    var passcodeStateButton: UIButton!
     var setPasscodeButton: UIButton!
     var resetCardsButton: UIButton!
     
@@ -26,7 +26,19 @@ class SettingsViewController: UIViewController {
         }
     }
     
+    var enabledPasscodeState: Bool = false {
+        didSet {
+            savePasscodeStateSetting()
+            setLabelOfPasscodeStateButton()
+            switchSetPasscodeButton()
+        }
+    }
+    
+    var passcode: String?
+    
     let biometricSettingKey = "com.projectxmaker.cardgame.settings.biometric"
+    let passcodeStateSettingKey = "com.projectxmaker.cardgame.settings.passcodeState"
+    let passcodeSettingKey = "com.projectxmaker.cardgame.settings.passcode"
     
     override func loadView() {
         view = UIView()
@@ -99,10 +111,12 @@ class SettingsViewController: UIViewController {
         ]
         let passcodeButtonTitleAttributedString = NSAttributedString(string: "Passcode: ON", attributes: passcodeButtonTitleAttributedKeys)
 
-        passcodeButton = UIButton(configuration: tinted)
-        passcodeButton.translatesAutoresizingMaskIntoConstraints = false
-        passcodeButton.setAttributedTitle(passcodeButtonTitleAttributedString, for: .normal)
-        view.addSubview(passcodeButton)
+        passcodeStateButton = UIButton(configuration: tinted)
+        passcodeStateButton.translatesAutoresizingMaskIntoConstraints = false
+        passcodeStateButton.setAttributedTitle(passcodeButtonTitleAttributedString, for: .normal)
+        view.addSubview(passcodeStateButton)
+        
+        passcodeStateButton.addTarget(self, action: #selector(handlePasscodeStateButtonTapped), for: .touchUpInside)
         
         let setPasscodeButtonTitleAttributedKeys: [NSAttributedString.Key: Any] = [
             .font: UIFont.systemFont(ofSize: 20),
@@ -114,12 +128,14 @@ class SettingsViewController: UIViewController {
         setPasscodeButton.setAttributedTitle(setPasscodeButtonTitleAttributedString, for: .normal)
         view.addSubview(setPasscodeButton)
         
+        setPasscodeButton.addTarget(self, action: #selector(handleSetPasscodeButtonTapped), for: .touchUpInside)
+        
         layoutConstraints += [
-            passcodeButton.topAnchor.constraint(equalTo: biometricButton.bottomAnchor, constant: 50),
-            passcodeButton.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.3),
-            passcodeButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            passcodeStateButton.topAnchor.constraint(equalTo: biometricButton.bottomAnchor, constant: 50),
+            passcodeStateButton.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.3),
+            passcodeStateButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             
-            setPasscodeButton.topAnchor.constraint(equalTo: passcodeButton.bottomAnchor, constant: 20),
+            setPasscodeButton.topAnchor.constraint(equalTo: passcodeStateButton.bottomAnchor, constant: 20),
             setPasscodeButton.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.3),
             setPasscodeButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor)
         ]
@@ -149,6 +165,20 @@ class SettingsViewController: UIViewController {
     // MARK: - Handled Methods Of Buttons
     @objc func handleBiometricButtonTapped() {
         authenticateWithBiometric()
+    }
+    
+    @objc func handlePasscodeStateButtonTapped() {
+        if enabledPasscodeState {
+            enabledPasscodeState = false
+        } else {
+            enabledPasscodeState = true
+            
+            showAlertToSetPasscodeIfNoPasscodeWasSetPreviously()
+        }
+    }
+    
+    @objc func handleSetPasscodeButtonTapped() {
+        showAlertToSetPasscode()
     }
     
     @objc func handleResetCardsButtonTapped() {
@@ -212,10 +242,21 @@ class SettingsViewController: UIViewController {
     // MARK: - Extra Funcs
     func loadSettings() {
         enabledBiometric = UserDefaults.standard.bool(forKey: biometricSettingKey)
+        enabledPasscodeState = UserDefaults.standard.bool(forKey: passcodeStateSettingKey)
+        passcode = UserDefaults.standard.string(forKey: passcodeSettingKey)
     }
     
     func saveBiometricSetting() {
         UserDefaults.standard.set(enabledBiometric, forKey: biometricSettingKey)
+    }
+    
+    func savePasscodeStateSetting() {
+        UserDefaults.standard.set(enabledPasscodeState, forKey: passcodeStateSettingKey)
+    }
+    
+    func savePasscode(_ newPasscode: String) {
+        passcode = newPasscode
+        UserDefaults.standard.set(newPasscode, forKey: passcodeSettingKey)
     }
     
     func setLabelOfBiometricButton() {
@@ -233,5 +274,116 @@ class SettingsViewController: UIViewController {
         ]
         
         return NSAttributedString(string: newTitle, attributes: biometricButtonTitleAttributedKeys)
+    }
+    
+    func setLabelOfPasscodeStateButton() {
+        guard let button = passcodeStateButton else { return }
+        
+        let newTitle = "Passcode: \(enabledPasscodeState ? "ON" : "OFF")"
+        let attributedString = getAttributedTitleForPasscodeButton(newTitle: newTitle)
+
+        button.setAttributedTitle(attributedString, for: .normal)
+    }
+    
+    func getAttributedTitleForPasscodeButton(newTitle: String) -> NSAttributedString {
+        let biometricButtonTitleAttributedKeys: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 20),
+        ]
+        
+        return NSAttributedString(string: newTitle, attributes: biometricButtonTitleAttributedKeys)
+    }
+    
+    func switchSetPasscodeButton() {
+        if enabledPasscodeState {
+            setPasscodeButton.isHidden = false
+        } else {
+            setPasscodeButton.isHidden = true
+        }
+    }
+    
+    func hasPasscode(execute: ((_ hasPasscode: Bool, _ passcode: String?) -> Void)? = nil) {
+        var hasPasscode = false
+        var existingPasscode: String?
+        if let tmpPasscode = passcode {
+            print("passcode: \(tmpPasscode)")
+            if !tmpPasscode.isEmpty {
+                existingPasscode = tmpPasscode
+                hasPasscode = true
+            }
+        }
+
+        if let execute = execute {
+            print("hasPasscode: \(hasPasscode ? "Y" : "N")")
+            execute(hasPasscode, existingPasscode)
+        }
+    }
+    
+    func showAlertToSetPasscode(errorMsg: String? = nil) {
+        let info = errorMsg ?? "Set passcode to unlock Card Management feature"
+        let ac = UIAlertController(title: "Passcode", message: info, preferredStyle: .alert)
+        
+        hasPasscode(execute: { [weak ac] hasPasscode, passcode in
+            if hasPasscode {
+                ac?.addTextField { textfield in
+                    textfield.placeholder = "Input existing passcode"
+                }
+            }
+        })
+
+        ac.addTextField { textfield in
+            textfield.placeholder = "Input new passcode"
+        }
+        ac.addTextField { textfield in
+            textfield.placeholder = "Confirm new passcode"
+        }
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        ac.addAction(UIAlertAction(title: "Save", style: .default, handler: { [weak self, weak ac] _ in
+            self?.hasPasscode { hasPasscode, passcode in
+                let newPasscode: String
+                let confirmNewPasscode: String
+                var errorMsg = [String]()
+                
+                if hasPasscode {
+                    let existingPasscode = ac?.textFields?[0].text
+                    newPasscode = ac?.textFields?[1].text ?? ""
+                    confirmNewPasscode = ac?.textFields?[2].text ?? ""
+                    
+                    if existingPasscode != self?.passcode {
+                        errorMsg.append("Existing passcode is invalid.")
+                    }
+                } else {
+                    newPasscode = ac?.textFields?[0].text ?? ""
+                    confirmNewPasscode = ac?.textFields?[1].text ?? ""
+                }
+                
+                if newPasscode.isEmpty || confirmNewPasscode.isEmpty || newPasscode != confirmNewPasscode {
+                    errorMsg.append("New passcode or confirming passcode is invalid.")
+                }
+                
+                guard errorMsg.isEmpty else {
+                    self?.showAlertToSetPasscode(errorMsg: errorMsg.joined(separator: "\n"))
+                    return
+                }
+                
+                self?.savePasscode(newPasscode)
+            }
+        }))
+        
+        if #available(iOS 16.0, *) {
+            ac.popoverPresentationController?.sourceItem = navigationItem.rightBarButtonItem
+        } else {
+            ac.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        }
+        
+        present(ac, animated: true)
+    }
+    
+    func showAlertToSetPasscodeIfNoPasscodeWasSetPreviously() {
+        // show alert to set passcode if passcode wasn't set previously
+        hasPasscode(execute: { [weak self] hasPasscode, passcode in
+            if !hasPasscode {
+                self?.showAlertToSetPasscode()
+            }
+        })
     }
 }
