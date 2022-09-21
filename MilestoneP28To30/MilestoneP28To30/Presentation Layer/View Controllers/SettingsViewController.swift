@@ -204,7 +204,6 @@ class SettingsViewController: UIViewController {
 
         if !enabledBiometric {
             if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
-                enabledBiometric = true
                 let reason = "It's used to unlock Card Management feature!"
 
                 context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) {
