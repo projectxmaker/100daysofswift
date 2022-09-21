@@ -36,10 +36,6 @@ class SettingsViewController: UIViewController {
     
     var passcode: String?
     
-    let biometricSettingKey = "com.projectxmaker.cardgame.settings.biometric"
-    let passcodeStateSettingKey = "com.projectxmaker.cardgame.settings.passcodeState"
-    let passcodeSettingKey = "com.projectxmaker.cardgame.settings.passcode"
-    
     override func loadView() {
         view = UIView()
         view.backgroundColor = .white
@@ -241,22 +237,22 @@ class SettingsViewController: UIViewController {
     
     // MARK: - Extra Funcs
     func loadSettings() {
-        enabledBiometric = UserDefaults.standard.bool(forKey: biometricSettingKey)
-        enabledPasscodeState = UserDefaults.standard.bool(forKey: passcodeStateSettingKey)
-        passcode = UserDefaults.standard.string(forKey: passcodeSettingKey)
+        enabledBiometric = UserDefaults.standard.bool(forKey: SettingsViewController.Keys.biometricSettingKey)
+        enabledPasscodeState = UserDefaults.standard.bool(forKey: SettingsViewController.Keys.passcodeStateSettingKey)
+        passcode = UserDefaults.standard.string(forKey: SettingsViewController.Keys.passcodeSettingKey)
     }
     
     func saveBiometricSetting() {
-        UserDefaults.standard.set(enabledBiometric, forKey: biometricSettingKey)
+        UserDefaults.standard.set(enabledBiometric, forKey: SettingsViewController.Keys.biometricSettingKey)
     }
     
     func savePasscodeStateSetting() {
-        UserDefaults.standard.set(enabledPasscodeState, forKey: passcodeStateSettingKey)
+        UserDefaults.standard.set(enabledPasscodeState, forKey: SettingsViewController.Keys.passcodeStateSettingKey)
     }
     
     func savePasscode(_ newPasscode: String) {
         passcode = newPasscode
-        UserDefaults.standard.set(newPasscode, forKey: passcodeSettingKey)
+        UserDefaults.standard.set(newPasscode, forKey: SettingsViewController.Keys.passcodeSettingKey)
     }
     
     func setLabelOfBiometricButton() {
