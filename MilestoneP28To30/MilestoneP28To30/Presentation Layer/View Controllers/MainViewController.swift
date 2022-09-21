@@ -84,8 +84,6 @@ class MainViewController: UIViewController {
         UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0.1, options: [.curveEaseInOut]) {
             self.playButton.transform = .identity
         } completion: { _ in
-            //self.playButton.transform = .identity
-            
             let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let playViewTableViewController = mainStoryboard.instantiateViewController(withIdentifier: "PlayView")
             
