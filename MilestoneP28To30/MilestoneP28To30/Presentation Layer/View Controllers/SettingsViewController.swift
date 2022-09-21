@@ -246,12 +246,18 @@ class SettingsViewController: UIViewController {
     }
     
     func savePasscodeStateSetting() {
-        UserDefaults.standard.set(enabledPasscodeState, forKey: SettingsViewController.Keys.passcodeStateSettingKey)
+        guard let passcode = passcode else { return }
+        
+        if !passcode.isEmpty {
+            UserDefaults.standard.set(enabledPasscodeState, forKey: SettingsViewController.Keys.passcodeStateSettingKey)
+        }
     }
     
     func savePasscode(_ newPasscode: String) {
-        passcode = newPasscode
-        UserDefaults.standard.set(newPasscode, forKey: SettingsViewController.Keys.passcodeSettingKey)
+        if !newPasscode.isEmpty {
+            passcode = newPasscode
+            UserDefaults.standard.set(newPasscode, forKey: SettingsViewController.Keys.passcodeSettingKey)
+        }
     }
     
     func setLabelOfBiometricButton() {
@@ -313,7 +319,20 @@ class SettingsViewController: UIViewController {
         }
     }
     
-    func showAlertToSetPasscode(errorMsg: String? = nil) {
+    func showAlertToSetPasscode() {
+        showAlertToSetPasscodeWithConditions()
+    }
+    
+    func showAlertToSetPasscode(withoutCancelButton: Bool) {
+        showAlertToSetPasscodeWithConditions(withoutCancelButton: withoutCancelButton)
+    }
+    
+    func showAlertToSetPasscode(errorMsg: String) {
+        showAlertToSetPasscodeWithConditions(withoutCancelButton: false, errorMsg: errorMsg)
+    }
+    
+    func showAlertToSetPasscodeWithConditions(withoutCancelButton: Bool? = false, errorMsg: String? = nil) {
+        let withoutCancelButton = withoutCancelButton ?? false
         let info = errorMsg ?? "Set passcode to unlock Card Management feature"
         let ac = UIAlertController(title: "Passcode", message: info, preferredStyle: .alert)
         
@@ -331,7 +350,11 @@ class SettingsViewController: UIViewController {
         ac.addTextField { textfield in
             textfield.placeholder = "Confirm new passcode"
         }
-        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
+        if !withoutCancelButton {
+            ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        }
+        
         ac.addAction(UIAlertAction(title: "Save", style: .default, handler: { [weak self, weak ac] _ in
             self?.hasPasscode { hasPasscode, passcode in
                 let newPasscode: String
@@ -361,6 +384,8 @@ class SettingsViewController: UIViewController {
                 }
                 
                 self?.savePasscode(newPasscode)
+                
+                self?.savePasscodeStateSetting()
             }
         }))
         
@@ -377,7 +402,7 @@ class SettingsViewController: UIViewController {
         // show alert to set passcode if passcode wasn't set previously
         hasPasscode(execute: { [weak self] hasPasscode, passcode in
             if !hasPasscode {
-                self?.showAlertToSetPasscode()
+                self?.showAlertToSetPasscode(withoutCancelButton: true)
             }
         })
     }
