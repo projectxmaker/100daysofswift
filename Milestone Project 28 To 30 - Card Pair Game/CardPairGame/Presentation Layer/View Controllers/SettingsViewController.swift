@@ -149,7 +149,7 @@ class SettingsViewController: UIViewController {
             .font: UIFont.systemFont(ofSize: 20),
             .foregroundColor: UIColor.red
         ]
-        let resetCardsButtonTitleAttributedString = NSAttributedString(string: "Reset Cards", attributes: resetCardsButtonTitleAttributedKeys)
+        let resetCardsButtonTitleAttributedString = NSAttributedString(string: "Reset Card Pairs", attributes: resetCardsButtonTitleAttributedKeys)
 
         let resetCardsButton = UIButton(configuration: tinted)
         resetCardsButton.translatesAutoresizingMaskIntoConstraints = false
