@@ -18,10 +18,6 @@ class CardListTableViewController: UITableViewController {
     
     var cardsManager = CardPairManager.shared
     
-    var enabledBiometric = false
-    var enabledPasscodeState = false
-    var passcode: String?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -30,17 +26,7 @@ class CardListTableViewController: UITableViewController {
         setupNavigationItems()
         setupNotifcationObservers()
         loadCardsInBackground()
-        loadSecuritySettings()
         runSecurity()
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        loadSecuritySettings()
     }
     
     // MARK: - Table view data source
@@ -73,51 +59,7 @@ class CardListTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         showEditAlertForCard(at: indexPath)
     }
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
 
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
     // MARK: - Bar Button Item Functions
     func setupNavigationItems() {
         settingsBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gearshape"), style: .plain, target: self, action: #selector(handleSettingsBarButtonItemTapped))
@@ -130,7 +72,6 @@ class CardListTableViewController: UITableViewController {
             settingsBarButtonItem,
             addNewCardBarButtonItem
         ]
-        
         
         navigationItem.leftBarButtonItem = lockAppBarButtonItem
         navigationItem.hidesBackButton = false
@@ -272,15 +213,8 @@ class CardListTableViewController: UITableViewController {
     }
     
     // MARK: - Security
-    
-    func loadSecuritySettings() {
-        enabledBiometric = appEngine.settings.biometricState
-        enabledPasscodeState = appEngine.settings.passcodeState
-        passcode = appEngine.settings.passcode
-    }
-    
     func runSecurity() {
-        if enabledBiometric || enabledPasscodeState {
+        if appEngine.settings.biometricState || appEngine.settings.passcodeState {
             switchVisibilityOfCardList(isHidden: true)
             authenticate()
         } else {
@@ -292,7 +226,7 @@ class CardListTableViewController: UITableViewController {
         let context = LAContext()
         var error: NSError?
 
-        if enabledBiometric {
+        if appEngine.settings.biometricState {
             if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
                 let reason = "It's used to unlock Card Management feature!"
 
@@ -305,7 +239,7 @@ class CardListTableViewController: UITableViewController {
                         } else {
                             let ac = UIAlertController(title: "Authentication failed", message: "You could not be verified; please try again.", preferredStyle: .alert)
                             
-                            if self?.enabledPasscodeState == true {
+                            if self?.appEngine.settings.passcodeState == true {
                                 ac.addTextField { textfield in
                                     textfield.enablePasswordToggle()
                                     textfield.placeholder = "Input passcode"
@@ -326,10 +260,10 @@ class CardListTableViewController: UITableViewController {
                 }
             } else {
                 var info = "Your device is not configured for biometric authentication."
-                info += (self.enabledPasscodeState) ? " Input passcode instead." : ""
+                info += (appEngine.settings.passcodeState) ? " Input passcode instead." : ""
                 let ac = UIAlertController(title: "Biometry unavailable", message: info, preferredStyle: .alert)
                 
-                if self.enabledPasscodeState == true {
+                if appEngine.settings.passcodeState == true {
                     ac.addTextField { textfield in
                         textfield.enablePasswordToggle()
                         textfield.placeholder = "Input passcode"
@@ -367,7 +301,7 @@ class CardListTableViewController: UITableViewController {
     }
     
     func evaluateInputtedPasscode(_ inputtedPassword: String) {
-        if let passcode = passcode {
+        if let passcode = appEngine.settings.passcode {
             if passcode == inputtedPassword {
                 switchVisibilityOfCardList(isHidden: false)
             } else {
@@ -379,7 +313,7 @@ class CardListTableViewController: UITableViewController {
     }
     
     func showAlertOfInvalidPasscode() {
-        if enabledPasscodeState == true {
+        if appEngine.settings.passcodeState == true {
             let ac = UIAlertController(title: "Invalid Passcode", message: "Inputted passcode is incorrect.", preferredStyle: .alert)
             ac.addTextField { textfield in
                 textfield.enablePasswordToggle()
