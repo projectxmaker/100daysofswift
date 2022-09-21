@@ -202,9 +202,17 @@ class PlayViewController: UIViewController {
     func resolveCardButtonsByIndexes(_ indexes: [Int]) {
         for eachIndex in indexes {
             let button = cardButtons[eachIndex]
-            UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0.5, options: [.curveEaseInOut], animations: {
-                button.transform = CGAffineTransform(scaleX: 0, y: 0)
-            })
+            button.layer.zPosition = 100
+            UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0.1, options: [.curveEaseInOut], animations: {
+                button.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+            }) { _ in
+                //button.transform = CGAffineTransform(scaleX: 0, y: 0)
+                UIView.animate(withDuration: 0.1, delay: 0, options: [.curveEaseOut]) {
+                    button.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
+                } completion: { _ in
+                    button.transform = CGAffineTransform(scaleX: 0, y: 0)
+                }
+            }
         }
         
         if cardGameEngine.isAllCardsResolved() {
