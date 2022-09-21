@@ -16,7 +16,7 @@ class MainViewController: UIViewController {
         
         let appTitleLabel = UILabel()
         appTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        appTitleLabel.text = "CARD GAME"
+        appTitleLabel.text = "CARD PAIR GAME"
         appTitleLabel.font = UIFont.preferredFont(forTextStyle: .largeTitle)
         appTitleLabel.textAlignment = .center
         view.addSubview(appTitleLabel)
