@@ -235,7 +235,9 @@ class CardListTableViewController: UITableViewController {
                         if success {
                             self?.switchVisibilityOfCardList(isHidden: false)
                         } else {
-                            let ac = UIAlertController(title: "Authentication failed", message: "You could not be verified; please try again.", preferredStyle: .alert)
+                            var info = "You could not be verified."
+                            info += (self?.appEngine.settings.passcodeState == true) ? " Input passcode instead." : ""
+                            let ac = UIAlertController(title: "Authentication failed", message: info, preferredStyle: .alert)
                             
                             if self?.appEngine.settings.passcodeState == true {
                                 ac.addTextField { textfield in
@@ -280,7 +282,7 @@ class CardListTableViewController: UITableViewController {
             }
         } else {
             let info = "Input passcode to unlock Card Management feature."
-            let ac = UIAlertController(title: "Biometry unavailable", message: info, preferredStyle: .alert)
+            let ac = UIAlertController(title: "Unlock With Passcode", message: info, preferredStyle: .alert)
             
             ac.addTextField { textfield in
                 textfield.enablePasswordToggle()
