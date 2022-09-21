@@ -23,7 +23,6 @@ extension UITextField {
         let button = UIButton(configuration: configuration)
         setPasswordToggleImage(button)
         button.addTarget(self, action: #selector(self.togglePasswordView), for: .touchUpInside)
-        self.isSecureTextEntry = true
         self.rightView = button
         self.rightViewMode = .always
     }
