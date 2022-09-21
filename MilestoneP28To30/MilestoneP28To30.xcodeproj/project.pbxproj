@@ -95,7 +95,7 @@
 				8A59547928D59A4000038BAB /* SceneDelegate.swift */,
 				8A59548C28D59A5600038BAB /* View Controllers */,
 				8A59548D28D59A5E00038BAB /* Storyboards */,
-				8A9AF51928DACB4D00728789 /* UITextField+Eye.swift */,
+				8A9AF51B28DAD50700728789 /* UIKit Extensions */,
 			);
 			path = "Presentation Layer";
 			sourceTree = "<group>";
@@ -119,6 +119,14 @@
 				8A59548228D59A4200038BAB /* LaunchScreen.storyboard */,
 			);
 			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		8A9AF51B28DAD50700728789 /* UIKit Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				8A9AF51928DACB4D00728789 /* UITextField+Eye.swift */,
+			);
+			path = "UIKit Extensions";
 			sourceTree = "<group>";
 		};
 		8AE7591228D7FB9F00CDE05C /* Data Layer */ = {
