@@ -9,6 +9,8 @@ import UIKit
 import LocalAuthentication
 
 class SettingsViewController: UIViewController {
+    var appEngine = AppEngine()
+    
     var settingsTitleLabel: UILabel!
     var biometricButton: UIButton!
     var passcodeStateButton: UIButton!
@@ -236,27 +238,24 @@ class SettingsViewController: UIViewController {
     
     // MARK: - Extra Funcs
     func loadSettings() {
-        enabledBiometric = UserDefaults.standard.bool(forKey: SettingsViewController.Keys.biometricSettingKey)
-        enabledPasscodeState = UserDefaults.standard.bool(forKey: SettingsViewController.Keys.passcodeStateSettingKey)
-        passcode = UserDefaults.standard.string(forKey: SettingsViewController.Keys.passcodeSettingKey)
+        enabledBiometric = appEngine.settings.biometricState
+        enabledPasscodeState = appEngine.settings.passcodeState
+        passcode = appEngine.settings.passcode
     }
     
     func saveBiometricSetting() {
-        UserDefaults.standard.set(enabledBiometric, forKey: SettingsViewController.Keys.biometricSettingKey)
+        appEngine.settings.biometricState = enabledBiometric
     }
     
     func savePasscodeStateSetting() {
-        guard let passcode = passcode else { return }
-        
-        if !passcode.isEmpty {
-            UserDefaults.standard.set(enabledPasscodeState, forKey: SettingsViewController.Keys.passcodeStateSettingKey)
+        if !appEngine.settings.passcode.isEmpty {
+            appEngine.settings.passcodeState = enabledPasscodeState
         }
     }
     
     func savePasscode(_ newPasscode: String) {
         if !newPasscode.isEmpty {
-            passcode = newPasscode
-            UserDefaults.standard.set(newPasscode, forKey: SettingsViewController.Keys.passcodeSettingKey)
+            appEngine.settings.passcode = newPasscode
         }
     }
     
@@ -306,7 +305,6 @@ class SettingsViewController: UIViewController {
         var hasPasscode = false
         var existingPasscode: String?
         if let tmpPasscode = passcode {
-            print("passcode: \(tmpPasscode)")
             if !tmpPasscode.isEmpty {
                 existingPasscode = tmpPasscode
                 hasPasscode = true
@@ -314,7 +312,6 @@ class SettingsViewController: UIViewController {
         }
 
         if let execute = execute {
-            print("hasPasscode: \(hasPasscode ? "Y" : "N")")
             execute(hasPasscode, existingPasscode)
         }
     }

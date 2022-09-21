@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension SettingsViewController {
+extension SettingsManager {
     struct Keys {
         static let biometricSettingKey = "com.projectxmaker.cardgame.settings.biometric"
         static let passcodeStateSettingKey = "com.projectxmaker.cardgame.settings.passcodeState"

@@ -9,7 +9,8 @@ import UIKit
 import LocalAuthentication
 
 class CardListTableViewController: UITableViewController {
-
+    var appEngine = AppEngine()
+    
     var settingsBarButtonItem: UIBarButtonItem!
     var addNewCardBarButtonItem: UIBarButtonItem!
     
@@ -273,9 +274,9 @@ class CardListTableViewController: UITableViewController {
     // MARK: - Security
     
     func loadSecuritySettings() {
-        enabledBiometric = UserDefaults.standard.bool(forKey: SettingsViewController.Keys.biometricSettingKey)
-        enabledPasscodeState = UserDefaults.standard.bool(forKey: SettingsViewController.Keys.passcodeStateSettingKey)
-        passcode = UserDefaults.standard.string(forKey: SettingsViewController.Keys.passcodeSettingKey)
+        enabledBiometric = appEngine.settings.biometricState
+        enabledPasscodeState = appEngine.settings.passcodeState
+        passcode = appEngine.settings.passcode
     }
     
     func runSecurity() {

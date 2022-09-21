@@ -20,6 +20,8 @@
 		8A9AF51628D96CE800728789 /* CardGameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9AF51528D96CE800728789 /* CardGameEngine.swift */; };
 		8A9AF51828DA245400728789 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9AF51728DA245400728789 /* Constants.swift */; };
 		8A9AF51A28DACB4D00728789 /* UITextField+Eye.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9AF51928DACB4D00728789 /* UITextField+Eye.swift */; };
+		8A9AF51D28DB031100728789 /* AppEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9AF51C28DB031100728789 /* AppEngine.swift */; };
+		8A9AF51F28DB039800728789 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9AF51E28DB039800728789 /* SettingsManager.swift */; };
 		8AE7591128D7FB9B00CDE05C /* cards.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8AE7591028D7FB9B00CDE05C /* cards.txt */; };
 		8AE7591428D7FE4600CDE05C /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE7591328D7FE4600CDE05C /* Card.swift */; };
 		8AE7591628D85A4700CDE05C /* CardPairManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE7591528D85A4700CDE05C /* CardPairManager.swift */; };
@@ -42,6 +44,8 @@
 		8A9AF51528D96CE800728789 /* CardGameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardGameEngine.swift; sourceTree = "<group>"; };
 		8A9AF51728DA245400728789 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		8A9AF51928DACB4D00728789 /* UITextField+Eye.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Eye.swift"; sourceTree = "<group>"; };
+		8A9AF51C28DB031100728789 /* AppEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEngine.swift; sourceTree = "<group>"; };
+		8A9AF51E28DB039800728789 /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
 		8AE7591028D7FB9B00CDE05C /* cards.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = cards.txt; sourceTree = "<group>"; };
 		8AE7591328D7FE4600CDE05C /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		8AE7591528D85A4700CDE05C /* CardPairManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPairManager.swift; sourceTree = "<group>"; };
@@ -142,8 +146,10 @@
 		8AE7591728D85A5100CDE05C /* Business Logic Layer */ = {
 			isa = PBXGroup;
 			children = (
+				8A9AF51C28DB031100728789 /* AppEngine.swift */,
 				8A9AF51528D96CE800728789 /* CardGameEngine.swift */,
 				8AE7591528D85A4700CDE05C /* CardPairManager.swift */,
+				8A9AF51E28DB039800728789 /* SettingsManager.swift */,
 			);
 			path = "Business Logic Layer";
 			sourceTree = "<group>";
@@ -231,6 +237,8 @@
 				8A9AF51628D96CE800728789 /* CardGameEngine.swift in Sources */,
 				8A9AF51A28DACB4D00728789 /* UITextField+Eye.swift in Sources */,
 				8AE7591428D7FE4600CDE05C /* Card.swift in Sources */,
+				8A9AF51F28DB039800728789 /* SettingsManager.swift in Sources */,
+				8A9AF51D28DB031100728789 /* AppEngine.swift in Sources */,
 				8AE7591928D95DF900CDE05C /* CardPair.swift in Sources */,
 				8A9AF51828DA245400728789 /* Constants.swift in Sources */,
 			);
