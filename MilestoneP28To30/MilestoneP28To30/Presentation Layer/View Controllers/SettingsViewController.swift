@@ -339,15 +339,18 @@ class SettingsViewController: UIViewController {
         hasPasscode(execute: { [weak ac] hasPasscode, passcode in
             if hasPasscode {
                 ac?.addTextField { textfield in
+                    textfield.enablePasswordToggle()
                     textfield.placeholder = "Input existing passcode"
                 }
             }
         })
 
         ac.addTextField { textfield in
+            textfield.enablePasswordToggle()
             textfield.placeholder = "Input new passcode"
         }
         ac.addTextField { textfield in
+            textfield.enablePasswordToggle()
             textfield.placeholder = "Confirm new passcode"
         }
         

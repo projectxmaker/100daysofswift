@@ -306,6 +306,7 @@ class CardListTableViewController: UITableViewController {
                             
                             if self?.enabledPasscodeState == true {
                                 ac.addTextField { textfield in
+                                    textfield.enablePasswordToggle()
                                     textfield.placeholder = "Input passcode"
                                 }
                                 ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
@@ -329,6 +330,7 @@ class CardListTableViewController: UITableViewController {
                 
                 if self.enabledPasscodeState == true {
                     ac.addTextField { textfield in
+                        textfield.enablePasswordToggle()
                         textfield.placeholder = "Input passcode"
                     }
                     ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
@@ -348,6 +350,7 @@ class CardListTableViewController: UITableViewController {
             let ac = UIAlertController(title: "Biometry unavailable", message: info, preferredStyle: .alert)
             
             ac.addTextField { textfield in
+                textfield.enablePasswordToggle()
                 textfield.placeholder = "Input passcode"
             }
             ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
@@ -378,8 +381,8 @@ class CardListTableViewController: UITableViewController {
         if enabledPasscodeState == true {
             let ac = UIAlertController(title: "Invalid Passcode", message: "Inputted passcode is incorrect.", preferredStyle: .alert)
             ac.addTextField { textfield in
+                textfield.enablePasswordToggle()
                 textfield.placeholder = "Input passcode"
-                textfield.isSecureTextEntry = true
             }
             ac.addAction(UIAlertAction(title: "Submit", style: .default, handler: { [weak ac, weak self] _ in
                 let passcode = ac?.textFields?[0].text ?? ""

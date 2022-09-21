@@ -19,6 +19,7 @@
 		8A59549528D7122600038BAB /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A59549428D7122600038BAB /* SettingsViewController.swift */; };
 		8A9AF51628D96CE800728789 /* CardGameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9AF51528D96CE800728789 /* CardGameEngine.swift */; };
 		8A9AF51828DA245400728789 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9AF51728DA245400728789 /* Constants.swift */; };
+		8A9AF51A28DACB4D00728789 /* UITextField+Eye.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9AF51928DACB4D00728789 /* UITextField+Eye.swift */; };
 		8AE7591128D7FB9B00CDE05C /* cards.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8AE7591028D7FB9B00CDE05C /* cards.txt */; };
 		8AE7591428D7FE4600CDE05C /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE7591328D7FE4600CDE05C /* Card.swift */; };
 		8AE7591628D85A4700CDE05C /* CardPairManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE7591528D85A4700CDE05C /* CardPairManager.swift */; };
@@ -40,6 +41,7 @@
 		8A59549428D7122600038BAB /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		8A9AF51528D96CE800728789 /* CardGameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardGameEngine.swift; sourceTree = "<group>"; };
 		8A9AF51728DA245400728789 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		8A9AF51928DACB4D00728789 /* UITextField+Eye.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Eye.swift"; sourceTree = "<group>"; };
 		8AE7591028D7FB9B00CDE05C /* cards.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = cards.txt; sourceTree = "<group>"; };
 		8AE7591328D7FE4600CDE05C /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		8AE7591528D85A4700CDE05C /* CardPairManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPairManager.swift; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 				8A59547928D59A4000038BAB /* SceneDelegate.swift */,
 				8A59548C28D59A5600038BAB /* View Controllers */,
 				8A59548D28D59A5E00038BAB /* Storyboards */,
+				8A9AF51928DACB4D00728789 /* UITextField+Eye.swift */,
 			);
 			path = "Presentation Layer";
 			sourceTree = "<group>";
@@ -218,6 +221,7 @@
 				8A59547A28D59A4000038BAB /* SceneDelegate.swift in Sources */,
 				8A59549328D70D2600038BAB /* CardListTableViewController.swift in Sources */,
 				8A9AF51628D96CE800728789 /* CardGameEngine.swift in Sources */,
+				8A9AF51A28DACB4D00728789 /* UITextField+Eye.swift in Sources */,
 				8AE7591428D7FE4600CDE05C /* Card.swift in Sources */,
 				8AE7591928D95DF900CDE05C /* CardPair.swift in Sources */,
 				8A9AF51828DA245400728789 /* Constants.swift in Sources */,
