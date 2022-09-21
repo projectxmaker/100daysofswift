@@ -8,6 +8,8 @@
 import UIKit
 
 class MainViewController: UIViewController {
+    var playButton: UIButton!
+    
     override func loadView() {
         view = UIView()
         view.backgroundColor = .white
@@ -28,7 +30,7 @@ class MainViewController: UIViewController {
         ]
         let playButtonTitleAttributedString = NSAttributedString(string: "PLAY", attributes: playButtonTitleAttributedKeys)
 
-        let playButton = UIButton(configuration: tinted)
+        playButton = UIButton(configuration: tinted)
         playButton.translatesAutoresizingMaskIntoConstraints = false
         playButton.setAttributedTitle(playButtonTitleAttributedString, for: .normal)
         view.addSubview(playButton)
@@ -78,10 +80,19 @@ class MainViewController: UIViewController {
     }
     
     @objc func handlePlayButtonTapped() {
-        let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let playViewTableViewController = mainStoryboard.instantiateViewController(withIdentifier: "PlayView")
-        
-        navigationController?.pushViewController(playViewTableViewController, animated: true)
+        playButton.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0.1, options: [.curveEaseInOut]) {
+            self.playButton.transform = .identity
+        } completion: { _ in
+            //self.playButton.transform = .identity
+            
+            let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let playViewTableViewController = mainStoryboard.instantiateViewController(withIdentifier: "PlayView")
+            
+            self.navigationController?.pushViewController(playViewTableViewController, animated: true)
+        }
+
+
     }
 }
 
