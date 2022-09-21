@@ -26,19 +26,30 @@ class SettingsManager {
         }
         
         set (newValue)  {
-            UserDefaults.standard.set(newValue, forKey: SettingsManager.Keys.passcodeStateSettingKey)
+            var allowToSave = false
+            if newValue == false {
+                passcode = nil
+                allowToSave = true
+            } else {
+                guard let passcode = passcode else { return }
+                if !passcode.isEmpty {
+                    allowToSave = true
+                }
+            }
+            
+            if allowToSave {
+                UserDefaults.standard.set(newValue, forKey: SettingsManager.Keys.passcodeStateSettingKey)
+            }
         }
     }
     
-    var passcode: String  {
+    var passcode: String?  {
         get {
             UserDefaults.standard.string(forKey: SettingsManager.Keys.passcodeSettingKey) ?? ""
         }
         
         set (newValue)  {
-            if !passcode.isEmpty {
-                UserDefaults.standard.set(newValue, forKey: SettingsManager.Keys.passcodeSettingKey)
-            }
+            UserDefaults.standard.set(newValue, forKey: SettingsManager.Keys.passcodeSettingKey)
         }
     }
 }

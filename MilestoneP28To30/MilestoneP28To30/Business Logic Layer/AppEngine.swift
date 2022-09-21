@@ -35,7 +35,7 @@ struct Settings {
         }
     }
     
-    var passcode: String  {
+    var passcode: String?  {
         get {
             settings.passcode
         }

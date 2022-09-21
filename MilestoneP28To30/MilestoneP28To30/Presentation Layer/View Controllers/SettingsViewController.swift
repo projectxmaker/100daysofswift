@@ -21,22 +21,38 @@ class SettingsViewController: UIViewController {
     
     var tinted = UIButton.Configuration.tinted()
     
-    var enabledBiometric: Bool = false {
-        didSet {
-            saveBiometricSetting()
+    var enabledBiometric: Bool {
+        get {
+            appEngine.settings.biometricState
+        }
+        
+        set (newValue) {
+            appEngine.settings.biometricState = newValue
             setLabelOfBiometricButton()
         }
     }
     
-    var enabledPasscodeState: Bool = false {
-        didSet {
-            savePasscodeStateSetting()
+    var enabledPasscodeState: Bool {
+        get {
+            appEngine.settings.passcodeState
+        }
+        
+        set (newValue) {
+            appEngine.settings.passcodeState = newValue
             setLabelOfPasscodeStateButton()
             switchSetPasscodeButton()
         }
     }
     
-    var passcode: String?
+    var passcode: String? {
+        get {
+            appEngine.settings.passcode
+        }
+        
+        set (newValue) {
+            appEngine.settings.passcode = newValue
+        }
+    }
     
     override func loadView() {
         view = UIView()
@@ -59,17 +75,6 @@ class SettingsViewController: UIViewController {
         // Do any additional setup after loading the view.
         loadSettings()
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
     // MARK: - Layout
     func setupTitleLabel() {
@@ -243,22 +248,6 @@ class SettingsViewController: UIViewController {
         passcode = appEngine.settings.passcode
     }
     
-    func saveBiometricSetting() {
-        appEngine.settings.biometricState = enabledBiometric
-    }
-    
-    func savePasscodeStateSetting() {
-        if !appEngine.settings.passcode.isEmpty {
-            appEngine.settings.passcodeState = enabledPasscodeState
-        }
-    }
-    
-    func savePasscode(_ newPasscode: String) {
-        if !newPasscode.isEmpty {
-            appEngine.settings.passcode = newPasscode
-        }
-    }
-    
     func setLabelOfBiometricButton() {
         guard let button = biometricButton else { return }
         
@@ -383,9 +372,9 @@ class SettingsViewController: UIViewController {
                     return
                 }
                 
-                self?.savePasscode(newPasscode)
+                self?.passcode = newPasscode
                 
-                self?.savePasscodeStateSetting()
+                self?.enabledPasscodeState = true
             }
         }))
         
