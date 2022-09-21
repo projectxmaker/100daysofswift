@@ -16,8 +16,6 @@ class CardListTableViewController: UITableViewController {
     
     var lockAppBarButtonItem: UIBarButtonItem!
     
-    var cardsManager = CardPairManager.shared
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -38,13 +36,13 @@ class CardListTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return cardsManager.getCardPairs().count
+        return appEngine.cardPairManager.getCardPairs().count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CardPairCell", for: indexPath)
 
-        let card = cardsManager.getCardPairs()[indexPath.row]
+        let card = appEngine.cardPairManager.getCardPairs()[indexPath.row]
         
         var contentConfig = cell.defaultContentConfiguration()
         contentConfig.text = card.first
@@ -129,7 +127,7 @@ class CardListTableViewController: UITableViewController {
     }
     
     @objc func loadCards() {
-        cardsManager.loadCards()
+        appEngine.cardPairManager.loadCards()
         
         DispatchQueue.main.async {
             self.tableView.reloadData()
@@ -137,23 +135,23 @@ class CardListTableViewController: UITableViewController {
     }
 
     func addNewCard(first: String, second: String) {
-        cardsManager.addNewCardPair(first: first, second: second)
+        appEngine.cardPairManager.addNewCardPair(first: first, second: second)
         tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
     }
     
     func editCard(at: IndexPath, first: String, second: String) {
-        cardsManager.editCardPair(at: at, first: first, second: second)
+        appEngine.cardPairManager.editCardPair(at: at, first: first, second: second)
         tableView.reloadRows(at: [at], with: .automatic)
     }
     
     func deleteCard(at: IndexPath) {
-        cardsManager.deleteCardPair(at: at)
+        appEngine.cardPairManager.deleteCardPair(at: at)
         tableView.deleteRows(at: [at], with: .automatic)
     }
     
     func showEditAlertForCard(at: IndexPath) {
         let cardIndex = at.row
-        let card = cardsManager.getCardPairs()[cardIndex]
+        let card = appEngine.cardPairManager.getCardPairs()[cardIndex]
         let info = "Edit a card pair"
         
         let ac = UIAlertController(title: "Card Pair", message: info, preferredStyle: .alert)
@@ -190,7 +188,7 @@ class CardListTableViewController: UITableViewController {
     
     func showAlertToConfirmDeletion(at: IndexPath) {
         let cardIndex = at.row
-        let card = cardsManager.getCardPairs()[cardIndex]
+        let card = appEngine.cardPairManager.getCardPairs()[cardIndex]
         let info = """
         Do you want to delete this card pair:
         \(card.first)

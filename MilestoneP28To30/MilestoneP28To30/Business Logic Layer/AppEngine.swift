@@ -9,6 +9,7 @@ import Foundation
 
 struct AppEngine {
     var settings = Settings()
+    var cardPairManager = CardPairManager.shared
 }
 
 // MARK: - Settings
