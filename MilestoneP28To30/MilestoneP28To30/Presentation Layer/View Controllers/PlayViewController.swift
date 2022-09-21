@@ -8,7 +8,7 @@
 import UIKit
 
 class PlayViewController: UIViewController {
-    var cardGameEngine = CardGameEngine()
+    var cardGameEngine = AppEngine().cardGameEngine
     
     var round: Int = 1
     var cardButtons = [UIButton]()

@@ -8,8 +8,15 @@
 import Foundation
 
 struct AppEngine {
-    var settings = Settings()
-    var cardPairManager = CardPairManager.shared
+    var settings: Settings
+    var cardPairManager: CardPairManager
+    var cardGameEngine: CardGameEngine
+    
+    init() {
+        settings = Settings()
+        cardPairManager = CardPairManager.shared
+        cardGameEngine = CardGameEngine(cardPairManager: cardPairManager)
+    }
 }
 
 // MARK: - Settings

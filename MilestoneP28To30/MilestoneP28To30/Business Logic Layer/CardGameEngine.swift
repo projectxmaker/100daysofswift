@@ -8,10 +8,14 @@
 import Foundation
 
 struct CardGameEngine {
-    var cardPairManager = CardPairManager.shared
+    var cardPairManager: CardPairManager
     
     var beingFacedUpCardIndexes = [Int]()
     var cardsInCurrentRound = [Card]()
+    
+    init(cardPairManager: CardPairManager) {
+        self.cardPairManager = cardPairManager
+    }
     
     mutating func handleCardTapped(cardIndex: Int) -> Bool {
         var stateChanged = false
