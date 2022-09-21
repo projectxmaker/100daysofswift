@@ -24,8 +24,8 @@ class CardListTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Cards"
-
+        title = "Card Pairs"
+        
         setupNavigationItems()
         setupNotifcationObservers()
         loadCardsInBackground()
@@ -170,7 +170,11 @@ class CardListTableViewController: UITableViewController {
     }
     
     @objc func handleLockAppBarButtonItemTapped() {
-        
+        switchVisibilityOfCardList(isHidden: true)
+    }
+    
+    @objc func handleUnlockAppBarButtonItemTapped() {
+        runSecurity()
     }
     
     // MARK: - Extra Funcs
@@ -274,6 +278,8 @@ class CardListTableViewController: UITableViewController {
         if enabledBiometric || enabledPasscodeState {
             switchVisibilityOfCardList(isHidden: true)
             authenticate()
+        } else {
+            switchVisibilityOfCardList(isHidden: false)
         }
     }
     
@@ -290,7 +296,7 @@ class CardListTableViewController: UITableViewController {
 
                     DispatchQueue.main.async {
                         if success {
-                            self?.tableView.isHidden = false
+                            self?.switchVisibilityOfCardList(isHidden: false)
                         } else {
                             let ac = UIAlertController(title: "Authentication failed", message: "You could not be verified; please try again.", preferredStyle: .alert)
                             
@@ -334,7 +340,7 @@ class CardListTableViewController: UITableViewController {
                 present(ac, animated: true)
             }
         } else {
-            var info = "Input passcode to unlock Card Management feature."
+            let info = "Input passcode to unlock Card Management feature."
             let ac = UIAlertController(title: "Biometry unavailable", message: info, preferredStyle: .alert)
             
             ac.addTextField { textfield in
@@ -384,8 +390,16 @@ class CardListTableViewController: UITableViewController {
     func switchVisibilityOfCardList(isHidden: Bool) {
         if isHidden {
             tableView.isHidden = true
+            addNewCardBarButtonItem.isEnabled = false
+            settingsBarButtonItem.isEnabled = false
+            lockAppBarButtonItem.image = UIImage(systemName: "lock.open")
+            lockAppBarButtonItem.action = #selector(handleUnlockAppBarButtonItemTapped)
         } else {
             tableView.isHidden = false
+            addNewCardBarButtonItem.isEnabled = true
+            settingsBarButtonItem.isEnabled = true
+            lockAppBarButtonItem.image = UIImage(systemName: "lock")
+            lockAppBarButtonItem.action = #selector(handleLockAppBarButtonItemTapped)
         }
     }
     
