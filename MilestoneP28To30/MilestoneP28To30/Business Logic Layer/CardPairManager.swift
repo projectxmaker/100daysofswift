@@ -129,7 +129,7 @@ class CardPairManager {
     }
     
     func getCards() -> [Card] {
-        var cardPairs = getCardPairs()
+        let cardPairs = getCardPairs()
         
         var cards = [Card]()
         for (index, eachCardPair) in cardPairs.enumerated() {
