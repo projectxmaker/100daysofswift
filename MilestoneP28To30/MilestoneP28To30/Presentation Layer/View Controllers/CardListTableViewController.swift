@@ -18,6 +18,8 @@ class CardListTableViewController: UITableViewController {
     var cardsManager = CardPairManager.shared
     
     var enabledBiometric = false
+    var enabledPasscodeState = false
+    var passcode: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -260,47 +262,130 @@ class CardListTableViewController: UITableViewController {
         present(ac, animated: true)
     }
     
+    // MARK: - Security
+    
     func loadSecuritySettings() {
         enabledBiometric = UserDefaults.standard.bool(forKey: SettingsViewController.Keys.biometricSettingKey)
+        enabledPasscodeState = UserDefaults.standard.bool(forKey: SettingsViewController.Keys.passcodeStateSettingKey)
+        passcode = UserDefaults.standard.string(forKey: SettingsViewController.Keys.passcodeSettingKey)
     }
     
     func runSecurity() {
-        if enabledBiometric {
-            tableView.isHidden = true
-            
-            authenticateWithBiometric()
+        if enabledBiometric || enabledPasscodeState {
+            switchVisibilityOfCardList(isHidden: true)
+            authenticate()
         }
     }
     
-    func authenticateWithBiometric() {
+    func authenticate() {
         let context = LAContext()
         var error: NSError?
 
-        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
-            let reason = "It's used to unlock Card Management feature!"
+        if enabledBiometric {
+            if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+                let reason = "It's used to unlock Card Management feature!"
 
-            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) {
-                [weak self] success, authenticationError in
+                context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) {
+                    [weak self] success, authenticationError in
 
-                DispatchQueue.main.async {
-                    if success {
-                        self?.tableView.isHidden = false
-                    } else {
-                        let ac = UIAlertController(title: "Authentication failed", message: "You could not be verified; please try again.", preferredStyle: .alert)
-                        
-                        ac.addAction(UIAlertAction(title: "Ok", style: .default))
+                    DispatchQueue.main.async {
+                        if success {
+                            self?.tableView.isHidden = false
+                        } else {
+                            let ac = UIAlertController(title: "Authentication failed", message: "You could not be verified; please try again.", preferredStyle: .alert)
+                            
+                            if self?.enabledPasscodeState == true {
+                                ac.addTextField { textfield in
+                                    textfield.placeholder = "Input passcode"
+                                }
+                                ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+                                ac.addAction(UIAlertAction(title: "Submit", style: .default, handler: { [weak ac, weak self] _ in
+                                    let passcode = ac?.textFields?[0].text ?? ""
+                                    self?.evaluateInputtedPasscode(passcode)
+                                }))
+                            } else {
+                                ac.addAction(UIAlertAction(title: "Ok", style: .default))
+                            }
 
-                        ac.popoverPresentationController?.barButtonItem = self?.navigationItem.rightBarButtonItem
-                        self?.present(ac, animated: true)
+                            ac.popoverPresentationController?.barButtonItem = self?.navigationItem.rightBarButtonItem
+                            self?.present(ac, animated: true)
+                        }
                     }
                 }
+            } else {
+                var info = "Your device is not configured for biometric authentication."
+                info += (self.enabledPasscodeState) ? " Input passcode instead." : ""
+                let ac = UIAlertController(title: "Biometry unavailable", message: info, preferredStyle: .alert)
+                
+                if self.enabledPasscodeState == true {
+                    ac.addTextField { textfield in
+                        textfield.placeholder = "Input passcode"
+                    }
+                    ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+                    ac.addAction(UIAlertAction(title: "Submit", style: .default, handler: { [weak ac, weak self] _ in
+                        let passcode = ac?.textFields?[0].text ?? ""
+                        self?.evaluateInputtedPasscode(passcode)
+                    }))
+                } else {
+                    ac.addAction(UIAlertAction(title: "Ok", style: .default))
+                }
+                
+                ac.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+                present(ac, animated: true)
             }
         } else {
-            let ac = UIAlertController(title: "Biometry unavailable", message: "Your device is not configured for biometric authentication.", preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "Ok", style: .default))
+            var info = "Input passcode to unlock Card Management feature."
+            let ac = UIAlertController(title: "Biometry unavailable", message: info, preferredStyle: .alert)
             
+            ac.addTextField { textfield in
+                textfield.placeholder = "Input passcode"
+            }
+            ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            ac.addAction(UIAlertAction(title: "Submit", style: .default, handler: { [weak ac, weak self] _ in
+                let passcode = ac?.textFields?[0].text ?? ""
+                self?.evaluateInputtedPasscode(passcode)
+            }))
+
             ac.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
             present(ac, animated: true)
+        }
+
+    }
+    
+    func evaluateInputtedPasscode(_ inputtedPassword: String) {
+        if let passcode = passcode {
+            if passcode == inputtedPassword {
+                switchVisibilityOfCardList(isHidden: false)
+            } else {
+                showAlertOfInvalidPasscode()
+            }
+        } else {
+            showAlertOfInvalidPasscode()
+        }
+    }
+    
+    func showAlertOfInvalidPasscode() {
+        if enabledPasscodeState == true {
+            let ac = UIAlertController(title: "Invalid Passcode", message: "Inputted passcode is incorrect.", preferredStyle: .alert)
+            ac.addTextField { textfield in
+                textfield.placeholder = "Input passcode"
+                textfield.isSecureTextEntry = true
+            }
+            ac.addAction(UIAlertAction(title: "Submit", style: .default, handler: { [weak ac, weak self] _ in
+                let passcode = ac?.textFields?[0].text ?? ""
+                self?.evaluateInputtedPasscode(passcode)
+            }))
+            ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            ac.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+            present(ac, animated: true)
+        }
+    }
+    
+    func switchVisibilityOfCardList(isHidden: Bool) {
+        if isHidden {
+            tableView.isHidden = true
+        } else {
+            tableView.isHidden = false
         }
     }
     
