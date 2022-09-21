@@ -19,7 +19,7 @@ extension UITextField {
     }
 
     func enablePasswordToggle(){
-        var configuration = UIButton.Configuration.borderless()
+        let configuration = UIButton.Configuration.borderless()
         let button = UIButton(configuration: configuration)
         setPasswordToggleImage(button)
         button.addTarget(self, action: #selector(self.togglePasswordView), for: .touchUpInside)
