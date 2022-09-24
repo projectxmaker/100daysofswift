@@ -8,6 +8,7 @@
 import UIKit
 
 class MainViewController: UIViewController {
+    var cardGameEngine = AppEngine()
     var playButton: UIButton!
     
     override func loadView() {
