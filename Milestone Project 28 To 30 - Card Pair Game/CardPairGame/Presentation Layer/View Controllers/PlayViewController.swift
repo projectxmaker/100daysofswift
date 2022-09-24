@@ -16,10 +16,14 @@ class PlayViewController: UIViewController {
     var cancelButton: UIButton!
     var buttonCardsView: UIView!
     
+    var roundLabel: UILabel!
+    
     override func loadView() {
         view = UIView()
         view.backgroundColor = .white
-
+        
+        cardGameEngine.generateCards()
+        
         setupRoundLabel()
         setupCancelButton()
         setupCardButtons()
@@ -74,12 +78,11 @@ class PlayViewController: UIViewController {
     
     // MARK: - Layout
     func setupRoundLabel() {
-        let roundLabel = UILabel()
+        roundLabel = UILabel()
         roundLabel.translatesAutoresizingMaskIntoConstraints = false
         roundLabel.text = "Round \(round)"
         roundLabel.font = UIFont.preferredFont(forTextStyle: .largeTitle)
         roundLabel.textAlignment = .center
-        roundLabel.setContentHuggingPriority(UILayoutPriority(1), for: .vertical)
         view.addSubview(roundLabel)
         
         // set up layout constraints
@@ -102,7 +105,6 @@ class PlayViewController: UIViewController {
         var tinted = UIButton.Configuration.tinted()
         tinted.buttonSize = .large
         
-        var shuffedCards = cardGameEngine.getCards()
         var shuffedCardCounter = 0
         
         for curRow in 0..<4 {
@@ -116,7 +118,6 @@ class PlayViewController: UIViewController {
                 
                 cardButton.frame = CGRect(x: xPosition, y: curRow * (buttonCardHeight + buttonCardSpacing) , width: buttonCardWidth, height: buttonCardHeight)
                 
-                shuffedCards.removeFirst()
                 cardButton.tag = shuffedCardCounter
                 
                 shuffedCardCounter += 1
@@ -131,7 +132,8 @@ class PlayViewController: UIViewController {
         
         // set up layout constraints
         layoutConstraints += [
-            buttonCardsView.bottomAnchor.constraint(equalTo: cancelButton.topAnchor, constant: -20),
+            buttonCardsView.bottomAnchor.constraint(equalTo: cancelButton.topAnchor, constant: 5),
+            buttonCardsView.topAnchor.constraint(equalTo: roundLabel.bottomAnchor, constant: 5),
             buttonCardsView.centerXAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.centerXAnchor),
             buttonCardsView.widthAnchor.constraint(equalToConstant: 620),
             buttonCardsView.heightAnchor.constraint(equalToConstant: 620)

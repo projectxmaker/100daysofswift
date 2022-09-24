@@ -124,12 +124,22 @@ class CardPairManager {
         }
     }
     
-    func getCardPairs() -> [CardPair] {
-        return cardPairs
+    func getCardPairs(numberOfCardPairs: Int? = nil) -> [CardPair] {
+        var shuffledCardPairs: [CardPair]
+        if let numberOfCardPairs {
+            shuffledCardPairs = Array(cardPairs.shuffled()[0..<numberOfCardPairs])
+        } else {
+            shuffledCardPairs = cardPairs
+        }
+        
+        return shuffledCardPairs
     }
     
-    func getCards() -> [Card] {
-        let cardPairs = getCardPairs()
+    func getCards(numberOfCards: Int) -> [Card] {
+        guard numberOfCards % 2 == 0 else { return [Card]() }
+        
+        let numberOfCardPairds = numberOfCards / 2
+        let cardPairs = getCardPairs(numberOfCardPairs: numberOfCardPairds)
         
         var cards = [Card]()
         for (index, eachCardPair) in cardPairs.enumerated() {

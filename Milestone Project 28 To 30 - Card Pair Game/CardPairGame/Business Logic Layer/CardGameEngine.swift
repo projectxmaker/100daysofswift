@@ -13,6 +13,8 @@ struct CardGameEngine {
     var beingFacedUpCardIndexes = [Int]()
     var cardsInCurrentRound = [Card]()
     
+    let numberOfCardsPerRound = 16
+    
     init(cardPairManager: CardPairManager) {
         self.cardPairManager = cardPairManager
     }
@@ -71,7 +73,7 @@ struct CardGameEngine {
     }
     
     mutating func generateCards() {
-        cardsInCurrentRound = cardPairManager.getCards().shuffled()
+        cardsInCurrentRound = cardPairManager.getCards(numberOfCards: numberOfCardsPerRound).shuffled()
     }
     
     mutating func getCards() -> [Card] {
